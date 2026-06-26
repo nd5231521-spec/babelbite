@@ -4,8 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BabelBite - Global Recipes</title>
+    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -47,67 +50,28 @@
     </footer>
 
     <script>
-        // डिशेज का डेटाबेस (अब इसमें मोमोज और बिरयानी भी हैं!)
-        const recipes = [
-          {
-            category: "Indian Classics",
-            prep_time: "25 mins",
-            icon: "fa-utensils",
-            languages: {
-              en: { title: "Classic Butter Chicken", desc: "A rich, creamy, and mildly spiced tomato curry.", diff: "Medium" },
-              hi: { title: "क्लासिक बटर चिकन", desc: "एक समृद्ध, मलाईदार और हल्के मसालों वाली टमाटर करी।", diff: "मध्यम" },
-              bn: { title: "ক্লাসিক বাটার চিকেন", desc: "একটি রিচ, ক্রিমি এবং হালকা মশলাযুক্ত টমেটো কারি।", diff: "মাঝারি" },
-              es: { title: "Pollo a la Mantequilla", desc: "Un curry de tomate rico, cremoso y ligeramente especiado.", diff: "Medio" },
-              ar: { title: "دجاج بالزبدة الكلاسيكي", desc: "كاري طماطم غني بالكريمة ومتبل خفيفاً.", diff: "متوسط" }
-            }
-          },
-          {
-            category: "Desserts",
-            prep_time: "15 mins",
-            icon: "fa-ice-cream",
-            languages: {
-              en: { title: "Mango Shrikhand", desc: "A creamy Indian dessert made with strained yogurt and mango pulp.", diff: "Easy" },
-              hi: { title: "मैंगो श्रीखंड", desc: "छने हुए दही और आम के गूदे से बनी एक मलाईदार भारतीय मिठाई।", diff: "आसान" },
-              bn: { title: "ম্যাঙ্গো শ্রীখণ্ড", desc: "জল ঝরানো দই এবং আমের পাল্প দিয়ে তৈরি একটি ক্রিমি মিষ্টি।", diff: "সহজ" },
-              es: { title: "Shrikhand de Mango", desc: "Un postre indio cremoso hecho con yogur colado y pulpa de mango.", diff: "Fácil" },
-              ar: { title: "شريخاند المانجو", desc: "حلوى هندية كريمية مصنوعة من اللبن المصفى ولب المانجو.", diff: "سهل" }
-            }
-          },
-          {
-            category: "Street Food",
-            prep_time: "20 mins",
-            icon: "fa-bowl-rice",
-            languages: {
-              en: { title: "Steamed Momos", desc: "Delicious dumplings stuffed with finely chopped vegetables or meat.", diff: "Easy" },
-              hi: { title: "स्टीम्ड मोमोज", desc: "बारीक कटी सब्जियों या मीट से भरे हुए स्वादिष्ट डंपलिंग्स।", diff: "आसान" },
-              bn: { title: "স্টিমড মোমো", desc: "মিহি করে কাটা সবজি বা মাংসে ঠাসা সুস্বাদু ডাম্পলিং।", diff: "সহজ" },
-              es: { title: "Momos al Vapor", desc: "Deliciosas empanadillas rellenas de verduras finamente picadas o carne.", diff: "Fácil" },
-              ar: { title: "موموس على البخار", desc: "فطائر لذيذة محشوة بالخضروات المفرومة فرماً ناعماً أو اللحم.", diff: "سهل" }
-            }
-          },
-          {
-            category: "Royal Main Course",
-            prep_time: "45 mins",
-            icon: "fa-plate-wheat",
-            languages: {
-              en: { title: "Hyderabadi Biryani", desc: "Fragrant basmati rice layered with spiced marinated meat or vegetables.", diff: "Hard" },
-              hi: { title: "हैदराबादी बिरयानी", desc: "मसालेदार मैरीनेट किए गए मीट या सब्जियों के साथ सुगंधित बासमती चावल की परतें।", diff: "कठिन" },
-              bn: { title: "হায়দ্রাবাদি বিরিয়ানি", desc: "মশলাদার ম্যারিনেট করা মাংস বা সবজির সাথে সুগন্ধি বাসমতি চালের স্তর।", diff: "কঠিন" },
-              es: { title: "Biryani de Hyderabadi", desc: "Arroz basmati aromático en capas con carne o verduras marinadas y especiadas.", diff: "Difícil" },
-              ar: { title: "بريانى حيدر أباد", desc: "أرز بسمتي عطري berlapis مع اللحم المتبل أو الخضار.", diff: "صعب" }
-            }
-          }
-        ];
-
+        let recipes = [];
         let currentLang = 'en';
 
         const metaData = {
             en: { title: "World's Best Recipes, <span class='text-[#d35400]'>In Your Language.</span>", sub: "Explore authentic recipes translated perfectly into your local tongue.", search: "Search recipes..." },
             hi: { title: "दुनिया की बेहतरीन रेसिपीज़, <span class='text-[#d35400]'>आपकी अपनी भाषा में।</span>", sub: "दुनिया भर से चुनिंदा रेसिपीज़ का अन्वेषण करें जो आपकी मातृभाषा में हैं।", search: "रेसिपी खोजें..." },
-            bn: { title: "বিশ্বের সেরা সব রেসিپی, <span class='text-[#d35400]'>আপনার নিজের ভাষায়।</span>", sub: "বিশ্বের দরবার থেকে বেছে নেওয়া খাঁটি রেসি品গুলি নিজের ভাষায় দেখুন।", search: "রেসিপি খুঁজুন..." },
+            bn: { title: "বিশ্বের সেরা সব রেসিপি, <span class='text-[#d35400]'>আপনার নিজের ভাষায়।</span>", sub: "বিশ্বের দরবার থেকে বেছে নেওয়া খাঁটি রেসিপিগুলি নিজের ভাষায় দেখুন।", search: "রেসিপি খুঁজুন..." },
             es: { title: "Las mejores recetas, <span class='text-[#d35400]'>en tu idioma.</span>", sub: "Explore recetas auténticas traducidas a su lengua materna.", search: "Buscar..." },
             ar: { title: "أفضل الوصفات العالمية، <span class='text-[#d35400]'>بلغتك الخاصة.</span>", sub: "استكشف وصفات أصلية ومترجمة إلى لغتك المحلية تمامًا.", search: "بحث..." }
         };
+
+        // recipes.json फाइल से डेटा लोड करने का जादू
+        async function fetchData() {
+            try {
+                const response = await fetch('recipes.json');
+                recipes = await response.json();
+                render();
+            } catch (error) {
+                console.error("Data load karne me dikkat aayi:", error);
+                document.getElementById('recipeGrid').innerHTML = `<div class="col-span-full text-center py-12 text-red-500">Database connection error. Please refresh.</div>`;
+            }
+        }
 
         function render() {
             document.getElementById('heroTitle').innerHTML = metaData[currentLang].title;
@@ -119,7 +83,7 @@
             const grid = document.getElementById('recipeGrid');
             grid.innerHTML = '';
             
-            // सर्च और भाषा के आधार पर फ़िल्टर करने का असली लॉजिक
+            // सर्च फ़िल्टर लॉजिक
             const filteredRecipes = recipes.filter(recipe => {
                 const langData = recipe.languages[currentLang];
                 return langData.title.toLowerCase().includes(searchValue) || 
@@ -132,19 +96,22 @@
                 return;
             }
 
+            // स्क्रीन पर सुंदर कार्ड्स और असली फोटो रेंडर करना
             filteredRecipes.forEach(recipe => {
                 const langData = recipe.languages[currentLang];
                 grid.innerHTML += `
-                    <div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition-shadow">
+                    <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition-shadow">
                         <div>
-                            <div class="h-40 bg-[#d35400]/5 rounded-2xl flex items-center justify-center mb-4">
-                                <i class="fa-solid ${recipe.icon} text-4xl text-[#d35400]"></i>
+                            <div class="h-48 overflow-hidden bg-gray-100">
+                                <img src="${recipe.image}" class="w-full h-full object-cover" alt="${langData.title}">
                             </div>
-                            <span class="text-xs font-bold text-[#d35400] bg-orange-50 px-3 py-1 rounded-full">${recipe.category}</span>
-                            <h3 class="text-xl font-bold mt-2 mb-1">${langData.title}</h3>
-                            <p class="text-gray-500 text-sm">${langData.desc}</p>
+                            <div class="p-6">
+                                <span class="text-xs font-bold text-[#d35400] bg-orange-50 px-3 py-1 rounded-full">${recipe.category}</span>
+                                <h3 class="text-xl font-bold mt-3 mb-1">${langData.title}</h3>
+                                    <p class="text-gray-500 text-sm font-normal">${langData.desc}</p>
+                            </div>
                         </div>
-                        <div class="mt-4 pt-4 border-t border-gray-50 flex justify-between text-xs text-gray-400">
+                        <div class="px-6 pb-6 pt-4 border-t border-gray-50 flex justify-between text-xs text-gray-400">
                             <span><i class="fa-solid fa-clock"></i> ${recipe.prep_time}</span>
                             <span>${langData.diff}</span>
                         </div>
@@ -153,7 +120,6 @@
             });
         }
 
-        // इनपुट बदलते ही तुरंत फ़िल्टर करने का इवेंट लिस्नर
         document.getElementById('search').addEventListener('input', render);
 
         document.getElementById('langSelect').addEventListener('change', (e) => {
@@ -161,8 +127,8 @@
             render();
         });
 
-        render();
+        // पेज लोड होते ही डेटाबेस को कॉल करना
+        fetchData();
     </script>
 </body>
 </html>
-
