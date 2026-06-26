@@ -47,6 +47,7 @@
     </footer>
 
     <script>
+        // डिशेज का डेटाबेस (अब इसमें मोमोज और बिरयानी भी हैं!)
         const recipes = [
           {
             category: "Indian Classics",
@@ -67,9 +68,33 @@
             languages: {
               en: { title: "Mango Shrikhand", desc: "A creamy Indian dessert made with strained yogurt and mango pulp.", diff: "Easy" },
               hi: { title: "मैंगो श्रीखंड", desc: "छने हुए दही और आम के गूदे से बनी एक मलाईदार भारतीय मिठाई।", diff: "आसान" },
-              bn: { title: "ম্যাঙ্গো শ্রীখণ্ড", desc: "জল ঝরানো দই এবং আমের পাল্প দিয়ে তৈরি একটি ক্রিमी মিষ্টি।", diff: "সহজ" },
+              bn: { title: "ম্যাঙ্গো শ্রীখণ্ড", desc: "জল ঝরানো দই এবং আমের পাল্প দিয়ে তৈরি একটি ক্রিমি মিষ্টি।", diff: "সহজ" },
               es: { title: "Shrikhand de Mango", desc: "Un postre indio cremoso hecho con yogur colado y pulpa de mango.", diff: "Fácil" },
               ar: { title: "شريخاند المانجو", desc: "حلوى هندية كريمية مصنوعة من اللبن المصفى ولب المانجو.", diff: "سهل" }
+            }
+          },
+          {
+            category: "Street Food",
+            prep_time: "20 mins",
+            icon: "fa-bowl-rice",
+            languages: {
+              en: { title: "Steamed Momos", desc: "Delicious dumplings stuffed with finely chopped vegetables or meat.", diff: "Easy" },
+              hi: { title: "स्टीम्ड मोमोज", desc: "बारीक कटी सब्जियों या मीट से भरे हुए स्वादिष्ट डंपलिंग्स।", diff: "आसान" },
+              bn: { title: "স্টিমড মোমো", desc: "মিহি করে কাটা সবজি বা মাংসে ঠাসা সুস্বাদু ডাম্পলিং।", diff: "সহজ" },
+              es: { title: "Momos al Vapor", desc: "Deliciosas empanadillas rellenas de verduras finamente picadas o carne.", diff: "Fácil" },
+              ar: { title: "موموس على البخار", desc: "فطائر لذيذة محشوة بالخضروات المفرومة فرماً ناعماً أو اللحم.", diff: "سهل" }
+            }
+          },
+          {
+            category: "Royal Main Course",
+            prep_time: "45 mins",
+            icon: "fa-plate-wheat",
+            languages: {
+              en: { title: "Hyderabadi Biryani", desc: "Fragrant basmati rice layered with spiced marinated meat or vegetables.", diff: "Hard" },
+              hi: { title: "हैदराबादी बिरयानी", desc: "मसालेदार मैरीनेट किए गए मीट या सब्जियों के साथ सुगंधित बासमती चावल की परतें।", diff: "कठिन" },
+              bn: { title: "হায়দ্রাবাদি বিরিয়ানি", desc: "মশলাদার ম্যারিনেট করা মাংস বা সবজির সাথে সুগন্ধি বাসমতি চালের স্তর।", diff: "কঠিন" },
+              es: { title: "Biryani de Hyderabadi", desc: "Arroz basmati aromático en capas con carne o verduras marinadas y especiadas.", diff: "Difícil" },
+              ar: { title: "بريانى حيدر أباد", desc: "أرز بسمتي عطري berlapis مع اللحم المتبل أو الخضار.", diff: "صعب" }
             }
           }
         ];
@@ -79,7 +104,7 @@
         const metaData = {
             en: { title: "World's Best Recipes, <span class='text-[#d35400]'>In Your Language.</span>", sub: "Explore authentic recipes translated perfectly into your local tongue.", search: "Search recipes..." },
             hi: { title: "दुनिया की बेहतरीन रेसिपीज़, <span class='text-[#d35400]'>आपकी अपनी भाषा में।</span>", sub: "दुनिया भर से चुनिंदा रेसिपीज़ का अन्वेषण करें जो आपकी मातृभाषा में हैं।", search: "रेसिपी खोजें..." },
-            bn: { title: "বিশ্বের সেরা সব রেসিپی, <span class='text-[#d35400]'>আপনার নিজের ভাষায়।</span>", sub: "বিশ্বের দরবার থেকে বেছে নেওয়া খাঁটি রেসিপিগুলি নিজের ভাষায় দেখুন।", search: "রেसिপি খুঁজুন..." },
+            bn: { title: "বিশ্বের সেরা সব রেসিپی, <span class='text-[#d35400]'>আপনার নিজের ভাষায়।</span>", sub: "বিশ্বের দরবার থেকে বেছে নেওয়া খাঁটি রেসি品গুলি নিজের ভাষায় দেখুন।", search: "রেসিপি খুঁজুন..." },
             es: { title: "Las mejores recetas, <span class='text-[#d35400]'>en tu idioma.</span>", sub: "Explore recetas auténticas traducidas a su lengua materna.", search: "Buscar..." },
             ar: { title: "أفضل الوصفات العالمية، <span class='text-[#d35400]'>بلغتك الخاصة.</span>", sub: "استكشف وصفات أصلية ومترجمة إلى لغتك المحلية تمامًا.", search: "بحث..." }
         };
@@ -90,10 +115,24 @@
             document.getElementById('search').placeholder = metaData[currentLang].search;
             document.body.style.direction = currentLang === 'ar' ? 'rtl' : 'ltr';
 
+            const searchValue = document.getElementById('search').value.toLowerCase();
             const grid = document.getElementById('recipeGrid');
             grid.innerHTML = '';
             
-            recipes.forEach(recipe => {
+            // सर्च और भाषा के आधार पर फ़िल्टर करने का असली लॉजिक
+            const filteredRecipes = recipes.filter(recipe => {
+                const langData = recipe.languages[currentLang];
+                return langData.title.toLowerCase().includes(searchValue) || 
+                       langData.desc.toLowerCase().includes(searchValue) ||
+                       recipe.category.toLowerCase().includes(searchValue);
+            });
+
+            if(filteredRecipes.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-400">No recipes found for "${searchValue}"</div>`;
+                return;
+            }
+
+            filteredRecipes.forEach(recipe => {
                 const langData = recipe.languages[currentLang];
                 grid.innerHTML += `
                     <div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition-shadow">
@@ -114,6 +153,9 @@
             });
         }
 
+        // इनपुट बदलते ही तुरंत फ़िल्टर करने का इवेंट लिस्नर
+        document.getElementById('search').addEventListener('input', render);
+
         document.getElementById('langSelect').addEventListener('change', (e) => {
             currentLang = e.target.value;
             render();
@@ -122,5 +164,5 @@
         render();
     </script>
 </body>
-  </html>
+</html>
 
