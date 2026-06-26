@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BabelBite - Global Recipes</title>
-    <!-- Tailwind CSS for styling -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -19,9 +16,8 @@
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- NAVBAR -->
     <header class="p-4 lg:px-12 bg-[#faf6ee]/90 backdrop-blur-md border-b border-[#d35400]/10 flex justify-between items-center sticky top-0 z-50">
-        <span class="text-2xl font-serif font-bold text-[#d35400] tracking-wide">BabelBite</span>
+        <span class="text-2xl font-serif font-bold text-[#d35400] tracking-wide cursor-pointer" onclick="window.location.reload()">BabelBite</span>
         <select id="langSelect" class="bg-white border border-[#d35400]/20 px-4 py-2 rounded-full text-sm font-medium cursor-pointer focus:outline-none shadow-sm">
             <option value="en">English 🇬🇧</option>
             <option value="hi">हिन्दी 🇮🇳</option>
@@ -31,7 +27,6 @@
         </select>
     </header>
 
-    <!-- HERO SECTION -->
     <section class="text-center py-16 px-4 max-w-4xl mx-auto">
         <h1 id="heroTitle" class="text-4xl lg:text-6xl font-serif font-bold mb-6 leading-tight">World's Best Recipes, <span class="text-[#d35400]">In Your Language.</span></h1>
         <p id="heroSub" class="text-gray-600 text-lg mb-8">Explore authentic recipes translated perfectly into your local tongue.</p>
@@ -41,27 +36,83 @@
         </div>
     </section>
 
-    <!-- RECIPE GRID -->
     <main id="recipeGrid" class="px-4 lg:px-12 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 w-full flex-grow"></main>
 
-    <!-- FOOTER -->
+    <div id="recipeModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl relative flex flex-col">
+            <button onclick="closeModal()" class="absolute top-4 right-4 bg-gray-100 hover:bg-gray-200 text-gray-700 w-10 h-10 rounded-full flex items-center justify-center z-10 transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="h-64 w-full overflow-hidden bg-gray-100 relative">
+                <img id="modalImage" class="w-full h-full object-cover" src="" alt="">
+                <div class="absolute bottom-4 left-4">
+                    <span id="modalCategory" class="text-xs font-bold text-white bg-[#d35400] px-3 py-1 rounded-full shadow-sm"></span>
+                </div>
+            </div>
+            <div class="p-6 lg:p-8 overflow-y-auto">
+                <h2 id="modalTitle" class="text-2xl lg:text-3xl font-serif font-bold mb-3"></h2>
+                <p id="modalDesc" class="text-gray-500 mb-6 border-b border-gray-100 pb-4"></p>
+                
+                <div class="grid grid-cols-2 gap-4 mb-6 bg-orange-50/50 p-4 rounded-2xl text-sm font-medium text-gray-700">
+                    <div><i class="fa-solid fa-clock text-[#d35400] mr-2"></i> <span id="modalTime"></span></div>
+                    <div class="text-right"><i class="fa-solid fa-layer-group text-[#d35400] mr-2"></i> <span id="modalDiff"></span></div>
+                </div>
+
+                <div class="mb-6">
+                    <h3 id="modalIngTitle" class="text-lg font-bold mb-3 text-[#d35400]"></h3>
+                    <ul id="modalIngredients" class="list-disc list-inside space-y-2 text-gray-600 text-sm pl-2"></ul>
+                </div>
+
+                <div>
+                    <h3 id="modalStepsTitle" class="text-lg font-bold mb-3 text-[#d35400]"></h3>
+                    <ol id="modalSteps" class="list-decimal list-inside space-y-3 text-gray-600 text-sm pl-2"></ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <footer class="bg-[#2c3e50] text-white/80 text-center py-6 border-t border-gray-800 mt-auto">
         <p class="text-sm font-medium">&copy; 2026 BabelBite. Powered by Passion.</p>
     </footer>
 
     <script>
-        // डेटा को सीधे यहीं रख दिया ताकि कोई नेटवर्क एरर कभी आ ही न सके!
+        // EXPANDED DATA SET WITH FULL RECIPES (INGREDIENTS & STEPS IN ALL LANGUAGES)
         const recipes = [
           {
             "category": "Indian Classics",
             "prep_time": "25 mins",
             "image": "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=600&q=80",
             "languages": {
-              "en": { "title": "Classic Butter Chicken", "desc": "A rich, creamy, and mildly spiced tomato curry.", "diff": "Medium" },
-              "hi": { "title": "क्लासिक बटर चिकन", "desc": "एक समृद्ध, मलाईदार और हल्के मसालों वाली टमाटर करी।", "diff": "मध्यम" },
-              "bn": { "title": "ক্লাসিক বাটার চিকেন", "desc": "একটি রিচ, ক্রিমি এবং হালকা মশলাযুক্ত টমেটো কারি।", "diff": "মাঝারি" },
-              "es": { "title": "Pollo a la Mantequilla", "desc": "Un curry de tomate rico, cremoso y ligeramente especiado.", "diff": "Medio" },
-              "ar": { "title": "دجاج بالزبدة الكلاسيكي", "desc": "كاري طماطم غني بالكريمة ومتبل خفيفاً.", "diff": "متوسط" }
+              "en": { 
+                "title": "Classic Butter Chicken", "desc": "A rich, creamy, and mildly spiced tomato curry.", "diff": "Medium",
+                "ingTitle": "Ingredients", "stepsTitle": "Cooking Steps",
+                "ingredients": ["500g Chicken", "2 cups Tomato Puree", "1 cup Fresh Cream", "2 tbsp Butter", "Spices (Garam Masala, Chili)"],
+                "steps": ["Marinate chicken with spices and yogurt for 30 mins.", "Pan-fry chicken until golden brown.", "Cook tomato puree with butter and spices.", "Add fried chicken and cream, simmer for 10 mins."]
+              },
+              "hi": { 
+                "title": "क्लासिक बटर चिकन", "desc": "एक समृद्ध, मलाईदार और हल्के मसालों वाली टमाटर करी।", "diff": "मध्यम",
+                "ingTitle": "सामग्री", "stepsTitle": "बनाने की विधि",
+                "ingredients": ["500 ग्राम चिकन", "2 कप टमाटर प्यूरी", "1 कप ताजी क्रीम", "2 चम्मच मक्खन", "मसाले (गरम मसाला, मिर्च)"],
+                "steps": ["चिकन को मसालों और दही के साथ 30 मिनट के लिए मैरीनेट करें।", "चिकन को सुनहरा होने तक पैन में फ्राई करें।", "टमाटर प्यूरी को मक्खन और मसालों के साथ पकाएं।", "तले हुए चिकन और क्रीम डालें, 10 मिनट तक धीमी आंच पर पकाएं।"]
+              },
+              "bn": { 
+                "title": "ক্লাসিক বাটার চিকেন", "desc": "একটি রিচ, ক্রিমি এবং হালকা মশলাযুক্ত টমেটো কারি।", "diff": "মাঝারি",
+                "ingTitle": "উপকরণ", "stepsTitle": "রান্নার ধাপ",
+                "ingredients": ["৫০০ গ্রাম মুরগির মাংস", "২ কাপ টমেটো পিউরি", "১ কাপ তাজা ক্রিম", "২ চামচ মাখন", "মশলা"],
+                "steps": ["মাংস মশলা ও দই দিয়ে ৩০ মিনিট ম্যারিনেট করুন।", "মাংস হালকা ভেজে নিন।", "মাখনে টমেটো পিউরি ও মশলা কষিয়ে নিন।", "মাংস ও ক্রিম দিয়ে ১০ মিনিট ফুটিয়ে নিন।"]
+              },
+              "es": { 
+                "title": "Pollo a la Mantequilla", "desc": "Un curry de tomate rico, cremoso y ligeramente especiado.", "diff": "Medio",
+                "ingTitle": "Ingredientes", "stepsTitle": "Pasos de Cocina",
+                "ingredients": ["500g de Pollo", "2 tazas de Puré de Tomate", "1 taza de Crema Fresca", "2 cucharadas de Mantequilla", "Especias"],
+                "steps": ["Marinar el pollo con especias durante 30 minutos.", "Freír el pollo hasta que esté dorado.", "Cocinar el puré de tomate con mantequilla.", "Agregar el pollo y la crema, cocinar a fuego lento por 10 min."]
+              },
+              "ar": { 
+                "title": "دجاج بالزبدة الكلاسيكي", "desc": "كاري طماطم غني بالكريمة ومتبل خفيفاً.", "diff": "متوسط",
+                "ingTitle": "المكونات", "stepsTitle": "خطوات الطبخ",
+                "ingredients": ["500 غرام دجاج", "2 كوب بيوريه طماطم", "1 كوب كريمة طازجة", "2 ملعقة زبدة", "بهارات"],
+                "steps": ["تبلي الدجاج بالبهارات واللبن لمدة 30 دقيقة.", "اقلي الدجاج حتى يصبح ذهبي اللون.", "اطهي بيوريه الطماطم مع الزبدة والبهارات.", "أضيفي الدجاج والمقرمشات والكريمة، واتركيه ينضج لمدة 10 دقائق."]
+              }
             }
           },
           {
@@ -69,11 +120,36 @@
             "prep_time": "20 mins",
             "image": "https://images.unsplash.com/photo-1625220194761-4601934988e0?auto=format&fit=crop&w=600&q=80",
             "languages": {
-              "en": { "title": "Steamed Momos", "desc": "Delicious dumplings stuffed with finely chopped vegetables.", "diff": "Easy" },
-              "hi": { "title": "स्टीम्ड मोमोज", "desc": "बारीक कटी सब्जियों से भरे हुए स्वादिष्ट डंपलिंग्स।", "diff": "आसान" },
-              "bn": { "title": "স্টিমড মোমো", "desc": "মিহি করে কাটা সবজি দিয়ে তৈরি সুস্বাদু ডাম্পলিং।", "diff": "সহজ" },
-              "es": { "title": "Momos al Vapor", "desc": "Deliciosas empanadillas rellenas de verduras picadas.", "diff": "Fácil" },
-              "ar": { "title": "موموس على البخار", "desc": "فطائر لذيذة محشوة بالخخضار المفروم فرماً ناعماً.", "diff": "سهل" }
+              "en": { 
+                "title": "Steamed Momos", "desc": "Delicious dumplings stuffed with finely chopped vegetables.", "diff": "Easy",
+                "ingTitle": "Ingredients", "stepsTitle": "Cooking Steps",
+                "ingredients": ["1 cup Maida (Flour)", "1 cup Chopped Cabbage & Carrot", "1 tbsp Ginger-Garlic paste", "Soy Sauce"],
+                "steps": ["Knead a soft dough with flour and water.", "Saute vegetables with ginger-garlic and soy sauce.", "Roll small discs, fill with veggies and shape them.", "Steam for 10-12 minutes until wrappers look translucent."]
+              },
+              "hi": { 
+                "title": "स्टीम्ड मोमोज", "desc": "बारीक कटी सब्जियों से भरे हुए स्वादिष्ट डंपलिंग्स।", "diff": "आसान",
+                "ingTitle": "सामग्री", "stepsTitle": "बनाने की विधि",
+                "ingredients": ["1 कप मैदा", "1 कप कटी हुई पत्तागोभी और गाजर", "1 चम्मच अदरक-लहसुन पेस्ट", "सोया सॉस"],
+                "steps": ["मैदा और पानी के साथ एक नरम आटा गूंध लें।", "अदरक-لहसुन और सोया सॉस के साथ सब्जियों को भूनें।", "छोटी पूरियां बेलें, सब्जियां भरें और उन्हें आकार दें।", "10-12 मिनट के लिए स्टीम करें।"]
+              },
+              "bn": { 
+                "title": "স্টিমড মোমো", "desc": "মিহি করে কাটা সবজি দিয়ে তৈরি সুস্বাদু ডাম্পলিং।", "diff": "সহজ",
+                "ingTitle": "উপকরণ", "stepsTitle": "রান্নার ধাপ",
+                "ingredients": ["১ কাপ ময়দা", "১ কাপ কুচানো বাঁধাকপি ও গাজর", "১ চামচ আদা-রসুন বাটা", "সয়া সস"],
+                "steps": ["ময়দা মেখে নরম ডো তৈরি করুন।", "সবজিগুলো আদা-রসুন ও সয়া সস দিয়ে হালকা নেড়ে নিন।", "ছোট লেচি কেটে সবজি ভরে মোমোর আকার দিন।", "১০-১২ মিনিট স্টিম বা ভাপে রান্না করুন।"]
+              },
+              "es": { 
+                "title": "Momos al Vapor", "desc": "Deliciosas empanadillas rellenas de verduras picadas.", "diff": "Fácil",
+                "ingTitle": "Ingredientes", "stepsTitle": "Pasos",
+                "ingredients": ["1 taza de Harina", "1 taza de Repollo y Zanahoria", "1 cucharada de Jengibre y Ajo", "Salsa de Soya"],
+                "steps": ["Amasar la harina con agua.", "Saltear las verduras con jengibre, ajo y soya.", "Hacer discos pequeños, rellenar y dar forma.", "Cocinar al vapor durante 10-12 minutos."]
+              },
+              "ar": { 
+                "title": "موموس على البخار", "desc": "فطائر لذيذة محشوة بالخضار المفروم فرماً ناعماً.", "diff": "سهل",
+                "ingTitle": "المكونات", "stepsTitle": "الخطوات",
+                "ingredients": ["1 كوب دقيق", "1 كوب ملفوف وجزر مفروم", "1 ملعقة معجون زنجبيل وثوم", "صلصة الصويا"],
+                "steps": ["اعجني الدقيق بالماء للحصول على عجينة ناعمة.", "شوّحي الخضار مع الزنجبيل والثوم والصويا.", "شكلي العجينة على هيئة أقراص صغيرة واحشيها.", "اطهيها على البخار لمدة 10-12 دقيقة."]
+              }
             }
           },
           {
@@ -81,103 +157,99 @@
             "prep_time": "45 mins",
             "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80",
             "languages": {
-              "en": { "title": "Hyderabadi Biryani", "desc": "Fragrant basmati rice layered with spiced marinated ingredients.", "diff": "Hard" },
-              "hi": { "title": "हैदराबादी बिरयानी", "desc": "मसालेदार मैरीनेट की गई सामग्रियों के साथ सुगंधित बासमती चावल।", "diff": "कठिन" },
-              "bn": { "title": "হায়দ্রাবাদি বিরিয়ানি", "desc": "সুগন্ধি বাসমতি চাল এবং মশলাদার ম্যারিনেট করা উপাদানের স্তর।", "diff": "কঠิน" },
-              "es": { "title": "Biryani de Hyderabadi", "desc": "Arroz basmati aromático cocinado con especias finas.", "diff": "Difícil" },
-              "ar": { "title": "بريانى حيدر أباد", "desc": "أرز بسمتي عطري مطبوخ مع التوابل الفاخرة.", "diff": "صعب" }
+              "en": { 
+                "title": "Hyderabadi Biryani", "desc": "Fragrant basmati rice layered with spiced marinated ingredients.", "diff": "Hard",
+                "ingTitle": "Ingredients", "stepsTitle": "Cooking Steps",
+                "ingredients": ["2 cups Basmati Rice", "300g Chicken/Paneer", "1 cup Fried Onions", "Mint & Coriander", "Biryani Masala"],
+                "steps": ["Boil rice till 70% cooked.", "Marinate chicken/paneer with yogurt and biryani masala.", "Layer the marinated mix and rice in a heavy pot.", "Top with fried onions, mint, and seal the pot. Cook on low heat (Dum) for 25 mins."]
+              },
+              "hi": { 
+                "title": "हैदराबादी बिरयानी", "desc": "मसालेदार मैरीनेट की गई सामग्रियों के साथ सुगंधित बासमती चावल।", "diff": "कठिन",
+                "ingTitle": "सामग्री", "stepsTitle": "बनाने की विधि",
+                "ingredients": ["2 कप बासमती चावल", "300 ग्राम चिकन/पनीर", "1 कप तली हुई प्याज", "पुदीना और धनिया", "बिरयानी मसाला"],
+                "steps": ["चावल को 70% पकने तक उबालें।", "दही और बिरयानी मसाले के साथ चिकन/पनीर को मैरीनेट करें।", "एक भारी बर्तन में मैरीनेटेड मिक्स और चावल की परतें लगाएं।", "तली हुई प्याज, पुदीना डालें और बर्तन को सील कर 25 मिनट धीमी आंच पर पकाएं।"]
+              },
+              "bn": { 
+                "title": "হায়দ্রাবাদি বিরিয়ানি", "desc": "সুগন্ধি বাসমতি চাল এবং মশলাদার ম্যারিনেট করা উপাদানের স্তর।", "diff": "কঠิน",
+                "ingTitle": "উপকরণ", "stepsTitle": "রান্নার ধাপ",
+                "ingredients": ["২ কাপ বাসমতি চাল", "৩০০ গ্রাম মাংস/পনির", "১ কাপ বেরেস্তা", "পুদিনা ও ধনেপাতা", "বিরিয়ানি মশলা"],
+                "steps": ["চাল ৭০% সেদ্ধ করে জল ঝরিয়ে নিন।", "দই ও মশলা দিয়ে মাংস ম্যারিনেট করুন।", "হাঁড়িতে প্রথমে মাংস ও পরে চালের স্তর সাজান।", "ওপরে বেরেস্তা, পুদিনা দিয়ে হাঁড়ির মুখ বন্ধ করে ২৫ মিনিট দমে রাখুন।"]
+              },
+              "es": { 
+                "title": "Biryani de Hyderabadi", "desc": "Arroz basmati aromático cocinado con especias finas.", "diff": "Difícil",
+                "ingTitle": "Ingredientes", "stepsTitle": "Pasos",
+                "ingredients": ["2 tazas de Arroz Basmati", "300g de Pollo/Paneer", "1 taza de Cebolla Frita", "Especias Biryani"],
+                "steps": ["Hervir el arroz hasta que esté 70% cocido.", "Marinar el ingrediente principal con yogur y especias.", "Hacer capas de arroz y mezcla en una olla.", "Cocinar a fuego muy bajo (Dum) durante 25 minutos."]
+              },
+              "ar": { 
+                "title": "بريانى حيدر أباد", "desc": "أرز بسمتي عطري مطبوخ مع التوابل الفاخرة.", "diff": "صعب",
+                "ingTitle": "المكونات", "stepsTitle": "الخطوات",
+                "ingredients": ["2 كوب أرز بسمتي", "300 غرام دجاج/بانير", "1 كوب بصل مقلي", "بهارات البرياني"],
+                "steps": ["اسلقي الأرز حتى ينضج بنسبة 70%.", "تبلي الدجاج بالزبادي وبهارات البرياني.", "ضعي طبقات من المزيج والأرز في قدر سميك.", "غطي القدر بإحكام واطهيه على نار هادئة جداً لمدة 25 دقيقة."]
+              }
             }
           },
           {
-            "category": "Italian",
-            "prep_time": "15 mins",
-            "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80",
-            "languages": {
-              "en": { "title": "Margherita Pizza", "desc": "Classic pizza topped with fresh mozzarella and basil leaves.", "diff": "Easy" },
-              "hi": { "title": "मार्गरीटा पिज्जा", "desc": "ताजा मोज़ारेला चीज़ और तुलसी के पत्तों से सजा क्लासिक पिज्जा।", "diff": "आसान" },
-              "bn": { "title": "মার্গারিটা পিৎজা", "desc": "তাজা মোজারেলা চিজ এবং তুলসী পাতা দিয়ে তৈরি ক্লাসিক পিৎজা।", "diff": "সহজ" },
-              "es": { "title": "Pizza Margherita", "desc": "Pizza clásica cubierta con mozzarella fresca y albahaca.", "diff": "Fácil" },
-              "ar": { "title": "بيتزا مارغريتا", "desc": "بيتزا كلاسيكية مغطاة بجبنة الموزاريلا الطازجة وأوراق الريحان.", "diff": "سهل" }
-            }
-          },
-          {
-            "category": "Desserts",
+            "category": "South Indian",
             "prep_time": "30 mins",
-            "image": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80",
+            "image": "https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=600&q=80",
             "languages": {
-              "en": { "title": "Chocolate Brownie", "desc": "Fudgy and rich chocolate cake bars served warm.", "diff": "Easy" },
-              "hi": { "title": "चॉकलेट ब्राउनी", "desc": "गरमागरम परोसी जाने वाली मखमली and भरपूर चॉकलेट केक बार्स।", "diff": "आसान" },
-              "bn": { "title": "চকলেট ব্রাউনি", "desc": "গরম গরম পরিবেশন করা রিচ চকোলেট কেক বার।", "diff": "সহজ" },
-              "es": { "title": "Brownie de Chocolate", "desc": "Bizcocho de chocolate denso y delicioso servido caliente.", "diff": "Fácil" },
-              "ar": { "title": "براوني الشوكولاتة", "desc": "قطع كعكة الشوكولاتة الغنية والدافئة.", "diff": "سهل" }
+              "en": { 
+                "title": "Crispy Masala Dosa", "desc": "Thin rice crepes filled with a delicious spiced potato mash.", "diff": "Medium",
+                "ingTitle": "Ingredients", "stepsTitle": "Cooking Steps",
+                "ingredients": ["2 cups Dosa Batter", "3 Boiled Potatoes", "1 Onion sliced", "Mustard seeds & Curry leaves", "Turmeric powder"],
+                "steps": ["Mash potatoes. Saute onions, mustard seeds, curry leaves, and turmeric; add potatoes.", "Heat a non-stick tawa, spread dosa batter in a thin circle.", "Add butter/oil till crispy, place potato filling inside, roll and serve."]
+              },
+              "hi": { 
+                "title": "कुरकुरा मसाला डोसा", "desc": "स्वादिष्ट मसालेदार आलू के मिश्रण से भरा पतला चावल का क्रेप।", "diff": "मध्यम",
+                "ingTitle": "सामग्री", "stepsTitle": "बनाने की विधि",
+                "ingredients": ["2 कप डोसा बैटर", "3 उबले आलू", "1 कटा हुआ प्याज", "राई और कढ़ी पत्ता", "हल्दी पाउडर"],
+                "steps": ["आलू को मैश करें। प्याज, राई, कढ़ी पत्ता और हल्दी भूनें, फिर आलू मिलाएं।", "नॉन-स्टिक तवा गर्म करें, डोसा बैटर को पतले गोल आकार में फैलाएं।", "कुरकुरा होने तक तेल/मक्खन लगाएं, बीच में आलू का मसाला रखें, रोल करके परोसें।"]
+              },
+              "bn": { 
+                "title": "মুচমুচে মশলা দোসা", "desc": "মশলাদার আলুর পুর দেওয়া চালের গুঁড়োর তৈরি পাতলা ক্রেপ।", "diff": "মাঝারি",
+                "ingTitle": "উপকরণ", "stepsTitle": "রান্নার ধাপ",
+                "ingredients": ["২ কাপ দোসার ব্যাটার", "৩টি সেদ্ধ আলু", "১টি পেঁয়াজ কুচি", "সর্ষে ও কারিপাতা", "হলুদ গুঁড়ো"],
+                "steps": ["আলু সেদ্ধ চটকে নিন। পেঁয়াজ, সর্ষে, কারিপাতা ও হলুদ দিয়ে আলু কষিয়ে পুর বানান।", "তাওয়া গরম করে দোসার ব্যাটার গোল করে পাতলা করে ছড়িয়ে দিন।", "মুচমুचे হলে মাঝখানে আলুর পুর দিয়ে মুড়িয়ে নামিয়ে নিন।"]
+              },
+              "es": { 
+                "title": "Masala Dosa Crujiente", "desc": "Crepes de arroz finos rellenos de un delicioso puré de patatas picante.", "diff": "Medio",
+                "ingTitle": "Ingredientes", "stepsTitle": "Pasos",
+                "ingredients": ["2 tazas de masa de Dosa", "3 patatas cocidas", "1 cebolla", "Mostaza y hojas de curry"],
+                "steps": ["Hacer el relleno de patata salteando con cebolla y especias.", "Calentar una sartén, extender la masa en un círculo fino.", "Cocinar hasta que esté crujiente, poner el relleno y enrollar."]
+              },
+              "ar": { 
+                "title": "ماسالا دوسا المقرمشة", "desc": "كريب أرز رقيق محشو ببطاطس مهروسة متبلة ولذيذة.", "diff": "متوسط",
+                "ingTitle": "المكونات", "stepsTitle": "الخطوات",
+                "ingredients": ["2 كوب عجين الدوسا", "3 حبات بطاطس مسلوقة", "1 بصلة مقطعة", "خردل وأوراق كاري"],
+                "steps": ["اهرسي البطاطس واطهيها مع البصل والخردل وأوراق الكاري والتوابل.", "سخني المقلاة وافردي العجين بشكل دائري رقيق.", "اطهيها حتى تقرمش، ثم ضعي حشوة البطاطس بالداخل ولفيها."]
+              }
             }
-          }
-        ];
-
-        let currentLang = 'en';
-
-        const metaData = {
-            en: { title: "World's Best Recipes, <span class='text-[#d35400]'>In Your Language.</span>", sub: "Explore authentic recipes translated perfectly into your local tongue.", search: "Search recipes..." },
-            hi: { title: "दुनिया की बेहतरीन रेसिपीज़, <span class='text-[#d35400]'>आपकी अपनी भाषा में।</span>", sub: "दुनिया भर से चुनिंदा रेसिपीज़ का अन्वेषण करें जो आपकी मातृभाषा में हैं।", search: "रेसिपी खोजें..." },
-            bn: { title: "বিশ্বের সেরা সব রেসিপি, <span class='text-[#d35400]'>আপনার নিজের ভাষায়।</span>", sub: "বিশ্বের দরবার থেকে বেছে নেওয়া খাঁটি রেসিপিগুলি নিজের ভাষায় দেখুন।", search: "রেসিপি খুঁজুন..." },
-            es: { title: "Las mejores recetas, <span class='text-[#d35400]'>en tu idioma.</span>", sub: "Explore recetas auténticas traducidas a su lengua materna.", search: "Buscar..." },
-            ar: { title: "أفضل الوصفات العالمية، <span class='text-[#d35400]'>بلغتك الخاصة.</span>", sub: "استكشف وصفات أصلية ومترجمة إلى لغتك المحلية تمامًا.", search: "بحث..." }
-        };
-
-        function render() {
-            document.getElementById('heroTitle').innerHTML = metaData[currentLang].title;
-            document.getElementById('heroSub').innerText = metaData[currentLang].sub;
-            document.getElementById('search').placeholder = metaData[currentLang].search;
-            document.body.style.direction = currentLang === 'ar' ? 'rtl' : 'ltr';
-
-            const searchValue = document.getElementById('search').value.toLowerCase();
-            const grid = document.getElementById('recipeGrid');
-            grid.innerHTML = '';
+          },
+          {
+            "category": "Mexican",
+            "prep_time": "15 mins",
+            "image": "https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=600&q=80",
+            "languages": {
+              "en": { 
+                "title": "Authentic Soft Tacos", "desc": "Corn tortillas loaded with fresh salsa and savory fillings.", "diff": "Easy",
+                "ingTitle": "Ingredients", "stepsTitle": "Cooking Steps",
+                "ingredients": ["4 Corn Tortillas", "1 cup Chopped Veggies/Meat", "1/2 cup Fresh Salsa", "Cheese", "Lemon & Coriander"],
+                "steps": ["Warm the tortillas on a pan for 30 seconds.", "Fill with your favorite grilled veggies or cooked meat.", "Top with fresh tomato salsa, cheese, and a squeeze of lime."]
+              },
+              "hi": { 
+                "title": "असली मैक्सिकन टैकोस", "desc": "ताज़ा साल्सा और स्वादिष्ट स्टफिंग से भरे कॉर्न टॉर्टिला।", "diff": "आसान",
+                "ingTitle": "सामग्री", "stepsTitle": "बनाने की विधि",
+                "ingredients": ["4 कॉर्न टॉर्टिला", "1 कप कटी सब्जियां/मीट", "1/2 कप ताजा साल्सा", "चीज़", "नींबू और धनिया"],
+                "steps": ["टॉर्टिला को तवे पर 30 सेकंड के लिए गर्म करें।", "अपनी पसंदीदा ग्रिल्ड सब्जियां या पका हुआ मीट भरें।", "ऊपर से ताजा टमाटर का साल्सा, चीज़ और नींबू निचोड़कर परोसें।"]
+              },
+              "bn": { 
+                "title": "মেক্সিকান ট্যাকোস", "desc": "তাজা সালসা এবং সুস্বাদু পুরে ঠাসা কর্ন টরটিলা।", "diff": "সহজ",
+                "ingTitle": "উপকরণ", "stepsTitle": "রান্নার ধাপ",
+                "ingredients": ["৪টি টরটিলা", "১ কাপ সবজি/মাংসের পুর", "১/2 কাপ তাজা সালসা", "চিজ", "লেবু ও ধনেপাতা"],
+                "steps": ["টরটিলাগুলো তাওয়ায় ৩০ সেকেন্ড গরম করে নিন।", "ভেতরে গ্রিল করা সবজি বা মাংসের পুর দিন।", "ওপরে তাজা সালসা ও চিজ ছড়িয়ে লেবুর রস দিয়ে পরিবেশন করুন।"]
+              },
+              "es": { 
+                "title": "Tacos Blandos Auténticos", "desc": "Tortillas de maíz cargadas con salsa fresca y rellenos sabrosos.", "diff": "Fácil",
+                "ingTitle": "Ingredientes", "stepsTitle": "Pasos",
             
-            const filteredRecipes = recipes.filter(recipe => {
-                const langData = recipe.languages[currentLang];
-                return langData.title.toLowerCase().includes(searchValue) || 
-                       langData.desc.toLowerCase().includes(searchValue) ||
-                       recipe.category.toLowerCase().includes(searchValue);
-            });
-
-            if(filteredRecipes.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-12 text-gray-400">No recipes found for "${searchValue}"</div>`;
-                return;
-            }
-
-            filteredRecipes.forEach(recipe => {
-                const langData = recipe.languages[currentLang];
-                grid.innerHTML += `
-                    <div class="bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition-shadow">
-                        <div>
-                            <div class="h-48 overflow-hidden bg-gray-100">
-                                <img src="${recipe.image}" class="w-full h-full object-cover" alt="${langData.title}">
-                            </div>
-                            <div class="p-6">
-                                <span class="text-xs font-bold text-[#d35400] bg-orange-50 px-3 py-1 rounded-full">${recipe.category}</span>
-                                <h3 class="text-xl font-bold mt-3 mb-1">${langData.title}</h3>
-                                <p class="text-gray-500 text-sm font-normal">${langData.desc}</p>
-                            </div>
-                        </div>
-                        <div class="px-6 pb-6 pt-4 border-t border-gray-50 flex justify-between text-xs text-gray-400">
-                            <span><i class="fa-solid fa-clock"></i> ${recipe.prep_time}</span>
-                            <span>${langData.diff}</span>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        document.getElementById('search').addEventListener('input', render);
-
-        document.getElementById('langSelect').addEventListener('change', (e) => {
-            currentLang = e.target.value;
-            render();
-        });
-
-        // तुरंत बिना किसी कनेक्शन के रेंडर करें
-        render();
-    </script>
-</body>
-</html>
