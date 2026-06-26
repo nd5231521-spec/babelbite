@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BabelBite - Global Recipes</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #faf6ee; color: #2c3e50; }
+        .font-serif { font-family: 'Playfair Display', serif; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- NAVBAR -->
+    <header class="p-4 lg:px-12 bg-[#faf6ee]/90 backdrop-blur-md border-b border-[#d35400]/10 flex justify-between items-center sticky top-0 z-50">
+        <span class="text-2xl font-serif font-bold text-[#d35400] tracking-wide">BabelBite</span>
+        <select id="langSelect" class="bg-white border border-[#d35400]/20 px-4 py-2 rounded-full text-sm font-medium cursor-pointer focus:outline-none shadow-sm">
+            <option value="en">English 🇬🇧</option>
+            <option value="hi">हिन्दी 🇮🇳</option>
+            <option value="bn">বাংলা 🇧🇩</option>
+            <option value="es">Español 🇪🇸</option>
+            <option value="ar">العربية 🇦🇪</option>
+        </select>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="text-center py-16 px-4 max-w-4xl mx-auto">
+        <h1 id="heroTitle" class="text-4xl lg:text-6xl font-serif font-bold mb-6 leading-tight">World's Best Recipes, <span class="text-[#d35400]">In Your Language.</span></h1>
+        <p id="heroSub" class="text-gray-600 text-lg mb-8">Explore authentic recipes translated perfectly into your local tongue.</p>
+        <div class="relative max-w-xl mx-auto">
+            <input type="text" id="search" placeholder="Search recipes..." class="w-full bg-white rounded-full pl-6 pr-12 py-3 shadow-sm border border-gray-200 focus:outline-none focus:border-[#d35400] transition-colors">
+            <i class="fa-solid fa-magnifying-glass absolute right-5 top-4 text-gray-400"></i>
+        </div>
+    </section>
+
+    <!-- RECIPE GRID -->
+    <main id="recipeGrid" class="px-4 lg:px-12 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 w-full flex-grow"></main>
+
+    <!-- FOOTER -->
+    <footer class="bg-[#2c3e50] text-white/80 text-center py-6 border-t border-gray-800 mt-auto">
+        <p class="text-sm font-medium">&copy; 2026 BabelBite. Powered by Passion.</p>
+    </footer>
+
+    <script>
+        const recipes = [
+          {
+            category: "Indian Classics",
+            prep_time: "25 mins",
+            icon: "fa-utensils",
+            languages: {
+              en: { title: "Classic Butter Chicken", desc: "A rich, creamy, and mildly spiced tomato curry.", diff: "Medium" },
+              hi: { title: "क्लासिक बटर चिकन", desc: "एक समृद्ध, मलाईदार और हल्के मसालों वाली टमाटर करी।", diff: "मध्यम" },
+              bn: { title: "ক্লাসিক বাটার চিকেন", desc: "একটি রিচ, ক্রিমি এবং হালকা মশলাযুক্ত টমেটো কারি।", diff: "মাঝারি" },
+              es: { title: "Pollo a la Mantequilla", desc: "Un curry de tomate rico, cremoso y ligeramente especiado.", diff: "Medio" },
+              ar: { title: "دجاج بالزبدة الكلاسيكي", desc: "كاري طماطم غني بالكريمة ومتبل خفيفاً.", diff: "متوسط" }
+            }
+          },
+          {
+            category: "Desserts",
+            prep_time: "15 mins",
+            icon: "fa-ice-cream",
+            languages: {
+              en: { title: "Mango Shrikhand", desc: "A creamy Indian dessert made with strained yogurt and mango pulp.", diff: "Easy" },
+              hi: { title: "मैंगो श्रीखंड", desc: "छने हुए दही और आम के गूदे से बनी एक मलाईदार भारतीय मिठाई।", diff: "आसान" },
+              bn: { title: "ম্যাঙ্গো শ্রীখণ্ড", desc: "জল ঝরানো দই এবং আমের পাল্প দিয়ে তৈরি একটি ক্রিमी মিষ্টি।", diff: "সহজ" },
+              es: { title: "Shrikhand de Mango", desc: "Un postre indio cremoso hecho con yogur colado y pulpa de mango.", diff: "Fácil" },
+              ar: { title: "شريخاند المانجو", desc: "حلوى هندية كريمية مصنوعة من اللبن المصفى ولب المانجو.", diff: "سهل" }
+            }
+          }
+        ];
+
+        let currentLang = 'en';
+
+        const metaData = {
+            en: { title: "World's Best Recipes, <span class='text-[#d35400]'>In Your Language.</span>", sub: "Explore authentic recipes translated perfectly into your local tongue.", search: "Search recipes..." },
+            hi: { title: "दुनिया की बेहतरीन रेसिपीज़, <span class='text-[#d35400]'>आपकी अपनी भाषा में।</span>", sub: "दुनिया भर से चुनिंदा रेसिपीज़ का अन्वेषण करें जो आपकी मातृभाषा में हैं।", search: "रेसिपी खोजें..." },
+            bn: { title: "বিশ্বের সেরা সব রেসিپی, <span class='text-[#d35400]'>আপনার নিজের ভাষায়।</span>", sub: "বিশ্বের দরবার থেকে বেছে নেওয়া খাঁটি রেসিপিগুলি নিজের ভাষায় দেখুন।", search: "রেसिপি খুঁজুন..." },
+            es: { title: "Las mejores recetas, <span class='text-[#d35400]'>en tu idioma.</span>", sub: "Explore recetas auténticas traducidas a su lengua materna.", search: "Buscar..." },
+            ar: { title: "أفضل الوصفات العالمية، <span class='text-[#d35400]'>بلغتك الخاصة.</span>", sub: "استكشف وصفات أصلية ومترجمة إلى لغتك المحلية تمامًا.", search: "بحث..." }
+        };
+
+        function render() {
+            document.getElementById('heroTitle').innerHTML = metaData[currentLang].title;
+            document.getElementById('heroSub').innerText = metaData[currentLang].sub;
+            document.getElementById('search').placeholder = metaData[currentLang].search;
+            document.body.style.direction = currentLang === 'ar' ? 'rtl' : 'ltr';
+
+            const grid = document.getElementById('recipeGrid');
+            grid.innerHTML = '';
+            
+            recipes.forEach(recipe => {
+                const langData = recipe.languages[currentLang];
+                grid.innerHTML += `
+                    <div class="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 flex flex-col justify-between hover:shadow-md transition-shadow">
+                        <div>
+                            <div class="h-40 bg-[#d35400]/5 rounded-2xl flex items-center justify-center mb-4">
+                                <i class="fa-solid ${recipe.icon} text-4xl text-[#d35400]"></i>
+                            </div>
+                            <span class="text-xs font-bold text-[#d35400] bg-orange-50 px-3 py-1 rounded-full">${recipe.category}</span>
+                            <h3 class="text-xl font-bold mt-2 mb-1">${langData.title}</h3>
+                            <p class="text-gray-500 text-sm">${langData.desc}</p>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-50 flex justify-between text-xs text-gray-400">
+                            <span><i class="fa-solid fa-clock"></i> ${recipe.prep_time}</span>
+                            <span>${langData.diff}</span>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        document.getElementById('langSelect').addEventListener('change', (e) => {
+            currentLang = e.target.value;
+            render();
+        });
+
+        render();
+    </script>
+</body>
+  </html>
+
