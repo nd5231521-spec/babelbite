@@ -1,0 +1,63 @@
+[
+  {
+    "category": "Indian Classics",
+    "prep_time": "25 mins",
+    "image": "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=600&q=80",
+    "languages": {
+      "en": { "title": "Classic Butter Chicken", "desc": "A rich, creamy, and mildly spiced tomato curry.", "diff": "Medium" },
+      "hi": { "title": "क्लासिक बटर चिकन", "desc": "एक समृद्ध, मलाईदार और हल्के मसालों वाली टमाटर करी।", "diff": "मध्यम" },
+      "bn": { "title": "ক্লাসিক বাটার চিকেন", "desc": "একটি রিচ, ক্রিমি এবং হালকা মশলাযুক্ত টমেটো কারি।", "diff": "মাঝারি" },
+      "es": { "title": "Pollo a la Mantequilla", "desc": "Un curry de tomate rico, cremoso y ligeramente especiado.", "diff": "Medio" },
+      "ar": { "title": "دجاج بالزبدة الكلاسيكي", "desc": "كاري طماطم غني بالكريمة ومتبل خفيفاً.", "diff": "متوسط" }
+    }
+  },
+  {
+    "category": "Street Food",
+    "prep_time": "20 mins",
+    "image": "https://images.unsplash.com/photo-1625220194761-4601934988e0?auto=format&fit=crop&w=600&q=80",
+    "languages": {
+      "en": { "title": "Steamed Momos", "desc": "Delicious dumplings stuffed with finely chopped vegetables.", "diff": "Easy" },
+      "hi": { "title": "स्टीम्ड मोमोज", "desc": "बारीक कटी सब्जियों से भरे हुए स्वादिष्ट डंपलिंग्स।", "diff": "आसान" },
+      "bn": { "title": "স্টিমড মোমো", "desc": "মিহি করে কাটা সবজি দিয়ে তৈরি সুস্বাদু ডাম্পলিং।", "diff": "সহজ" },
+      "es": { "title": "Momos al Vapor", "desc": "Deliciosas empanadillas rellenas de verduras picadas.", "diff": "Fácil" },
+      "ar": { "title": "موموس على البخار", "desc": "فطائر لذيذة محشوة بالخخضار المفروم فرماً ناعماً.", "diff": "سهل" }
+    }
+  },
+  {
+    "category": "Royal Course",
+    "prep_time": "45 mins",
+    "image": "https://images.unsplash.com/photo-1563379091339-03b21ab4a4f8?auto=format&fit=crop&w=600&q=80",
+    "languages": {
+      "en": { "title": "Hyderabadi Biryani", "desc": "Fragrant basmati rice layered with spiced marinated ingredients.", "diff": "Hard" },
+      "hi": { "title": "हैदराबादी बिरयानी", desc: "मसालेदार मैरीनेट की गई सामग्रियों के साथ सुगंधित बासमती चावल।", "diff": "कठिन" },
+      "bn": { "title": "হায়দ্রাবাদি বিরিয়ানি", "desc": "সুগন্ধি বাসমতি চাল এবং মশলাদার ম্যারিনেট করা উপাদানের স্তর।", "diff": "কঠิน" },
+      "es": { "title": "Biryani de Hyderabadi", "desc": "Arroz basmati aromático cocinado con especias finas.", "diff": "Difícil" },
+      "ar": { "title": "بريانى حيدر أباد", "desc": "أرز بسمتي عطري مطبوخ مع التوابل الفاخرة.", "diff": "صعب" }
+    }
+  },
+  {
+    "category": "Italian",
+    "prep_time": "15 mins",
+    "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80",
+    "languages": {
+      "en": { "title": "Margherita Pizza", "desc": "Classic pizza topped with fresh mozzarella and basil leaves.", "diff": "Easy" },
+      "hi": { "title": "मार्गरीटा पिज्जा", "desc": "ताजा मोज़ारेला चीज़ और तुलसी के पत्तों से सजा क्लासिक पिज्जा।", "diff": "आसान" },
+      "bn": { "title": "মার্গারিটা পিৎজা", "desc": "তাজা মোজারেলা চিজ এবং তুলসী পাতা দিয়ে তৈরি ক্লাসিক পিৎজা।", "diff": "সহজ" },
+      "es": { "title": "Pizza Margherita", "desc": "Pizza clásica cubierta con mozzarella fresca y albahaca.", "diff": "Fácil" },
+      "ar": { "title": "بيتزا مارغريتا", "desc": "بيتزا كلاسيكية مغطاة بجبنة الموزاريلا الطازجة وأوراق الريحان.", "diff": "سهل" }
+    }
+  },
+  {
+    "category": "Desserts",
+    "prep_time": "30 mins",
+    "image": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80",
+    "languages": {
+      "en": { "title": "Chocolate Brownie", "desc": "Fudgy and rich chocolate cake bars served warm.", "diff": "Easy" },
+      "hi": { "title": "चॉकलेट ब्राउनी", "desc": "गरमागरम परोसी जाने वाली मखमली और भरपूर चॉकलेट केक बार्स।", "diff": "आसान" },
+      "bn": { "title": "চকলেট ব্রাউনি", "desc": "গরম গরম পরিবেশন করা রিচ চকোলেট কেক বার।", "diff": "সহজ" },
+      "es": { "title": "Brownie de Chocolate", "desc": "Bizcocho de chocolate denso y delicioso servido caliente.", "diff": "Fácil" },
+      "ar": { "title": "براوني الشوكولاتة", "desc": "قطع كعكة الشوكولاتة الغنية والدافئة.", "diff": "سهل" }
+    }
+  }
+]
+
