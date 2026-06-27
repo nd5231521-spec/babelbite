@@ -3,259 +3,605 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BabelBite - Global Recipes</title>
+    <title>BabelBite - Premium Global Recipes</title>
+    
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: #faf6ee;
             color: #2c3e50;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         .font-serif {
             font-family: 'Playfair Display', serif;
         }
+        /* Custom Smooth Transitions */
+        .premium-card {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+        }
+        .premium-card:hover {
+            transform: translateY(-6px);
+        }
+        /* Hide scrollbars but keep functionality */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Dark Mode overrides */
+        .dark body {
+            background-color: #121212;
+            color: #f3f4f6;
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col antialiased">
 
-    <header class="p-4 lg:px-12 bg-[#faf6ee]/80 backdrop-blur-md border-b border-[#2c3e50]/10 flex justify-between items-center sticky top-0 z-40">
-        <span class="text-2xl font-serif font-bold text-[#d53400] tracking-wide">BabelBite</span>
-        <select id="langSelect" class="bg-white border border-[#2c3e50]/20 px-4 py-2 rounded-full text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#d53400]">
-            <option value="en">English 🇬🇧</option>
-            <option value="hi">हिन्दी 🇮🇳</option>
-            <option value="bn">বাংলা 🇧🇩</option>
-            <option value="es">Español 🇪🇸</option>
-            <option value="ar">العربية 🇦🇪</option>
-        </select>
+    <header class="sticky top-0 z-40 backdrop-blur-md bg-[#faf6ee]/80 dark:bg-[#121212]/80 border-b border-[#2c3e50]/10 dark:border-gray-800 transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <span class="text-2xl font-serif font-bold tracking-wide text-amber-700 dark:text-amber-500 cursor-pointer" onclick="resetFilters()">BabelBite</span>
+            
+            <div class="flex items-center gap-4">
+                <button id="darkModeToggle" class="p-2.5 rounded-full hover:bg-gray-200/50 dark:hover:bg-gray-800 text-[#2c3e50] dark:text-gray-300 transition-all">
+                    <i class="fa-solid fa-moon text-lg dark:hidden"></i>
+                    <i class="fa-solid fa-sun text-lg hidden dark:block"></i>
+                </button>
+
+                <button id="favFilterBtn" onclick="toggleFavFilter()" class="relative p-2.5 rounded-full hover:bg-red-50 dark:hover:bg-red-950/30 text-gray-400 transition-all">
+                    <i id="favFilterIcon" class="fa-regular fa-heart text-xl"></i>
+                    <span id="favCountBadge" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full hidden">0</span>
+                </button>
+
+                <div class="relative">
+                    <select id="langSelect" onchange="changeLanguage(this.value)" class="appearance-none bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 pl-4 pr-10 py-2 rounded-full text-sm font-medium focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm cursor-pointer dark:text-white transition-all">
+                        <option value="en">English 🇬🇧</option>
+                        <option value="hi">हिन्दी 🇮🇳</option>
+                        <option value="es">Español 🇪🇸</option>
+                    </select>
+                    <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-500">
+                        <i class="fa-solid fa-chevron-down text-xs"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
     </header>
 
-    <section class="text-center py-16 px-4 max-w-4xl mx-auto">
-        <h1 id="heroTitle" class="text-4xl lg:text-6xl font-serif font-bold mb-6 leading-tight">
-            World's Best Recipes, <span class="text-[#d53400]">In Your Language.</span>
+    <section class="max-w-4xl mx-auto px-4 pt-12 pb-6 text-center">
+        <h1 id="heroTitle" class="text-4xl sm:text-5xl font-serif font-bold text-gray-900 dark:text-white leading-tight transition-all">
+            World's Best Recipes, <span class="text-amber-700 dark:text-amber-500">In Your Language.</span>
         </h1>
-        <p id="heroSub" class="text-gray-600 text-base lg:text-lg mb-8 max-w-2xl mx-auto">
+        <p id="heroSub" class="text-gray-600 dark:text-gray-400 mt-4 text-base sm:text-lg max-w-2xl mx-auto">
             Explore authentic recipes translated perfectly into your local tongue with complete professional cooking guides.
         </p>
-        <div class="relative max-w-xl mx-auto">
-            <input type="text" id="search" placeholder="Search recipes by name, ingredient or category..." class="w-full bg-white rounded-full pl-6 pr-12 py-4 border border-gray-200 shadow-sm focus:outline-none focus:border-[#d53400] focus:ring-1 focus:ring-[#d53400] text-sm">
-            <i class="fa-solid fa-magnifying-glass absolute right-5 top-1/2 -translate-y-1/2 text-gray-400"></i>
+
+        <div class="mt-8 relative max-w-xl mx-auto">
+            <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Search recipes by name, ingredient..." class="w-full bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-full pl-6 pr-12 py-3.5 shadow-sm text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-all">
+            <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-gray-400">
+                <i class="fa-solid fa-magnifying-glass text-lg"></i>
+            </div>
         </div>
+
+        <div class="mt-6 flex gap-2 justify-center flex-wrap" id="categoryChips">
+            </div>
     </section>
 
-    <main id="recipeGrid" class="px-4 lg:px-12 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 w-full flex-1">
-        </main>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+        <div id="recipeGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            </div>
+        
+        <div id="emptyState" class="hidden text-center py-16">
+            <i class="fa-solid fa-utensils text-5xl text-gray-300 dark:text-gray-700 mb-4"></i>
+            <h3 class="text-xl font-medium text-gray-600 dark:text-gray-400">No Recipes Found Matching Your Filters</h3>
+            <button onclick="resetFilters()" class="mt-4 px-5 py-2 bg-amber-600 text-white rounded-full text-sm font-medium hover:bg-amber-700 transition-colors">Clear Filters</button>
+        </div>
+    </main>
 
-    <div id="recipeModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex justify-center items-center p-4 overflow-y-auto">
-        <div class="bg-white w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl relative my-8 max-h-[90vh] flex flex-col">
-            <button onclick="closeModal()" class="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white rounded-full w-9 h-9 flex items-center justify-center transition-colors z-10 cursor-pointer">
-                <i class="fa-solid fa-xmark"></i>
+    <div id="recipeModal" class="fixed inset-0 z-50 overflow-y-auto hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-900 w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl relative max-h-[90vh] flex flex-col transform scale-95 transition-transform duration-300" id="modalContainer">
+            <button onclick="closeModal()" class="absolute top-4 right-4 z-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm hover:bg-white p-2.5 rounded-full shadow-md text-gray-700 dark:text-gray-300 focus:outline-none transition-all">
+                <i class="fa-solid fa-xmark text-lg"></i>
             </button>
-            
-            <div class="overflow-y-auto flex-1 pb-8">
-                <div class="h-64 w-full relative bg-gray-100">
-                    <img id="modalImage" src="" alt="" class="w-full h-full object-cover">
-                    <span id="modalCategory" class="absolute bottom-4 left-6 bg-[#d53400] text-white text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-md"></span>
+
+            <div class="overflow-y-auto no-scrollbar flex-grow" id="modalBody">
                 </div>
-                
-                <div class="px-6 lg:px-8 pt-6">
-                    <h2 id="modalTitle" class="text-2xl lg:text-3xl font-serif font-bold text-[#2c3e50] mb-2"></h2>
-                    <p id="modalDesc" class="text-gray-500 text-sm mb-6 leading-relaxed border-b border-gray-100 pb-4"></p>
-                    
-                    <div class="grid grid-cols-2 gap-4 mb-8">
-                        <div class="bg-[#faf6ee] rounded-xl px-4 py-3 flex items-center gap-3">
-                            <i class="fa-regular fa-clock text-[#d53400] text-lg"></i>
-                            <div>
-                                <p id="lblPrep" class="text-[10px] uppercase text-gray-400 font-bold tracking-wider">Prep Time</p>
-                                <p id="modalTime" class="text-sm font-semibold text-[#2c3e50]"></p>
-                            </div>
-                        </div>
-                        <div class="bg-[#faf6ee] rounded-xl px-4 py-3 flex items-center gap-3">
-                            <i class="fa-solid fa-layer-group text-[#d53400] text-lg"></i>
-                            <div>
-                                <p id="lblComp" class="text-[10px] uppercase text-gray-400 font-bold tracking-wider">Complexity</p>
-                                <p id="modalComplexity" class="text-sm font-semibold text-[#2c3e50]"></p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="mb-8">
-                        <h4 id="lblIngredientsHeading" class="text-lg font-bold text-[#2c3e50] font-serif mb-4 flex items-center gap-2"></h4>
-                        <ul id="modalIngredients" class="list-disc list-inside space-y-2 text-sm text-gray-600 pl-2"></ul>
-                    </div>
-                    
-                    <div>
-                        <h4 id="lblStepsHeading" class="text-lg font-bold text-[#2c3e50] font-serif mb-4 flex items-center gap-2"></h4>
-                        <ol id="modalSteps" class="space-y-4 text-sm text-gray-600 list-decimal list-inside"></ol>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="p-4 bg-gray-50 border-t border-gray-100">
-                <button id="modalActionBtn" class="bg-[#d53400] hover:bg-[#b02b00] text-white text-sm font-bold py-3 px-6 rounded-xl w-full transition-colors flex items-center justify-center gap-2 shadow-sm cursor-pointer">
-                    <i class="fa-solid fa-utensils"></i> <span id="modalActionText">Enjoy your delicious dish!</span>
-                </button>
-            </div>
         </div>
     </div>
 
-    <footer class="bg-[#2c3e50] text-white/80 text-center py-6 border-t border-gray-800 mt-auto">
+    <footer class="bg-stone-900 text-white/70 text-center py-6 border-t border-stone-800 mt-12 transition-colors">
         <p class="text-sm font-medium">&copy; 2026 BabelBite Platform. Real Craftsmanship. Zero Placeholders.</p>
     </footer>
 
     <script>
-        // Interface Localization Elements Map
-        const uiTranslations = {
+        // MULTI-LANGUAGE CONSTANTS STATIC TEXT TRANSLATIONS
+        const uiText = {
             en: {
-                heroTitle: "World's Best Recipes, <span class='text-[#d53400]'>In Your Language.</span>",
+                heroTitle: "World's Best Recipes, <span class='text-amber-700 dark:text-amber-500'>In Your Language.</span>",
                 heroSub: "Explore authentic recipes translated perfectly into your local tongue with complete professional cooking guides.",
-                searchPlaceholder: "Search recipes by name, ingredient or category...",
-                prepTime: "Prep Time",
-                complexity: "Complexity",
-                ingredients: "Required Ingredients",
-                steps: "Step-by-Step Culinary Process",
-                actionBtn: "Enjoy your delicious dish!",
-                noRecipes: "No recipes found matching your search."
+                searchPlaceholder: "Search recipes by name, ingredient...",
+                ingredientsTitle: "Required Ingredients",
+                processTitle: "Step-by-Step Culinary Process",
+                ctaBtn: "Enjoy your delicious dish!",
+                favOnlyMsg: "Showing Your Favorite Bookmarks"
             },
             hi: {
-                heroTitle: "दुनिया के सर्वश्रेष्ठ व्यंजन, <span class='text-[#d53400]'>आपकी भाषा में।</span>",
-                heroSub: "अपनी स्थानीय भाषा में पूरी तरह से अनुवादित व्यंजनों और संपूर्ण व्यावसायिक कुकिंग गाइड का आनंद लें।",
-                searchPlaceholder: "नाम, सामग्री या श्रेणी से व्यंजन खोजें...",
-                prepTime: "तैयारी का समय",
-                complexity: "जटिलता",
-                ingredients: "आवश्यक सामग्री",
-                steps: "चरण-दर-चरण पाक प्रक्रिया",
-                actionBtn: "अपने स्वादिष्ट भोजन का आनंद लें!",
-                noRecipes: "आपकी खोज से मेल खाता कोई व्यंजन नहीं मिला।"
-            },
-            bn: {
-                heroTitle: "বিশ্বের সেরা রেসিپی, <span class='text-[#d53400]'>আপনার নিজের ভাষায়।</span>",
-                heroSub: "সম্পূর্ণ পেশাদার রান্নার গাইড সহ আপনার স্থানীয় ভাষায় নিখুঁتভাবে অনূদিত খাঁটি রেসিپیগুলি অন্বেষণ করুন।",
-                searchPlaceholder: "নাম, উপাদান বা বিভাগ দ্বারা রেসিپی খুঁজুন...",
-                prepTime: "প্রস্তুতির সময়",
-                complexity: "জটিলতা",
-                ingredients: "প্রয়োজনীয় উপাদান",
-                steps: "ধাপে ধাপে রান্নার প্রক্রিয়া",
-                actionBtn: "আপনার সুস্বাদু খাবার উপভোগ করুন!",
-                noRecipes: "আপনার অনুসন্ধানের সাথে মেলে এমন কোনও রেসিپی পাওয়া যায়নি।"
+                heroTitle: "दुनिया के बेहतरीन पकवान, <span class='text-amber-600 dark:text-amber-500'>आपकी अपनी भाषा में।</span>",
+                heroSub: "पूर्ण व्यावसायिक खाना पकाने के गाइड के साथ अपनी स्थानीय भाषा में पूरी तरह से अनुवादित व्यंजनों का अन्वेषण करें।",
+                searchPlaceholder: "व्यंजन, सामग्री या श्रेणी खोजें...",
+                ingredientsTitle: "आवश्यक सामग्री",
+                processTitle: "चरण-दर-चरण पाक कला प्रक्रिया",
+                ctaBtn: "अपने स्वादिष्ट भोजन का आनंद लें!",
+                favOnlyMsg: "आपके पसंदीदा व्यंजन दिखाए जा रहे हैं"
             },
             es: {
-                heroTitle: "Las mejores recetas del mundo, <span class='text-[#d53400]'>en tu idioma.</span>",
-                heroSub: "Explore recetas auténticas traducidas perfectamente a su lengua local con guías de cocina profesionales completas.",
-                searchPlaceholder: "Buscar recetas por nombre, ingrediente o categoría...",
-                prepTime: "Tiempo de prep.",
-                complexity: "Complejidad",
-                ingredients: "Ingredientes requeridos",
-                steps: "Proceso culinario paso a paso",
-                actionBtn: "¡Disfruta de tu delicioso plato!",
-                noRecipes: "No se encontraron recetas que coincidan con tu búsqueda."
-            },
-            ar: {
-                heroTitle: "أفضل الوصفات في العالم، <span class='text-[#d53400]'>بلغتك المحلية.</span>",
-                heroSub: "استكشف وصفات أصيلة مترجمة تمامًا إلى لغتك المحلية مع أدلة طهي احترافية كاملة.",
-                searchPlaceholder: "ابحث عن الوصفات بالاسم أو المكون أو الفئة...",
-                prepTime: "وقت التحضير",
-                complexity: "التعقيد",
-                ingredients: "المكونات المطلوبة",
-                steps: "عملية الطهي خطوة بخطوة",
-                actionBtn: "استمتع بوجبتك الشهية!",
-                noRecipes: "لم يتم العثور على وصفات تطابق بحثك."
+                heroTitle: "Las mejores recetas del mundo, <span class='text-amber-700 dark:text-amber-500'>en tu idioma.</span>",
+                heroSub: "Explore recetas auténticas traducidas perfectamente a su idioma local con guías de cocina profesionales completas.",
+                searchPlaceholder: "Buscar recetas por nombre o ingrediente...",
+                ingredientsTitle: "Ingredientes Requeridos",
+                processTitle: "Proceso Culinario Paso a Paso",
+                ctaBtn: "¡Disfruta de tu delicioso plato!",
+                favOnlyMsg: "Mostrando tus marcadores favoritos"
             }
         };
 
-        // Complete Recipes Database Object
+        // PRODUCTION DATABASE COMPATIBLE STATIC RECIPES ARRAY INJECTIONS
         const recipes = [
             {
-                category: "Indian Classics",
-                prep_time: "45 mins",
-                complexity: "Medium Complexity",
-                image: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=800&q=80",
+                id: "recipe_01",
+                baseCategory: "Indian Classics",
+                imageUrl: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=800&q=80",
                 languages: {
                     en: {
                         title: "Classic Butter Chicken",
                         desc: "A rich, velvety, mildly sweet and perfectly spiced authentic North Indian tomato-cream curry.",
-                        ingredients: ["500g Boneless Chicken Chunks", "2 cups Thick Tomato Puree", "1 cup Fresh Heavy Cream", "3 tbsp Unsalted White Butter", "1.5 tbsp Ginger-Garlic Paste", "1 tbsp Kashmiri Red Chili Powder", "1 cup Plain Yogurt / Dahi"],
-                        steps: ["Marinate chicken chunks completely with yogurt, ginger-garlic paste, and spices for 30 minutes inside the refrigerator.", "Pan-sear the marinated chicken chunks on high heat until beautifully charred and fully cooked.", "In the same pan, cook down the fresh tomato puree with premium white butter until fat separates.", "Slowly stir in the heavy cream on a lower flame to build a rich silky texture.", "Add chicken back into bubbling gravy and simmer for 5 minutes."]
+                        category: "Indian Classics",
+                        difficulty: "Medium Complexity",
+                        time: "45 mins",
+                        ingredients: ["500g Boneless Chicken Chunks", "2 cups Thick Tomato Puree", "1 cup Fresh Heavy Cream", "3 tbsp Unsalted White Butter", "1 tbsp Kasuri Methi", "1.5 tbsp Ginger-Garlic Paste", "1 cup Plain Yogurt / Dahi"],
+                        steps: [
+                            "Marinate chicken chunks completely with plain yogurt, ginger-garlic paste, and spices for 30 minutes.",
+                            "Pan-sear or roast the marinated chicken chunks on high heat until beautifully charred.",
+                            "Cook down tomato puree with butter in a skillet until oil begins separating from the edges.",
+                            "Toss in mild aromatic Indian spices, pour in the heavy cream while continuously whisking on low heat.",
+                            "Add the charred roasted chicken pieces back into the rich bubbling gravy. Simmer gently for 5 minutes."
+                        ]
                     },
                     hi: {
                         title: "क्लासिक बटर चिकन",
-                        desc: "एक समृद्ध, मखमली, हल्के मीठे और पूरी तरह से मसालेदार प्रामाणिक उत्तर भारतीय टमाटर-मलाई करी।",
-                        ingredients: ["500 ग्राम बोनलेस चिकन", "2 कप गाढ़ी टमाटर प्यूरी", "1 कप ताजी हैवी क्रीम", "3 चम्मच सफेद मक्खन", "1.5 चम्मच अदरक-लहसुन पेस्ट", "1 चम्मच कश्मीरी लाल मिर्च पाउडर", "1 कप सादा दही"],
-                        steps: ["चिकन को दही, अदरक-लहसुन पेस्ट और मसालों के साथ 30 मिनट के लिए फ्रिज में मैरिनेट करें।", "मैरिनेटेड चिकन को तेज आंच पर अच्छी तरह से भूनें जब तक वह पक न जाए।", "उसी पैन में टमाटर प्यूरी और मक्खन को तब तक पकाएं जब तक कि तेल अलग न हो जाए।", "धीमी आंच पर हैवी क्रीम डालें ताकि एक रेशमी गाढ़ी ग्रेवी तैयार हो सके।", "चिकन को ग्रेवी में डालकर 5 मिनट के लिए धीमी आंच पर पकाएं।"]
-                    },
-                    bn: {
-                        title: "ক্লাসিক বাটার চিকেন",
-                        desc: "একটি সমৃদ্ধ, মখমল এবং নিখুঁতভাবে মশলাযুক্ত খাঁটি উত্তর ভারতীয় টমেটো-ক্রিম তরকারি।",
-                        ingredients: ["৫০০ গ্রাম বোনলেস চিকেন", "২ কাপ টমেটো পিউরি", "১ কাপ ফ্রেশ হেভি ক্রিম", "৩ চামচ মাখন", "১.৫ চামচ আদা-রসুন পেস্ট", "১ চামচ কাশ্মীরি লঙ্কা গুঁড়ো", "১ কাপ টক দই"],
-                        steps: ["চিকেন দই, আদা-রসুন পেস্ট এবং মশলা দিয়ে ৩০ মিনিট ম্যারিনেট করে রাখুন।", "ম্যারিনেট করা চিকেন কড়াইতে ভালো করে ভেজে তুলে রাখুন।", "একই কড়াইতে টমেটো পিউরি এবং মাখন ভালো করে কষিয়ে নিন।", "ধিমী আঁচে হেভি ক্রিম যোগ করে একটি চমৎকার গ্রেভি তৈরি করুন।", "ভেজে রাখা চিকেন গ্রেভিতে দিয়ে ৫ মিনিট ফুটিয়ে নিন।"]
+                        desc: "एक समृद्ध, मखमली, हल्का मीठा और पूरी तरह से सुगंधित उत्तर भारतीय टमाटर-क्रीम करी व्यंजन।",
+                        category: "भारतीय क्लासिक्स",
+                        difficulty: "मध्यम जटिलता",
+                        time: "45 मिनट",
+                        ingredients: ["500 ग्राम बोनलेस चिकन", "2 कप गाढ़ी टमाटर प्यूरी", "1 कप ताजी गाढ़ी मलाई", "3 चम्मच मक्खन", "1 चम्मच कसूरी मेथी", "1.5 चम्मच अदरक-लहसुन पेस्ट", "1 कप दही"],
+                        steps: [
+                            "चिकन के टुकड़ों को दही, अदरक-लहसुन के पेस्ट और मसालों के साथ 30 मिनट के लिए मैरीनेट करें।",
+                            "मैरीनेट किए हुए चिकन को तेज आंच पर पैन में तब तक भूनें जब तक वह अच्छे से पक न जाए।",
+                            "एक कड़ाही में मक्खन के साथ टमाटर की प्यूरी को तब तक पकाएं जब तक कि किनारों से तेल अलग न होने लगे।",
+                            "हल्के सुगंधित मसाले डालें, फिर धीमी आंच पर लगातार चलाते हुए गाढ़ी क्रीम मिलाएं।",
+                            "भुने हुए चिकन के टुकड़ों को वापस ग्रेवी में डालें। 5 मिनट तक धीमी आंच पर पकने दें।"
+                        ]
                     },
                     es: {
                         title: "Pollo a la Mantequilla",
-                        desc: "Un curry de tomate rico, cremoso y ligeramente especiado, un auténtico clásico del norte de la India.",
-                        ingredients: ["500g de Pollo deshuesado", "2 tazas de Puré de tomate", "1 taza de Crema espesa", "3 cucharadas de Mantequilla", "1.5 cucharadas de Pasta de jengibre y ajo", "1 cucharada de Chile en polvo"],
-                        steps: ["Marinar el pollo con yogur y especias durante 30 minutos.", "Dorar el pollo en una sartén a fuego alto.", "Cocinar el puré de tomate con mantequilla hasta que se reduzca.", "Agregar la crema a fuego bajo para crear una textura sedosa.", "Añadir el pollo a la salsa y guisar por 5 minutos."]
-                    },
-                    ar: {
-                        title: "دجاج بالزبدة الكلاسيكي",
-                        desc: "كاري هندي شمالي غني بالكريمة والطماطم مع نكهات متوازنة تماماً ولذيذة للغاية.",
-                        ingredients: ["500 غرام قطع دجاج", "2 كوب بيوريه الطماطم", "1 كوب كريمة طهي طازجة", "3 ملعقة زبدة بيضاء", "1.5 ملعقة معجون ثوم وزنجبيل"],
-                        steps: ["نقع الدجاج في الزبادي والبهارات لمدة 30 دقيقة في الثلاجة.", "طهي قطع الدجاج على نار عالية حتى تنضج وتكتسب لوناً جميلاً.", "طهي بيوريه الطماطم والزبدة في المقلاة حتى ينفصل الزيت.", "إضافة الكريمة الطازجة على نار هادئة للحصول على قوام حريري.", "إعادة الدجاج إلى الصلصة وتركه يغلي لمدة 5 دقائق."]
+                        desc: "Un curry de tomate rico, cremoso y ligeramente especiado, un clásico auténtico del norte de la India.",
+                        category: "Clásicos Indios",
+                        difficulty: "Complejidad Media",
+                        time: "45 min",
+                        ingredients: ["500g de Pollo deshuesado", "2 tazas de Puré de tomate grueso", "1 taza de Crema de leche fresca", "3 cucharadas de Mantequilla sin sal", "1 cucharada de Kasuri Methi"],
+                        steps: [
+                            "Marinar los trozos de pollo con yogur, pasta de jengibre y ajo, y especias durante 30 minutos.",
+                            "Dorar los trozos de pollo marinado a fuego alto hasta que estén bellamente chamuscados.",
+                            "Cocinar el puré de tomate con mantequilla en una sartén hasta que el aceite comience a separarse.",
+                            "Agregar las especias aromáticas, verter la crema de leche mientras se bate continuamente a fuego lento.",
+                            "Agregar los trozos de pollo asado nuevamente a la rica salsa burbujeante. Cocinar a fuego lento por 5 minutos."
+                        ]
                     }
                 }
             },
             {
-                category: "Street Food",
-                prep_time: "35 mins",
-                complexity: "Easy to Medium",
-                image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80",
+                id: "recipe_02",
+                baseCategory: "Street Food",
+                imageUrl: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?auto=format&fit=crop&w=800&q=80",
                 languages: {
                     en: {
                         title: "Steamed Veg Momos",
                         desc: "Authentic street-style Himalayan dumplings packed with finely minced crunchy vegetables and light savory seasonings.",
-                        ingredients: ["1 cup All-Purpose Flour / Maida", "1 cup Finely Chopped Cabbage", "0.5 cup Grated Carrots", "1 tbsp Ginger-Garlic Paste", "1 tbsp Soy Sauce"],
-                        steps: ["Knead a smooth firm dough with flour and water, then let it rest covered.", "Saute vegetables with ginger-garlic paste and soy sauce on high heat briefly.", "Roll thin small wrappers from the dough balls.", "Place filling in the center and fold into secure pleated shapes.", "Steam the momos for 10-12 minutes inside a steamer until translucent."]
+                        category: "Street Food",
+                        difficulty: "Easy to Medium",
+                        time: "35 mins",
+                        ingredients: ["1.5 cups Refined Flour (Maida)", "1 cup Finely Minced Cabbage", "1/2 cup Grated Carrots", "1/4 cup Chopped Onions", "1 tbsp Ginger-Garlic Paste", "1 tsp Dark Soy Sauce"],
+                        steps: [
+                            "Knead a smooth soft dough using refined flour, water, and a pinch of salt. Rest it covered for 15 minutes.",
+                            "Sauté the minced cabbage, carrots, and onions with ginger-garlic paste and soy sauce on high heat for 3 minutes.",
+                            "Roll out the dough into small, thin translucent circular wrappers with edges thinner than the center.",
+                            "Place a spoonful of stuffing in the center, pleat the edges carefully to seal the dumpling shape securely.",
+                            "Arrange in a greased steamer basket and steam perfectly for 10-12 minutes until the skin turns glossy."
+                        ]
                     },
                     hi: {
                         title: "स्टीम्ड वेज मोमोज",
-                        desc: "बारीक कटी हुई कुरकुरी सब्जियों और हल्के मसालों से भरे प्रामाणिक स्ट्रीट-स्टाइल हिमालयन डंपलिंग्स।",
-                        ingredients: ["1 कप मैदा", "1 कप बारीक कटी पत्तागोभी", "0.5 कप कद्दूकस गाजर", "1 चम्मच अदरक-लहसुन पेस्ट", "1 चम्मच सोया सॉस"],
-                        steps: ["मैदा और पानी के साथ एक चिकना सख्त आटा गूंध लें और ढककर रख दें।", "सब्जियों को अदरक-लहसुन पेस्ट और सोया सॉस के साथ तेज आंच पर हल्का भूनें।", "आटे की छोटी-छोटी पतली पूरियां बेल लें।", "बीच में स्टफिंग रखें और मोमोज का आकार देते हुए फोल्ड करें।", "मोमोज को स्टीमर में 10-12 मिनट के लिए भाप में पकाएं।"]
-                    },
-                    bn: {
-                        title: "স্টিমড ভেজ মোমো",
-                        desc: "মিহি করে কুচানো ক্রাঞ্চি সবজি এবং হালকা মশলাদার স্বাদে ভরা হিমালয় অঞ্চলের স্ট্রিট-স্টাইল ডাম্পলিং।",
-                        ingredients: ["১ कप ময়দা", "১ কাপ কুচানো বাঁধাকপি", "০.৫ কাপ কুচানো গাজর", "১ চামচ আদা-রসুন পেস্ট", "১ চামচ সয়া সস"],
-                        steps: ["ময়দা এবং জল দিয়ে একটি নরম মণ্ড তৈরি করুন এবং এটি ঢেকে রাখুন।", "সবজিগুলি আদা-রসুন পেস্ট এবং সয়া সস দিয়ে তীব্র আঁচে হালকা নেড়ে নিন।", "মণ্ড থেকে ছোট ছোট পাতলা লেচি বেলে নিন।", "মাঝখানে পুরটি রাখুন এবং মোমোর আকারে সুন্দর ভাঁজ দিন।", "মোমো ১০-১২ মিনিটের জন্য স্টিমারে ভাপিয়ে নিন।"]
+                        desc: "बारीक कटी हुई कुरकुरी सब्जियों और हल्के स्वादिष्ट मसालों से भरे प्रामाणिक स्ट्रीट-स्टाइल हिमालयन डंपलिंग।",
+                        category: "स्ट्रीट फूड",
+                        difficulty: "सरल से मध्यम",
+                        time: "35 मिनट",
+                        ingredients: ["1.5 कप मैदा", "1 कप बारीक कटी पत्तागोभी", "1/2 कप कद्दूकस की हुई गाजर", "1/4 कप बारीक कटे प्याज", "1 चम्मच अदरक-लहसुन पेस्ट"],
+                        steps: [
+                            "मैदा, पानी और एक चुटकी नमक मिलाकर चिकना और मुलायम आटा गूंध लें। इसे 15 मिनट के लिए ढककर रख दें।",
+                            "कटी हुई पत्तागोभी, गाजर और प्याज को अदरक-लहसुन के पेस्ट और सोया सॉस के साथ तेज आंच पर 3 मिनट तक भूनें।",
+                            "आटे की छोटी, पतली पारभासी लोइयां बेल लें, जिनके किनारे बीच की तुलना में पतले हों।",
+                            "बीच में एक चम्मच स्टफिंग रखें, मोमोज का आकार सुरक्षित रूप से सील करने के लिए किनारों को सावधानी से मोड़ें।",
+                            "स्टीमर बास्केट में रखें और त्वचा के चमकदार होने तक 10-12 मिनट के लिए अच्छी तरह से स्टीम करें।"
+                        ]
                     },
                     es: {
-                        title: "Momos Vegetarianos",
-                        desc: "Empanadillas del Himalaya al estilo callejero auténtico, rellenas de verduras crujientes picadas.",
-                        ingredients: ["1 taza de Harina de trigo", "1 taza de Repollo picado", "0.5 taza de Zanahoria rallada", "1 cucharada de Salsa de soja"],
-                        steps: ["Amasar la harina con agua hasta tener una masa firme y dejar reposar.", "Saltear las verduras con la salsa de soja rápidamente a fuego alto.", "Estirar la masa en discos pequeños y delgados.", "Colocar el relleno y cerrar haciendo pliegues tradicionales.", "Cocinar al vapor durante 10-12 minutos hasta que estén listos."]
-                    },
-                    ar: {
-                        title: "مومو الخضار على البخار",
-                        desc: "فطائر الهيمالايا الشهيرة على طراز الشارع محشوة بالخضار المقرمشة المفرومة ناعماً.",
-                        ingredients: ["1 كوب دقيق متعدد الاستخدامات", "1 كوب ملفوف مفروم ناعم", "0.5 كوب جزر مبشور", "1 ملعقة صلصة الصويا"],
-                        steps: ["عجن الدقيق بالماء للحصول على عجينة متماسكة وتركها ترتاح.", "تشويح الخضار مع صلصة الصويا والثوم على نار عالية بسرعة.", "فرد العجينة إلى دوائر صغيرة ورقيقة جداً.", "وضع الحشوة في المنتصف وإغلاق الفطيرة على شكل طيات محكمة.", "طهي المومو على البخار لمدة 10-12 دقيقة حتى تنضج."]
+                        title: "Momos Vegetarianos al Vapor",
+                        desc: "Empanadillas de estilo callejero del Himalaya rellenas de verduras crujientes finamente picadas y condimentos ligeros.",
+                        category: "Comida Callejera",
+                        difficulty: "Fácil a Medio",
+                        time: "35 min",
+                        ingredients: ["1.5 tazas de Harina de trigo", "1 taza de Repollo finamente picado", "1/2 taza de Zanahorias ralladas", "1 cucharada de Pasta de jengibre y ajo"],
+                        steps: [
+                            "Amasar una masa suave con harina, agua y una pizca de sal. Dejar reposar cubierta por 15 minutos.",
+                            "Saltear el repollo, las zanahorias y las cebollas con pasta de jengibre y ajo a fuego alto durante 3 minutos.",
+                            "Estirar la masa en discos pequeños y delgados, con los bordes más delgados que el centro.",
+                            "Colocar una cucharada de relleno en el centro, plisar los bordes con cuidado para sellar el momo.",
+                            "Cocinar al vapor en una vaporera engrasada durante 10-12 minutos hasta que la masa esté brillante."
+                        ]
                     }
                 }
             },
             {
-                category: "Italian Classics",
-                prep_time: "25 mins",
-                complexity: "Easy Precision",
-                image: "https://images.unsplash.com/photo-1604382355076-af4b0eb60143?auto=format&fit=crop&w=800&q=80",
+                id: "recipe_03",
+                baseCategory: "Desserts",
+                imageUrl: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=800&q=80",
                 languages: {
                     en: {
-                        title: "Classic Margherita Pizza",
-                        desc: "The quintessential Italian thin-crust masterpiece layered with rich rustic tomato sauce, creamy fresh mozzarella, and aromatic basil leaves.",
-                        ingredients: ["1 Pre-baked Pizza Crust / Dough", "0.5 cup Authentic Tomato Sauce", "1 cup Shredded Mozzarella Cheese", "5-6 Fresh Basil Leaves", "1 tbsp Extra Virgin Olive Oil"],
-                        steps: ["Preheat your oven to 220°C (430°F) for maximum baking efficiency.", "Spread the rustic tomato sauce evenly over the prepared pizza base surface.", "Top generously with fresh mozzarella cheese evenly across the pizza.", "Bake at 220°C for 10-12 minutes until the crust turns golden and cheese bubbles.", "Garnish instantly with fresh torn basil leaves and a drizzle of olive oil."]
+                        title: "Chocolate Lava Cake",
+                        desc: "An ultimate decadent sweet indulgence featuring a rich baked exterior with a molten, gooey hot liquid chocolate core.",
+                        category: "Desserts",
+                        difficulty: "Medium Precision",
+                        time: "20 mins",
+                        ingredients: ["100g Premium Dark Chocolate", "50g Unsalted Butter", "2 Whole Eggs", "1/4 cup Powdered Sugar", "3 tbsp All-Purpose Flour", "1 tsp Vanilla Extract"],
+                        steps: [
+                            "Melt the premium dark chocolate chunks and unsalted butter together over a double boiler until perfectly glossy.",
+                            "In a separate bowl, whisk the whole eggs and powdered sugar vigorously until pale, thick, and voluminous.",
+                            "Gently fold the melted chocolate mixture and sifted all-purpose flour into the eggs without deflating the air.",
+                            "Pour the velvety batter smoothly into greased ramekins dusted with cocoa powder.",
+                            "Bake in a preheated oven at 200°C for exactly 12-14 minutes until sides are firm but center is soft."
+                        ]
                     },
                     hi: {
-                        title: "क्लासिक मार्गेरिटा पिज्जा",
-                        desc: "समृद्ध टमाटर सॉस, मलाईदार मोज़ारेला चीज़ और सुगंधित तुलसी के पत्तों से
+                        title: "चॉकलेट लावा केक",
+                        desc: "एक बेहतरीन और लाजवाब मीठा व्यंजन जिसमें एक समृद्ध बेक्ड बाहरी परत के अंदर पिघला हुआ गर्म लावा होता है।",
+                        category: "डेसर्ट",
+                        difficulty: "सटीक माध्यम",
+                        time: "20 मिनट",
+                        ingredients: ["100 ग्राम डार्क चॉकलेट", "50 ग्राम मक्खन", "2 अंडे", "1/4 कप पिसी चीनी", "3 चम्मच मैदा", "1 चम्मच वैनिला एक्सट्रेक्ट"],
+                        steps: [
+                            "डार्क चॉकलेट के टुकड़ों और मक्खन को एक साथ डबल बॉयलर पर पिघलाएं जब तक कि वह पूरी तरह चमकदार न हो जाए।",
+                            "एक अलग कटोरे में, अंडों और पिसी हुई चीनी को तब तक फेंटें जब तक कि वह गाढ़ा और झागदार न हो जाए।",
+                            "पिघले हुए चॉकलेट मिश्रण और छने हुए मैदे को धीरे से अंडों के मिश्रण में मिलाएं।",
+                            "मखमली बैटर को कोको पाउडर से डस्ट किए हुए और घी लगे रमेकिंस (कटोरियों) में डालें।",
+                            "पहले से गरम ओवन में 200°C पर ठीक 12-14 मिनट तक बेक करें जब तक कि किनारे सख्त और केंद्र नरम न रहे।"
+                        ]
+                    },
+                    es: {
+                        title: "Volcán de Chocolate",
+                        desc: "Una indulgencia dulce suprema que presenta un exterior horneado con un centro de chocolate líquido fundido.",
+                        category: "Postres",
+                        difficulty: "Precisión Media",
+                        time: "20 min",
+                        ingredients: ["100g de Chocolate negro premium", "50g de Mantequilla", "2 Huevos enteros", "1/4 taza de Azúcar", "3 cucharadas de Harina"],
+                        steps: [
+                            "Derretir el chocolate negro y la mantequilla juntos al baño María hasta que estén perfectamente integrados.",
+                            "En un tazón aparte, batir los huevos y el azúcar vigorosamente hasta que la mezcla esté pálida y espesa.",
+                            "Incorporar suavemente la mezcla de chocolate derretido y la harina tamizada a los huevos con movimientos envolventes.",
+                            "Verter la masa en moldes engrasados y espolvoreados con cacao en polvo.",
+                            "Hornear en horno precalentado a 200°C durante exactamente 12-14 minutos hasta que los lados estén firmes."
+                        ]
+                    }
+                }
+            }
+        ];
+
+        // APPLICATION STATE STORAGE
+        let currentLang = localStorage.getItem('babelbite_lang') || 'en';
+        let searchQuery = "";
+        let selectedCategory = "All";
+        let showFavoritesOnly = false;
+        let favoriteRecipes = JSON.parse(localStorage.getItem('babelbite_favs')) || [];
+
+        // INITIALIZE SYSTEM RUNTIME
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById('langSelect').value = currentLang;
+            setupDarkMode();
+            updateUiContent();
+            renderCategoryChips();
+            filterAndRenderRecipes();
+            updateFavBadge();
+        });
+
+        // DARK MODE SYSTEM CONTROLLER
+        function setupDarkMode() {
+            const toggleBtn = document.getElementById('darkModeToggle');
+            if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+            toggleBtn.addEventListener('click', () => {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                }
+            });
+        }
+
+        // UPDATE UI STATIC TEXTS SCRIPT RUNTIME
+        function updateUiContent() {
+            const text = uiText[currentLang] || uiText['en'];
+            document.getElementById('heroTitle').innerHTML = text.heroTitle;
+            document.getElementById('heroSub').innerText = text.heroSub;
+            document.getElementById('searchInput').placeholder = text.searchPlaceholder;
+        }
+
+        // RENDER FILTER CHIPS DYNAMICALLY
+        function renderCategoryChips() {
+            // Get unique functional categories from database
+            const categories = ["All", ...new Set(recipes.map(r => r.baseCategory))];
+            const chipContainer = document.getElementById('categoryChips');
+            
+            chipContainer.innerHTML = categories.map(cat => {
+                // Translate Category names mapping logic if required
+                const isSelected = selectedCategory === cat;
+                return `
+                    <button onclick="selectCategory('${cat}')" class="px-5 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all cursor-pointer ${
+                        isSelected 
+                        ? 'bg-amber-700 text-white shadow-md' 
+                        : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700'
+                    }">
+                        ${cat}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        // HANDLE FILTERS CHANGE EVENTS
+        function selectCategory(cat) {
+            selectedCategory = cat;
+            renderCategoryChips();
+            filterAndRenderRecipes();
+        }
+
+        function handleSearch(val) {
+            searchQuery = val.toLowerCase().trim();
+            filterAndRenderRecipes();
+        }
+
+        function toggleFavFilter() {
+            showFavoritesOnly = !showFavoritesOnly;
+            const icon = document.getElementById('favFilterIcon');
+            if (showFavoritesOnly) {
+                icon.className = "fa-solid fa-heart text-xl text-red-500";
+            } else {
+                icon.className = "fa-regular fa-heart text-xl text-gray-400";
+            }
+            filterAndRenderRecipes();
+        }
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('babelbite_lang', lang);
+            updateUiContent();
+            renderCategoryChips();
+            filterAndRenderRecipes();
+        }
+
+        function resetFilters() {
+            searchQuery = "";
+            selectedCategory = "All";
+            showFavoritesOnly = false;
+            document.getElementById('searchInput').value = "";
+            document.getElementById('favFilterIcon').className = "fa-regular fa-heart text-xl text-gray-400";
+            renderCategoryChips();
+            filterAndRenderRecipes();
+        }
+
+        // PERSISTENT BOOKMARK LOCALSTORAGE MANAGER
+        function toggleFavorite(id, event) {
+            event.stopPropagation(); // Avoid triggering details modal open
+            const index = favoriteRecipes.indexOf(id);
+            if (index > -1) {
+                favoriteRecipes.splice(index, 1);
+            } else {
+                favoriteRecipes.push(id);
+            }
+            localStorage.setItem('babelbite_favs', JSON.stringify(favoriteRecipes));
+            updateFavBadge();
+            filterAndRenderRecipes();
+        }
+
+        function updateFavBadge() {
+            const badge = document.getElementById('favCountBadge');
+            badge.innerText = favoriteRecipes.length;
+            if (favoriteRecipes.length > 0) {
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+        }
+
+        // CORE ENGINE: FILTER & RENDER METHOD ARCHITECTURE
+        function filterAndRenderRecipes() {
+            const grid = document.getElementById('recipeGrid');
+            const emptyState = document.getElementById('emptyState');
+            
+            const filtered = recipes.filter(item => {
+                const data = item.languages[currentLang] || item.languages['en'];
+                
+                // 1. Search Query filter check
+                const matchesSearch = data.title.toLowerCase().includes(searchQuery) || 
+                                      data.desc.toLowerCase().includes(searchQuery) ||
+                                      data.ingredients.some(i => i.toLowerCase().includes(searchQuery));
+                
+                // 2. Category filter check
+                const matchesCategory = selectedCategory === "All" || item.baseCategory === selectedCategory;
+                
+                // 3. Favorites status check
+                const matchesFavs = !showFavoritesOnly || favoriteRecipes.includes(item.id);
+
+                return matchesSearch && matchesCategory && matchesFavs;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = "";
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            
+            emptyState.classList.add('hidden');
+            grid.innerHTML = filtered.map(item => {
+                const langData = item.languages[currentLang] || item.languages['en'];
+                const isFav = favoriteRecipes.includes(item.id);
+                
+                return `
+                    <div onclick="openModal('${item.id}')" class="bg-white dark:bg-gray-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl premium-card cursor-pointer border border-gray-100 dark:border-gray-700/50 flex flex-col h-full group">
+                        <div class="relative aspect-video w-full overflow-hidden bg-gray-200">
+                            <img src="${item.imageUrl}" alt="${langData.title}" loading="lazy" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-4 left-4 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-amber-800 dark:text-amber-400 shadow-sm">
+                                ${langData.category}
+                            </div>
+                            <button onclick="toggleFavorite('${item.id}', event)" class="absolute top-3 right-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm p-2 rounded-full shadow-md text-gray-400 hover:text-red-500 transition-colors">
+                                <i class="${isFav ? 'fa-solid fa-heart text-red-500' : 'fa-regular fa-heart'} text-base"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="p-5 flex flex-col flex-grow justify-between">
+                            <div>
+                                <h3 class="text-lg font-bold text-gray-900 dark:text-white group-hover:text-amber-700 dark:group-hover:text-amber-500 transition-colors">${langData.title}</h3>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 mt-2 line-clamp-2 leading-relaxed">${langData.desc}</p>
+                            </div>
+                            
+                            <div class="flex items-center justify-between border-t border-gray-100 dark:border-gray-700/60 pt-4 mt-4 text-[11px] font-medium text-gray-500 dark:text-gray-400">
+                                <div class="flex items-center gap-1.5">
+                                    <i class="fa-regular fa-clock text-amber-600"></i>
+                                    <span>${langData.time}</span>
+                                </div>
+                                <div class="flex items-center gap-1.5">
+                                    <i class="fa-solid fa-layer-group text-amber-600"></i>
+                                    <span>${langData.difficulty}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // DETAILED MODAL VIEWS MANAGER RUNTIME
+        function openModal(id) {
+            const item = recipes.find(r => r.id === id);
+            if (!item) return;
+
+            const langData = item.languages[currentLang] || item.languages['en'];
+            const labels = uiText[currentLang] || uiText['en'];
+            const modalBody = document.getElementById('modalBody');
+
+            modalBody.innerHTML = `
+                <div class="relative w-full aspect-video sm:aspect-[21/10] bg-gray-100">
+                    <img src="${item.imageUrl}" alt="${langData.title}" class="w-full h-full object-cover">
+                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6 pt-16">
+                        <span class="text-xs font-bold uppercase tracking-widest text-amber-400">${langData.category}</span>
+                        <h2 class="text-2xl sm:text-3xl font-serif font-bold text-white mt-1">${langData.title}</h2>
+                    </div>
+                </div>
+
+                <div class="p-6 sm:p-8 space-y-6">
+                    <div class="flex gap-4 items-center bg-gray-50 dark:bg-gray-800/40 p-4 rounded-2xl text-xs font-medium text-gray-600 dark:text-gray-300">
+                        <div class="flex items-center gap-2">
+                            <i class="fa-regular fa-clock text-base text-amber-600"></i>
+                            <span>${langData.time}</span>
+                        </div>
+                        <div class="h-4 w-px bg-gray-200 dark:bg-gray-700"></div>
+                        <div class="flex items-center gap-2">
+                            <i class="fa-solid fa-chart-simple text-base text-amber-600"></i>
+                            <span>${langData.difficulty}</span>
+                        </div>
+                    </div>
+
+                    <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-400 italic">"${langData.desc}"</p>
+
+                    <div>
+                        <h4 class="text-sm font-bold uppercase tracking-wider text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-basket-shopping text-amber-600"></i> ${labels.ingredientsTitle}
+                        </h4>
+                        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                            ${langData.ingredients.map(ing => `
+                                <li class="flex items-start gap-2.5 text-xs text-gray-600 dark:text-gray-300 bg-stone-50 dark:bg-gray-800/30 px-3 py-2 rounded-xl border border-stone-100 dark:border-gray-800">
+                                    <input type="checkbox" class="mt-0.5 accent-amber-600 rounded cursor-pointer">
+                                    <span>${ing}</span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                    </div>
+
+                    <div class="pt-2">
+                        <h4 class="text-sm font-bold uppercase tracking-wider text-gray-900 dark:text-white mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-kitchen-set text-amber-600"></i> ${labels.processTitle}
+                        </h4>
+                        <ol class="space-y-4">
+                            ${langData.steps.map((step, idx) => `
+                                <li class="flex gap-4 items-start">
+                                    <span class="flex-shrink-0 w-6 h-6 rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-400 flex items-center justify-center text-xs font-bold">${idx + 1}</span>
+                                    <p class="text-xs leading-relaxed text-gray-600 dark:text-gray-300 pt-0.5">${step}</p>
+                                </li>
+                            `).join('')}
+                        </ol>
+                    </div>
+
+                    <div class="w-full bg-gradient-to-r from-amber-600 to-orange-600 py-3.5 px-4 rounded-xl text-center text-white text-xs font-semibold shadow-md flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>${labels.ctaBtn}</span>
+                    </div>
+                </div>
+            `;
+
+            const modal = document.getElementById('recipeModal');
+            const container = document.getElementById('modalContainer');
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                container.classList.remove('scale-95');
+                container.classList.add('scale-100');
+            }, 10);
+            document.body.style.overflow = 'hidden'; // Lock background page scroll
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('recipeModal');
+            const container = document.getElementById('modalContainer');
+            container.classList.remove('scale-100');
+            container.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 200);
+            document.body.style.overflow = ''; // Release background scroll lock
+        }
+
+        // Close Modal if client clicks outside the active bounding container
+        window.onclick = function(event) {
+            const modal = document.getElementById('recipeModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
