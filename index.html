@@ -4,23 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BabelBite - Global Recipes</title>
-    <!-- Stable Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #faf6ee; color: #2c3e50; }
-        .font-serif { font-family: 'Playfair Display', serif; }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #faf6ee;
+            color: #2c3e50;
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- NAVBAR -->
-    <header class="p-4 lg:px-12 bg-[#faf6ee]/90 backdrop-blur-md border-b border-orange-100 flex justify-between items-center sticky top-0 z-50">
-        <span class="text-2xl font-serif font-bold text-[#d35400] tracking-wide cursor-pointer" onclick="window.location.reload()">BabelBite</span>
-        <select id="langSelect" class="bg-white border border-orange-200 px-4 py-2 rounded-full text-sm font-medium cursor-pointer focus:outline-none shadow-sm">
+    <header class="p-4 lg:px-12 bg-[#faf6ee]/80 backdrop-blur-md border-b border-[#2c3e50]/10 flex justify-between items-center sticky top-0 z-40">
+        <span class="text-2xl font-serif font-bold text-[#d53400] tracking-wide">BabelBite</span>
+        <select id="langSelect" class="bg-white border border-[#2c3e50]/20 px-4 py-2 rounded-full text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#d53400]">
             <option value="en">English 🇬🇧</option>
             <option value="hi">हिन्दी 🇮🇳</option>
             <option value="bn">বাংলা 🇧🇩</option>
@@ -29,99 +33,229 @@
         </select>
     </header>
 
-    <!-- HERO SECTION -->
-    <section class="text-center py-12 px-4 max-w-4xl mx-auto">
-        <h1 id="heroTitle" class="text-4xl lg:text-6xl font-serif font-bold mb-6 leading-tight">World's Best Recipes, <span class="text-[#d35400]">In Your Language.</span></h1>
-        <p id="heroSub" class="text-gray-600 text-base mb-8">Explore authentic recipes translated perfectly into your local tongue.</p>
+    <section class="text-center py-16 px-4 max-w-4xl mx-auto">
+        <h1 id="heroTitle" class="text-4xl lg:text-6xl font-serif font-bold mb-6 leading-tight">
+            World's Best Recipes, <span class="text-[#d53400]">In Your Language.</span>
+        </h1>
+        <p id="heroSub" class="text-gray-600 text-base lg:text-lg mb-8 max-w-2xl mx-auto">
+            Explore authentic recipes translated perfectly into your local tongue with complete professional cooking guides.
+        </p>
         <div class="relative max-w-xl mx-auto">
-            <input type="text" id="search" placeholder="Search recipes..." class="w-full bg-white rounded-full pl-6 pr-12 py-3 shadow-sm border border-gray-200 focus:outline-none focus:border-[#d35400] transition-colors">
-            <i class="fa-solid fa-magnifying-glass absolute right-5 top-4 text-gray-400"></i>
+            <input type="text" id="search" placeholder="Search recipes by name, ingredient or category..." class="w-full bg-white rounded-full pl-6 pr-12 py-4 border border-gray-200 shadow-sm focus:outline-none focus:border-[#d53400] focus:ring-1 focus:ring-[#d53400] text-sm">
+            <i class="fa-solid fa-magnifying-glass absolute right-5 top-1/2 -translate-y-1/2 text-gray-400"></i>
         </div>
     </section>
 
-    <!-- RECIPE GRID -->
-    <main id="recipeGrid" class="px-4 lg:px-12 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 w-full flex-grow"></main>
+    <main id="recipeGrid" class="px-4 lg:px-12 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16 w-full flex-1">
+        </main>
 
-    <!-- RECIPE POPUP (MODAL) -->
-    <div id="recipeModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
-        <div class="bg-white rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl relative flex flex-col">
-            <button onclick="closeModal()" class="absolute top-4 right-4 bg-gray-100 hover:bg-gray-200 text-gray-700 w-10 h-10 rounded-full flex items-center justify-center z-10">
-                <i class="fa-solid fa-xmark text-lg"></i>
+    <div id="recipeModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden flex justify-center items-center p-4 overflow-y-auto">
+        <div class="bg-white w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl relative my-8 max-h-[90vh] flex flex-col">
+            <button onclick="closeModal()" class="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white rounded-full w-9 h-9 flex items-center justify-center transition-colors z-10 cursor-pointer">
+                <i class="fa-solid fa-xmark"></i>
             </button>
-            <div class="h-52 w-full overflow-hidden bg-gray-100 relative flex-shrink-0">
-                <img id="modalImage" class="w-full h-full object-cover" src="" alt="">
-                <div class="absolute bottom-4 left-4">
-                    <span id="modalCategory" class="text-xs font-bold text-white bg-[#d35400] px-3 py-1 rounded-full shadow-sm"></span>
+            
+            <div class="overflow-y-auto flex-1 pb-8">
+                <div class="h-64 w-full relative bg-gray-100">
+                    <img id="modalImage" src="" alt="" class="w-full h-full object-cover">
+                    <span id="modalCategory" class="absolute bottom-4 left-6 bg-[#d53400] text-white text-xs font-bold uppercase tracking-wider px-3 py-1.5 rounded-md"></span>
+                </div>
+                
+                <div class="px-6 lg:px-8 pt-6">
+                    <h2 id="modalTitle" class="text-2xl lg:text-3xl font-serif font-bold text-[#2c3e50] mb-2"></h2>
+                    <p id="modalDesc" class="text-gray-500 text-sm mb-6 leading-relaxed border-b border-gray-100 pb-4"></p>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="bg-[#faf6ee] rounded-xl px-4 py-3 flex items-center gap-3">
+                            <i class="fa-regular fa-clock text-[#d53400] text-lg"></i>
+                            <div>
+                                <p id="lblPrep" class="text-[10px] uppercase text-gray-400 font-bold tracking-wider">Prep Time</p>
+                                <p id="modalTime" class="text-sm font-semibold text-[#2c3e50]"></p>
+                            </div>
+                        </div>
+                        <div class="bg-[#faf6ee] rounded-xl px-4 py-3 flex items-center gap-3">
+                            <i class="fa-solid fa-layer-group text-[#d53400] text-lg"></i>
+                            <div>
+                                <p id="lblComp" class="text-[10px] uppercase text-gray-400 font-bold tracking-wider">Complexity</p>
+                                <p id="modalComplexity" class="text-sm font-semibold text-[#2c3e50]"></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-8">
+                        <h4 id="lblIngredientsHeading" class="text-lg font-bold text-[#2c3e50] font-serif mb-4 flex items-center gap-2"></h4>
+                        <ul id="modalIngredients" class="list-disc list-inside space-y-2 text-sm text-gray-600 pl-2"></ul>
+                    </div>
+                    
+                    <div>
+                        <h4 id="lblStepsHeading" class="text-lg font-bold text-[#2c3e50] font-serif mb-4 flex items-center gap-2"></h4>
+                        <ol id="modalSteps" class="space-y-4 text-sm text-gray-600 list-decimal list-inside"></ol>
+                    </div>
                 </div>
             </div>
-            <div class="p-6 overflow-y-auto">
-                <h2 id="modalTitle" class="text-2xl font-serif font-bold mb-2"></h2>
-                <p id="modalDesc" class="text-gray-500 text-sm mb-6 border-b border-gray-100 pb-4"></p>
-                
-                <div class="grid grid-cols-2 gap-4 mb-6 bg-orange-50 p-4 rounded-2xl text-sm font-medium text-gray-700">
-                    <div><i class="fa-solid fa-clock text-[#d35400] mr-2"></i> <span id="modalTime"></span></div>
-                    <div class="text-right"><i class="fa-solid fa-layer-group text-[#d35400] mr-2"></i> <span id="modalDiff"></span></div>
-                </div>
-
-                <div class="mb-6">
-                    <h3 id="modalIngTitle" class="text-lg font-bold mb-3 text-[#d35400]"></h3>
-                    <ul id="modalIngredients" class="list-disc list-inside space-y-2 text-gray-600 text-sm pl-2"></ul>
-                </div>
-
-                <div>
-                    <h3 id="modalStepsTitle" class="text-lg font-bold mb-3 text-[#d35400]"></h3>
-                    <ol id="modalSteps" class="list-decimal list-inside space-y-3 text-gray-600 text-sm pl-2"></ol>
-                </div>
+            
+            <div class="p-4 bg-gray-50 border-t border-gray-100">
+                <button id="modalActionBtn" class="bg-[#d53400] hover:bg-[#b02b00] text-white text-sm font-bold py-3 px-6 rounded-xl w-full transition-colors flex items-center justify-center gap-2 shadow-sm cursor-pointer">
+                    <i class="fa-solid fa-utensils"></i> <span id="modalActionText">Enjoy your delicious dish!</span>
+                </button>
             </div>
         </div>
     </div>
 
-    <!-- FOOTER -->
     <footer class="bg-[#2c3e50] text-white/80 text-center py-6 border-t border-gray-800 mt-auto">
-        <p class="text-sm font-medium">&copy; 2026 BabelBite. Powered by Passion.</p>
+        <p class="text-sm font-medium">&copy; 2026 BabelBite Platform. Real Craftsmanship. Zero Placeholders.</p>
     </footer>
 
     <script>
+        // Interface Localization Elements Map
+        const uiTranslations = {
+            en: {
+                heroTitle: "World's Best Recipes, <span class='text-[#d53400]'>In Your Language.</span>",
+                heroSub: "Explore authentic recipes translated perfectly into your local tongue with complete professional cooking guides.",
+                searchPlaceholder: "Search recipes by name, ingredient or category...",
+                prepTime: "Prep Time",
+                complexity: "Complexity",
+                ingredients: "Required Ingredients",
+                steps: "Step-by-Step Culinary Process",
+                actionBtn: "Enjoy your delicious dish!",
+                noRecipes: "No recipes found matching your search."
+            },
+            hi: {
+                heroTitle: "दुनिया के सर्वश्रेष्ठ व्यंजन, <span class='text-[#d53400]'>आपकी भाषा में।</span>",
+                heroSub: "अपनी स्थानीय भाषा में पूरी तरह से अनुवादित व्यंजनों और संपूर्ण व्यावसायिक कुकिंग गाइड का आनंद लें।",
+                searchPlaceholder: "नाम, सामग्री या श्रेणी से व्यंजन खोजें...",
+                prepTime: "तैयारी का समय",
+                complexity: "जटिलता",
+                ingredients: "आवश्यक सामग्री",
+                steps: "चरण-दर-चरण पाक प्रक्रिया",
+                actionBtn: "अपने स्वादिष्ट भोजन का आनंद लें!",
+                noRecipes: "आपकी खोज से मेल खाता कोई व्यंजन नहीं मिला।"
+            },
+            bn: {
+                heroTitle: "বিশ্বের সেরা রেসিپی, <span class='text-[#d53400]'>আপনার নিজের ভাষায়।</span>",
+                heroSub: "সম্পূর্ণ পেশাদার রান্নার গাইড সহ আপনার স্থানীয় ভাষায় নিখুঁتভাবে অনূদিত খাঁটি রেসিپیগুলি অন্বেষণ করুন।",
+                searchPlaceholder: "নাম, উপাদান বা বিভাগ দ্বারা রেসিپی খুঁজুন...",
+                prepTime: "প্রস্তুতির সময়",
+                complexity: "জটিলতা",
+                ingredients: "প্রয়োজনীয় উপাদান",
+                steps: "ধাপে ধাপে রান্নার প্রক্রিয়া",
+                actionBtn: "আপনার সুস্বাদু খাবার উপভোগ করুন!",
+                noRecipes: "আপনার অনুসন্ধানের সাথে মেলে এমন কোনও রেসিپی পাওয়া যায়নি।"
+            },
+            es: {
+                heroTitle: "Las mejores recetas del mundo, <span class='text-[#d53400]'>en tu idioma.</span>",
+                heroSub: "Explore recetas auténticas traducidas perfectamente a su lengua local con guías de cocina profesionales completas.",
+                searchPlaceholder: "Buscar recetas por nombre, ingrediente o categoría...",
+                prepTime: "Tiempo de prep.",
+                complexity: "Complejidad",
+                ingredients: "Ingredientes requeridos",
+                steps: "Proceso culinario paso a paso",
+                actionBtn: "¡Disfruta de tu delicioso plato!",
+                noRecipes: "No se encontraron recetas que coincidan con tu búsqueda."
+            },
+            ar: {
+                heroTitle: "أفضل الوصفات في العالم، <span class='text-[#d53400]'>بلغتك المحلية.</span>",
+                heroSub: "استكشف وصفات أصيلة مترجمة تمامًا إلى لغتك المحلية مع أدلة طهي احترافية كاملة.",
+                searchPlaceholder: "ابحث عن الوصفات بالاسم أو المكون أو الفئة...",
+                prepTime: "وقت التحضير",
+                complexity: "التعقيد",
+                ingredients: "المكونات المطلوبة",
+                steps: "عملية الطهي خطوة بخطوة",
+                actionBtn: "استمتع بوجبتك الشهية!",
+                noRecipes: "لم يتم العثور على وصفات تطابق بحثك."
+            }
+        };
+
+        // Complete Recipes Database Object
         const recipes = [
-          {
-            "category": "Indian Classics",
-            "prep_time": "35 mins",
-            "image": "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=600&q=80",
-            "languages": {
-              "en": { "title": "Classic Butter Chicken", "desc": "A rich, creamy, and mildly spiced authentic Indian tomato curry.", "diff": "Medium", "ingTitle": "Ingredients", "stepsTitle": "Cooking Steps", "ingredients": ["500g Chicken", "2 cups Tomato Puree", "1 cup Fresh Cream", "3 tbsp Butter", "1 tbsp Kasuri Methi", "Spices & Ginger Paste"], "steps": ["Marinate chicken chunks with yogurt, ginger-garlic paste, and spices for 20 mins.", "Pan-fry or roast the marinated chicken in a pan until completely golden brown.", "In another deep pan, melt butter and cook tomato puree with mild spices until oil separates.", "Slowly stir in the fresh cream and add roasted chicken into the rich gravy.", "Simmer on low heat for 5 minutes, crush and sprinkle kasuri methi on top.", "Enjoy your delicious dish!"] },
-              "hi": { "title": "क्लासिक बटर चिकन", "desc": "एक समृद्ध, मलाईदार और हल्के मसालों वाली प्रामाणिक भारतीय टमाटर करी।", "diff": "मध्यम", "ingTitle": "सामग्री", "stepsTitle": "बनाने की विधि", "ingredients": ["500 ग्राम चिकन", "2 कप टमाटर प्यूरी", "1 कप ताजी क्रीम", "3 चम्मच मक्खन", "1 चम्मच कसूरी मेथी", "मसाले और अदरक पेस्ट"], "steps": ["चिकन के टुकड़ों को दही, अदरक-लहसुन के पेस्ट और मसालों के साथ 20 मिनट के लिए मैरीनेट करें।", "मैरीनेट किए हुए चिकन को एक पैन में सुनहरा भूरा होने तक अच्छी तरह फ्राई या रोस्ट कर लें।", "दूसरे गहरे पैन में मक्खन पिघलाएं और टमाटर प्यूरी को हल्के मसालों के साथ तेल अलग होने तक पकाएं।", "अब धीरे-धीरे ताजी क्रीम मिलाएं और भुने हुए चिकन को इस गाढ़ी ग्रेवी में डाल दें।", "धीमी आंच पर 5 मिनट तक पकने दें, फिर ऊपर से कसूरी मेथी क्रश करके छिड़कें।", "अपनी स्वादिष्ट डिश का आनंद लें!"] },
-              "bn": { "title": "ক্লাসিক বাটার চিকেন", "desc": "একটি রিচ, ক্রিমি এবং হালকা মশলাযুক্ত খাঁটি ভারতীয় টমেটো কারি।", "diff": "মাঝারি", "ingTitle": "উপকরণ", "stepsTitle": "রান্নার ধাপ", "ingredients": ["৫০০ গ্রাম মাংস", "২ কাপ টমেটো পিউরি", "১ কাপ ফ্রেশ ক্রিম", "৩ চামচ মাখন", "১ চামচ কাসুরি মেথি", "মশলা ও আদা বাটা"], "steps": ["মাংসের টুকরোগুলি দই, আদা-রসুন বাটা এবং মশলা দিয়ে ২০ মিনিট ম্যারিনেট করে রাখুন।", "ম্যারিনেট করা মাংস একটি প্যানে সোনালী বাদামী হওয়া পর্যন্ত ভালো করে ভেজে নিন।", "অন্য একটি পাত্রে মাখন গলিয়ে টমেটো পিউরি ও হালকা মশলা দিয়ে তেল ছাড়া পর্যন্ত কষাতে থাকুন।", "এবার আস্তে আস্তে ফ্রেশ ক্রিম মেশান এবং ভেজে রাখা মাংস গ্রেভির মধ্যে দিয়ে দিন।", "ধীমে আঁচে ৫ মিনিট রান্না করুন, নামানোর আগে ওপর থেকে কাসুরি মেথি ছড়িয়ে দিন।", "আপনার সুস্বাদু খাবারটি উপভোগ করুন!"] },
-              "es": { "title": "Pollo a la Mantequilla", "desc": "Un curry de tomate indio auténtico, rico, cremoso y ligeramente especiado.", "diff": "Medio", "ingTitle": "Ingredientes", "stepsTitle": "Pasos de Cocina", "ingredients": ["500g de Pollo", "2 tazas de Puré de Tomate", "1 taza de Crema Fresca", "3 cucharadas de Mantequilla", "Especias"], "steps": ["Marinar los trozos de pollo con yogur, pasta de ajo y jengibre, y especias por 20 minutos.", "Freír el pollo marinado en una sartén hasta que esté bien dorado.", "En otra sartén profunda, derrita la mantequilla y cocine el puré de tomate hasta que se separe el aceite.", "Agregue lentamente la crema fresca e introduzca el pollo dorado en la salsa rica.", "Cocine a fuego lento durante 5 minutos y decore.", "¡Disfruta de tu delicioso plato!"] },
-              "ar": { "title": "دجاج بالزبدة الكلاسيكي", "desc": "كاري طماطم هندي أصيل غني بالكريمة ومتبل خفيفاً.", "diff": "متوسط", "ingTitle": "المكونات", "stepsTitle": "خطوات الطبخ", "ingredients": ["500 غرام دجاج", "2 كوب بيوريه طماطم", "1 كوب كريمة طازجة", "3 ملاعق كبيرة زبدة", "بهارات هندية"], "steps": ["نقع قطع الدجاج مع اللبن، معجون الثوم والزنجبيل، والبهارات لمدة 20 دقيقة.", "اقلي الدجاج المتبل في مقلاة حتى يصبح لونه بنياً ذهبياً تماماً.", "في مقلاة عميقة أخرى، ذوّبي الزبدة واطهي بيوريه الطماطم مع البهارات حتى ينفصل الزيت.", "أضيفي الكريمة الطازجة ببطء وضعي الدجاج المحمر داخل المرقة الغنية.", "اتركيه على نار خفيفة لمدة 5 دقائق ثم رشي الكاسوري ميثي.", "استمتع بوجبتك اللذيذة!"] }
-            }
-          },
-          {
-            "category": "Street Food",
-            "prep_time": "30 mins",
-            "image": "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80",
-            "languages": {
-              "en": { "title": "Steamed Veg Momos", "desc": "Delicious street-style dumplings stuffed with seasoned finely chopped vegetables.", "diff": "Easy", "ingTitle": "Ingredients", "stepsTitle": "Cooking Steps", "ingredients": ["1.5 cups All-purpose Flour", "1 cup Chopped Cabbage", "1/2 cup Grated Carrots", "1 tbsp Ginger-Garlic paste", "1 tbsp Soy Sauce", "1 tbsp Oil"], "steps": ["Mix flour, water, and a pinch of salt to knead a tight, smooth dough. Rest it for 15 mins.", "Heat oil in a pan, saute ginger-garlic paste, then add cabbage and carrots on high flame.", "Add soy sauce, black pepper, and salt. Cook for 3 mins until the moisture dries out completely.", "Roll the dough into very thin, small round discs keeping the edges thinner than the center.", "Place a spoonful of stuffing in the center, pleat the edges carefully to seal the momo shape.", "Arrange in a greased steamer basket and steam over boiling water for 10-12 minutes.", "Enjoy your delicious dish!"] },
-              "hi": { "title": "स्टीम्ड वेज मोमोज", "desc": "मसालेदार और बारीक कटी हुई मिक्स सब्जियों से भरे हुए स्वादिष्ट स्ट्रीट-स्टाइल डंपलिंग्स।", "diff": "आसान", "ingTitle": "सामग्री", "stepsTitle": "बनाने की विधि", "ingredients": ["1.5 कप मैदा", "1 कप कटी पत्तागोभी", "1/2 कप कद्दूकस गाजर", "1 चम्मच अदरक-लहसुन पेस्ट", "1 चम्मच सोया सॉस", "1 चम्मच तेल"], "steps": ["मैदा, पानी और एक चुटकी नमक मिलाकर एक सख्त और चिकना आटा गूंध लें। इसे 15 मिनट आराम दें।", "पैन में तेल गर्म करें, अदरक-लहसुन पेस्ट भूनें, फिर तेज आंच पर पत्तागोभी और गाजर डालें।", "सोया सॉस, काली मिर्च और नमक डालें। 3 मिनट तक पकाएं जब तक कि सब्जियों का पानी सूख न जाए।", "आटे की छोटी-छोटी लोइयां बनाकर बेहद पतली और गोल पूरियां बेल लें (किनारे पतले रखें)।", "बीच में एक चम्मच स्टफिंग रखें और किनारों को चुनते हुए मोड़कर मोमोज का सुंदर शेप दें।", "मोमोज को ग्रीस की हुई स्टीमर प्लेट पर रखें और उबलते पानी के ऊपर 10-12 मिनट तक स्टीम करें।", "अपनी स्वादिष्ट डिश का आनंद लें!"] },
-              "bn": { "title": "ভেজ স্টিমড মোমো", "desc": "মশলাদার মিহি কুচানো সবজি দিয়ে তৈরি সুস্বাদু এবং জনপ্রিয় স্ট্রিট-স্টাইল ডাম্পলিং।", "diff": "সহজ", "ingTitle": "উপকরণ", "stepsTitle": "রান্নার ধাপ", "ingredients": ["১.৫ কাপ ময়দা", "১ কাপ কুচানো বাঁধাকপি", "১/২ কাপ গ্রেট করা গাজর", "১ চামচ আদা-রসুন বাটা", "১ চামচ সয়া সস", "১ চামচ তেল"], "steps": ["ময়দা, জল ও এক চিমটি নুন মিশিয়ে একটি শক্ত ও মসৃণ ডো তৈরি করুন। ১৫ মিনিট ঢাকা দিয়ে রাখুন।", "প্যানে তেল গরম করে আদা-রসুন বাটা ভাজুন, তারপর কড়া আঁচে বাঁধাকপি ও গাজর কুচি দিয়ে দিন।", "সয়া সস, গোলমরিচ গুঁড়ো এবং নুন মেশান। সবজির জল শুকানো পর্যন্ত ৩ মিনিট রান্না করুন।", "ডো থেকে ছোট ছোট লেচি কেটে একদম পাতলা গোল লুচির মতো বেলে নিন (ধারগুলো যেন পাতলা হয়)।", "মাঝখানে এক চামচ পুর রাখুন এবং ধারগুলো কুঁচকে মুড়ে মোমোর আকৃতি দিন।", "তেল মাখানো স্টিমারে মোমোগুলি সাজিয়ে ফুটন্ত জলের ওপর ১০-১২ মিনিট ভাপিয়ে নিন।", "আপনার সুস্বাদু খাবারটি উপভোগ করুন!"] },
-              "es": { "title": "Momos de Verduras al Vapor", "desc": "Deliciosas empanadillas al estilo callejero rellenas de verduras picadas sazonadas.", "diff": "Fácil", "ingTitle": "Ingredientes", "stepsTitle": "Pasos de Cocina", "ingredients": ["1.5 tazas de Harina", "1 taza de Repollo picado", "1/2 taza de Zanahoria", "1 cucharada de Pasta de Jengibre y Ajo", "Salsa de Soya"], "steps": ["Mezclar harina, agua y sal para amasar una masa firme y suave. Dejar reposar por 15 minutos.", "Calentar aceite, saltear la pasta de jengibre y ajo, luego agregar el repollo y la zanahoria.", "Añadir salsa de soya y pimienta negra. Cocinar por 3 minutos hasta que se seque la humedad.", "Estirar la masa en discos redondos muy finos, manteniendo los bordes delgados.", "Colocar una cucharada de relleno en el centro y doblar los bordes para sellar el momo.", "Colocar en una vaporera engrasada y cocinar al vapor sobre agua hirviendo durante 10-12 minutos.", "¡Disfruta de tu delicioso plato!"] },
-              "ar": { "title": "موموس الخضار على البخار", "desc": "فطائر لذيذة على طريقة الشارع محشوة بالخضار المفروم المتبل بشكل رائع.", "diff": "سهل", "ingTitle": "المكونات", "stepsTitle": "خطوات الطبخ", "ingredients": ["1.5 كوب دقيق", "1 كوب ملفوف مفروم", "1/2 كوب جزر مبشور", "1 ملعقة معجون زنجبيل وثوم", "صلصة صويا"], "steps": ["خلط الدقيق، الماء والملح للحصول على عجينة متماسكة وناعمة. اتركيها ترتاح لمدة 15 دقيقة.", "سخني الزيت، شوّحي معجون الثوم والزنجبيل، ثم أضيفي الملفوف والجزر على نار عالية.", "أضيفي صلصة الصويا والفلفل الأسود. اطهي لمدة 3 دقائق حتى تجف الرطوبة تماماً.", "افردي العجينة إلى أقراص دائرية صغيرة ورقيقة جداً مع إبقاء الحواف رفيعة.", "ضعي ملعقة من الحشوة في المركز، واجمعي الحواف معاً لإغلاق الموموس بشكل مثالي.", "رصيها في سلة بخار مدهونة واطهيها على البخار فوق الماء المغلي لمدة 10-12 دقيقة.", "استمتع بوجبتك اللذيذة!"] }
-            }
-          },
-          {
-            "category": "Italian Classics",
-            "prep_time": "20 mins",
-            "image": "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=600&q=80",
-            "languages": {
-              "en": { "title": "Margherita Pizza", "desc": "Classic Italian thin-crust pizza topped with rich tomato sauce, fresh mozzarella, and basil leaves.", "diff": "Easy", "ingTitle": "Ingredients", "stepsTitle": "Cooking Steps", "ingredients": ["1 Ready Pizza Base", "1/2 cup Italian Tomato Sauce", "1 cup Fresh Mozzarella Cheese", "5-6 Fresh Basil leaves", "1 tbsp Olive Oil"], "steps": ["Preheat your home oven to 220°C for at least 10 minutes before baking.", "Place the pizza base on a baking tray and brush the edges lightly with olive oil.", "Spread the Italian tomato sauce evenly across the base using the back of a spoon.", "Tear fresh mozzarella cheese into chunks and scatter them generously over the sauce.", "Bake in the preheated oven at 220°C for 10-12 minutes until the crust turns golden and cheese bubbles.", "Remove from oven, top with fresh basil leaves immediately, and drizzle a little olive oil.", "Enjoy your delicious dish!"] },
-              "hi": { "title": "मार्गॉरिटा पिज्जा", "desc": "समृद्ध टमाटर सॉस, ताज़ा मोज़ारेला और तुलसी के पत्तों से सजा क्लासिक इतालवी थिन-क्रस्ट पिज्जा।", "diff": "आसान", "ingTitle": "सामग्री", "stepsTitle": "बनाने की विधि", "ingredients": ["1 रेडीमेड पिज्जा बेस", "1/2 कप इतालवी टमाटर सॉस", "1 कप मोज़ारेला चीज़", "5-6 ताज़ा तुलसी के पत्ते", "1 चम्मच जैतून का तेल"], "steps": ["बेक करने से पहले अपने घरेलू ओवन को 220°C पर कम से कम 10 मिनट के लिए प्रीहीट करें।", "पिज्जा बेस को बेकिंग ट्रे पर रखें और उसके किनारों पर हल्का सा जैतून का तेल लगाएं।", "चम्मच के पिछले हिस्से का उपयोग करके इतालवी टमाटर सॉस को पूरे बेस पर समान रूप से फैलाएं।", "मोज़ारेला चीज़ को टुकड़ों में तोड़कर सॉस के ऊपर अच्छी मात्रा में चारों तरफ बिखेर दें।", "प्रीहीटेड ओवन में 220°C पर 10-12 मिनट बेक करें जब तक कि क्रस्ट गोल्डन न हो जाए और चीज़ पिघल न जाए।", "ओवन से निकालें, तुरंत ताज़ा तुलसी के पत्ते ऊपर रखें और थोड़ा सा जैतून का तेल छिड़कें।", "अपनी स्वादिष्ट डिश का आनंद लें!"] },
-              "bn": { "title": "মার্গারিটা পিৎজা", "desc": "ধীমে আঁচে তৈরি টমেটো সস, তাজা মোজারেলা এবং তুলসী পাতা দিয়ে সাজানো ইতালীয় থিন-ক্রাস্ট পিৎজা।", "diff": "সহজ", "ingTitle": "উপকরণ", "stepsTitle": "রান্নার ধাপ", "ingredients": ["১টি পিৎজা বেস", "১/২ কাপ টমেটো সস", "১ কাপ মোজারেলা চিজ", "৫-৬টি তাজা তুলসী পাতা", "১ চামচ অলিভ অয়েল"], "steps": ["পিৎজা বেক করার আগে ওভেনটি ২২০ ডিগ্রিতে কমপক্ষে ১০ মিনিট প্রি-হিট করে নিন।", "পিৎজা বেসটি একটি বেকিং ট্রের ওপর রাখুন এবং ধারগুলোতে হালকা অলিভ অয়েল ব্রাশ করুন।", "একটি চামচের পিছনের দিক দিয়ে টমেটো সসটি পিৎজা বেসের ওপর সমানভাবে ছড়িয়ে দিন।", "মোজারেলা চিজের টুকরোগুলি সসের ওপর সুন্দরভাবে চারদিকে ছড়িয়ে দিন।", "প্রি-হিট করা ওভেনে ২২০ ডিগ্রিতে ১০-১২ মিনিট বেক করুন যতক্ষণ না ধারগুলো সোনালী হচ্ছে ও চিজ গলছে।", "ওভেন থেকে বের করে অবিলম্বে তাজা তুলসী পাতা দিন এবং ওপর থেকে সামান্য অলিভ অয়েল ছড়িয়ে দিন।", "আপনার সুস্বাদু খাবারটি উপভোগ করুন!"] },
-              "es": { "title": "Pizza Margherita", "desc": "Clásica pizza italiana de masa fina cubierta con salsa de tomate rica, mozzarella fresca y hojas de albahaca.", "diff": "Fácil", "ingTitle": "Ingredientes", "stepsTitle": "Pasos de Cocina", "ingredients": ["1 Base de Pizza", "1/2 taza de Salsa de Tomate", "1 taza de Queso Mozzarella", "Hojas de Albahaca fresca", "Aceite de Oliva"], "steps": ["Precaliente el horno a 220°C durante al menos 10 minutos antes de hornear.", "Coloque la base de pizza en una bandeja y unte los bordes con un poco de aceite de oliva.", "Extienda la salsa de tomate de manera uniforme sobre la base con la parte posterior de una cuchara.", "Distribuya trozos de queso mozzarella fresco generosamente sobre la salsa.", "Hornee a 220°C durante 10-12 minutos hasta que la masa esté dorada y el queso burbujee.", "Retire del horno, agregue las hojas de albahaca fresca inmediatamente y vierta un hilo de aceite.", "¡Disfruta de tu delicioso plato!"] },
-              "ar": { "title": "بيتزا مارغريتا", "desc": "بيتزا إيطالية كلاسيكية رقيقة العجينة مغطاة بصلصة الطماطم الغنية، جبنة الموزاريلا الطازجة، وأوراق الريحان.", "diff": "سهل", "ingTitle": "المكونات", "stepsTitle": "خطوات الطبخ", "ingredients": ["1 قاعدة بيتزا جاهزة", "1/2 كوب صلصة طماطم إيطالية", "1 كوب جبن موزاريلا طازج", "5-6 أوراق ريحان طازجة", "زيت زيتون"], "steps": ["سخني الفرن مسبقاً على درجة 220 مئوية لمدة 10 دقائق على الأقل قبل الخبز.", "ضعي قاعدة البيتزا في صينية الخبز وادهني الحواف بقليل من زيت الزيتون.", "افردي صلصة الطماطم الإيطالية بالتساوي على القاعدة باستخدام ظهر الملعقة.", "وزعي قطع جبن الموزاريلا الطازجة بوفرة فوق الصلصة في كل مكان.", "اخبزيها في الفرن المسخن على 220 درجة لمدة 10-12 دقيقة حتى تصبح العجينة ذهبية وتذوب الجبنة.", "أخرجيها من الفرن، وضعي أوراق الريحان الطازجة فوراً ورشي القليل من زيت الزيتون.", "استمتع بوجبتك اللذيذة!"] }
-            }
-          },
-          {
-            "category": "Desserts",
-            "prep_time": "15 mins",
-            "image": "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80",
-            "languages": {
-              "en": { "title": "Chocolate Lava Cake", "desc": "An irresistible rich chocolate dessert with a warm, gooey liquid chocolate center.", "diff": "Medium", "ingTitle": "Ingredients", "stepsTitle": "Cooking Steps", "ingredients": ["100g Dark Chocolate", "50g Butter", "2 Eggs", "3 tbsp Sugar", "2 tbsp All-purpose Flour"], "steps": ["Preheat your oven to 200°C and grease your baking cups or ramekins with butter.", "Melt the dark chocolate and butter together in a bowl over hot water or in a microwave, then let it cool slightly.", "In another bowl, whisk the eggs and sugar vigorously together until pale and thick.", "Gently fold the melted chocolate mi
+            {
+                category: "Indian Classics",
+                prep_time: "45 mins",
+                complexity: "Medium Complexity",
+                image: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=800&q=80",
+                languages: {
+                    en: {
+                        title: "Classic Butter Chicken",
+                        desc: "A rich, velvety, mildly sweet and perfectly spiced authentic North Indian tomato-cream curry.",
+                        ingredients: ["500g Boneless Chicken Chunks", "2 cups Thick Tomato Puree", "1 cup Fresh Heavy Cream", "3 tbsp Unsalted White Butter", "1.5 tbsp Ginger-Garlic Paste", "1 tbsp Kashmiri Red Chili Powder", "1 cup Plain Yogurt / Dahi"],
+                        steps: ["Marinate chicken chunks completely with yogurt, ginger-garlic paste, and spices for 30 minutes inside the refrigerator.", "Pan-sear the marinated chicken chunks on high heat until beautifully charred and fully cooked.", "In the same pan, cook down the fresh tomato puree with premium white butter until fat separates.", "Slowly stir in the heavy cream on a lower flame to build a rich silky texture.", "Add chicken back into bubbling gravy and simmer for 5 minutes."]
+                    },
+                    hi: {
+                        title: "क्लासिक बटर चिकन",
+                        desc: "एक समृद्ध, मखमली, हल्के मीठे और पूरी तरह से मसालेदार प्रामाणिक उत्तर भारतीय टमाटर-मलाई करी।",
+                        ingredients: ["500 ग्राम बोनलेस चिकन", "2 कप गाढ़ी टमाटर प्यूरी", "1 कप ताजी हैवी क्रीम", "3 चम्मच सफेद मक्खन", "1.5 चम्मच अदरक-लहसुन पेस्ट", "1 चम्मच कश्मीरी लाल मिर्च पाउडर", "1 कप सादा दही"],
+                        steps: ["चिकन को दही, अदरक-लहसुन पेस्ट और मसालों के साथ 30 मिनट के लिए फ्रिज में मैरिनेट करें।", "मैरिनेटेड चिकन को तेज आंच पर अच्छी तरह से भूनें जब तक वह पक न जाए।", "उसी पैन में टमाटर प्यूरी और मक्खन को तब तक पकाएं जब तक कि तेल अलग न हो जाए।", "धीमी आंच पर हैवी क्रीम डालें ताकि एक रेशमी गाढ़ी ग्रेवी तैयार हो सके।", "चिकन को ग्रेवी में डालकर 5 मिनट के लिए धीमी आंच पर पकाएं।"]
+                    },
+                    bn: {
+                        title: "ক্লাসিক বাটার চিকেন",
+                        desc: "একটি সমৃদ্ধ, মখমল এবং নিখুঁতভাবে মশলাযুক্ত খাঁটি উত্তর ভারতীয় টমেটো-ক্রিম তরকারি।",
+                        ingredients: ["৫০০ গ্রাম বোনলেস চিকেন", "২ কাপ টমেটো পিউরি", "১ কাপ ফ্রেশ হেভি ক্রিম", "৩ চামচ মাখন", "১.৫ চামচ আদা-রসুন পেস্ট", "১ চামচ কাশ্মীরি লঙ্কা গুঁড়ো", "১ কাপ টক দই"],
+                        steps: ["চিকেন দই, আদা-রসুন পেস্ট এবং মশলা দিয়ে ৩০ মিনিট ম্যারিনেট করে রাখুন।", "ম্যারিনেট করা চিকেন কড়াইতে ভালো করে ভেজে তুলে রাখুন।", "একই কড়াইতে টমেটো পিউরি এবং মাখন ভালো করে কষিয়ে নিন।", "ধিমী আঁচে হেভি ক্রিম যোগ করে একটি চমৎকার গ্রেভি তৈরি করুন।", "ভেজে রাখা চিকেন গ্রেভিতে দিয়ে ৫ মিনিট ফুটিয়ে নিন।"]
+                    },
+                    es: {
+                        title: "Pollo a la Mantequilla",
+                        desc: "Un curry de tomate rico, cremoso y ligeramente especiado, un auténtico clásico del norte de la India.",
+                        ingredients: ["500g de Pollo deshuesado", "2 tazas de Puré de tomate", "1 taza de Crema espesa", "3 cucharadas de Mantequilla", "1.5 cucharadas de Pasta de jengibre y ajo", "1 cucharada de Chile en polvo"],
+                        steps: ["Marinar el pollo con yogur y especias durante 30 minutos.", "Dorar el pollo en una sartén a fuego alto.", "Cocinar el puré de tomate con mantequilla hasta que se reduzca.", "Agregar la crema a fuego bajo para crear una textura sedosa.", "Añadir el pollo a la salsa y guisar por 5 minutos."]
+                    },
+                    ar: {
+                        title: "دجاج بالزبدة الكلاسيكي",
+                        desc: "كاري هندي شمالي غني بالكريمة والطماطم مع نكهات متوازنة تماماً ولذيذة للغاية.",
+                        ingredients: ["500 غرام قطع دجاج", "2 كوب بيوريه الطماطم", "1 كوب كريمة طهي طازجة", "3 ملعقة زبدة بيضاء", "1.5 ملعقة معجون ثوم وزنجبيل"],
+                        steps: ["نقع الدجاج في الزبادي والبهارات لمدة 30 دقيقة في الثلاجة.", "طهي قطع الدجاج على نار عالية حتى تنضج وتكتسب لوناً جميلاً.", "طهي بيوريه الطماطم والزبدة في المقلاة حتى ينفصل الزيت.", "إضافة الكريمة الطازجة على نار هادئة للحصول على قوام حريري.", "إعادة الدجاج إلى الصلصة وتركه يغلي لمدة 5 دقائق."]
+                    }
+                }
+            },
+            {
+                category: "Street Food",
+                prep_time: "35 mins",
+                complexity: "Easy to Medium",
+                image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=800&q=80",
+                languages: {
+                    en: {
+                        title: "Steamed Veg Momos",
+                        desc: "Authentic street-style Himalayan dumplings packed with finely minced crunchy vegetables and light savory seasonings.",
+                        ingredients: ["1 cup All-Purpose Flour / Maida", "1 cup Finely Chopped Cabbage", "0.5 cup Grated Carrots", "1 tbsp Ginger-Garlic Paste", "1 tbsp Soy Sauce"],
+                        steps: ["Knead a smooth firm dough with flour and water, then let it rest covered.", "Saute vegetables with ginger-garlic paste and soy sauce on high heat briefly.", "Roll thin small wrappers from the dough balls.", "Place filling in the center and fold into secure pleated shapes.", "Steam the momos for 10-12 minutes inside a steamer until translucent."]
+                    },
+                    hi: {
+                        title: "स्टीम्ड वेज मोमोज",
+                        desc: "बारीक कटी हुई कुरकुरी सब्जियों और हल्के मसालों से भरे प्रामाणिक स्ट्रीट-स्टाइल हिमालयन डंपलिंग्स।",
+                        ingredients: ["1 कप मैदा", "1 कप बारीक कटी पत्तागोभी", "0.5 कप कद्दूकस गाजर", "1 चम्मच अदरक-लहसुन पेस्ट", "1 चम्मच सोया सॉस"],
+                        steps: ["मैदा और पानी के साथ एक चिकना सख्त आटा गूंध लें और ढककर रख दें।", "सब्जियों को अदरक-लहसुन पेस्ट और सोया सॉस के साथ तेज आंच पर हल्का भूनें।", "आटे की छोटी-छोटी पतली पूरियां बेल लें।", "बीच में स्टफिंग रखें और मोमोज का आकार देते हुए फोल्ड करें।", "मोमोज को स्टीमर में 10-12 मिनट के लिए भाप में पकाएं।"]
+                    },
+                    bn: {
+                        title: "স্টিমড ভেজ মোমো",
+                        desc: "মিহি করে কুচানো ক্রাঞ্চি সবজি এবং হালকা মশলাদার স্বাদে ভরা হিমালয় অঞ্চলের স্ট্রিট-স্টাইল ডাম্পলিং।",
+                        ingredients: ["১ कप ময়দা", "১ কাপ কুচানো বাঁধাকপি", "০.৫ কাপ কুচানো গাজর", "১ চামচ আদা-রসুন পেস্ট", "১ চামচ সয়া সস"],
+                        steps: ["ময়দা এবং জল দিয়ে একটি নরম মণ্ড তৈরি করুন এবং এটি ঢেকে রাখুন।", "সবজিগুলি আদা-রসুন পেস্ট এবং সয়া সস দিয়ে তীব্র আঁচে হালকা নেড়ে নিন।", "মণ্ড থেকে ছোট ছোট পাতলা লেচি বেলে নিন।", "মাঝখানে পুরটি রাখুন এবং মোমোর আকারে সুন্দর ভাঁজ দিন।", "মোমো ১০-১২ মিনিটের জন্য স্টিমারে ভাপিয়ে নিন।"]
+                    },
+                    es: {
+                        title: "Momos Vegetarianos",
+                        desc: "Empanadillas del Himalaya al estilo callejero auténtico, rellenas de verduras crujientes picadas.",
+                        ingredients: ["1 taza de Harina de trigo", "1 taza de Repollo picado", "0.5 taza de Zanahoria rallada", "1 cucharada de Salsa de soja"],
+                        steps: ["Amasar la harina con agua hasta tener una masa firme y dejar reposar.", "Saltear las verduras con la salsa de soja rápidamente a fuego alto.", "Estirar la masa en discos pequeños y delgados.", "Colocar el relleno y cerrar haciendo pliegues tradicionales.", "Cocinar al vapor durante 10-12 minutos hasta que estén listos."]
+                    },
+                    ar: {
+                        title: "مومو الخضار على البخار",
+                        desc: "فطائر الهيمالايا الشهيرة على طراز الشارع محشوة بالخضار المقرمشة المفرومة ناعماً.",
+                        ingredients: ["1 كوب دقيق متعدد الاستخدامات", "1 كوب ملفوف مفروم ناعم", "0.5 كوب جزر مبشور", "1 ملعقة صلصة الصويا"],
+                        steps: ["عجن الدقيق بالماء للحصول على عجينة متماسكة وتركها ترتاح.", "تشويح الخضار مع صلصة الصويا والثوم على نار عالية بسرعة.", "فرد العجينة إلى دوائر صغيرة ورقيقة جداً.", "وضع الحشوة في المنتصف وإغلاق الفطيرة على شكل طيات محكمة.", "طهي المومو على البخار لمدة 10-12 دقيقة حتى تنضج."]
+                    }
+                }
+            },
+            {
+                category: "Italian Classics",
+                prep_time: "25 mins",
+                complexity: "Easy Precision",
+                image: "https://images.unsplash.com/photo-1604382355076-af4b0eb60143?auto=format&fit=crop&w=800&q=80",
+                languages: {
+                    en: {
+                        title: "Classic Margherita Pizza",
+                        desc: "The quintessential Italian thin-crust masterpiece layered with rich rustic tomato sauce, creamy fresh mozzarella, and aromatic basil leaves.",
+                        ingredients: ["1 Pre-baked Pizza Crust / Dough", "0.5 cup Authentic Tomato Sauce", "1 cup Shredded Mozzarella Cheese", "5-6 Fresh Basil Leaves", "1 tbsp Extra Virgin Olive Oil"],
+                        steps: ["Preheat your oven to 220°C (430°F) for maximum baking efficiency.", "Spread the rustic tomato sauce evenly over the prepared pizza base surface.", "Top generously with fresh mozzarella cheese evenly across the pizza.", "Bake at 220°C for 10-12 minutes until the crust turns golden and cheese bubbles.", "Garnish instantly with fresh torn basil leaves and a drizzle of olive oil."]
+                    },
+                    hi: {
+                        title: "क्लासिक मार्गेरिटा पिज्जा",
+                        desc: "समृद्ध टमाटर सॉस, मलाईदार मोज़ारेला चीज़ और सुगंधित तुलसी के पत्तों से
