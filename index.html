@@ -517,174 +517,166 @@
         }
 
         // 🔥 BABELCHEF AI ENGINE CORE LOGIC 🔥
-        function triggerBabelChefAI() {
-            const rawInput = document.getElementById('searchInput').value.trim();
-            const dishName = rawInput ? rawInput : "Secret Imperial Delicacy";
-            const capitalizedDish = dishName.charAt(0).toUpperCase() + dishName.slice(1);
+             function triggerBabelChefAI() {
+    const rawInput = document.getElementById('searchInput').value.trim();
+    const dishName = rawInput ? rawInput : "Gourmet Delicacy";
+    const capitalizedDish = dishName.charAt(0).toUpperCase() + dishName.slice(1);
+    const lowerDish = dishName.toLowerCase();
 
-            const overlay = document.getElementById('aiLoadingOverlay');
-            overlay.classList.remove('hidden');
+    const overlay = document.getElementById('aiLoadingOverlay');
+    overlay.classList.remove('hidden');
 
-            setTimeout(() => {
-                const aiRecipeId = "ai_recipe_" + Date.now();
-                const generatedRecipe = {
-                    id: aiRecipeId,
-                    baseCategory: "BabelChef AI",
-                    imageUrl: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
-                    languages: {
-                        en: {
-                            title: `AI: ${capitalizedDish}`,
-                            desc: `A pristine custom culinary blueprint for ${capitalizedDish}, engineered instantly by the BabelChef AI matrix.`,
-                            category: "BabelChef AI ✨",
-                            difficulty: "AI Precision",
-                            time: "25 mins",
-                            ingredients: [`Premium choice parts for ${capitalizedDish}`, "1 tbsp Culinary Secret Essence", "2 pinches Organic Microgreens", "1 cup Refined Aromatic Broth", "Gourmet Spices Blend"],
-                            steps: [
-                                `Prepare your fresh ingredients and optimize heat metrics specific to a custom gourmet ${capitalizedDish}.`,
-                                "Infuse the base mixture slowly with the unique BabelChef aromatic spice matrix over medium precision flame.",
-                                "Simmer continuously for 15 minutes until structural texture reaches optimal savory concentration.",
-                                "Plate with professional elite geometric balance, garnish with fresh organic greens, and serve hot."
-                            ]
-                        },
-                        hi: {
-                            title: `AI: ${capitalizedDish}`,
-                            desc: `BabelChef AI द्वारा आपके लिए तुरंत डिज़ाइन की गई ${capitalizedDish} की एक डिजिटल मास्टरक्लास रेसिपी।`,
-                            category: "BabelChef AI ✨",
-                            difficulty: "AI सटीकता",
-                            time: "25 मिनट",
-                            ingredients: [`${capitalizedDish} की मुख्य सामग्री`, "1 चम्मच सीक्रेट कुलीनरी एसेंस", "2 चुटकी ताजी हरी पत्तियां", "1 कप सुगंधित अर्क", "विशेष प्रीमियम मसालों का मिश्रण"],
-                            steps: [
-                                `प्रीमियम स्वाद के लिए सामग्री को साफ करके ${capitalizedDish} के अनुसार तापमान सेट करें।`,
-                                "धीमी आंच पर BabelChef के विशेष सुगंधित मिश्रण को बेस ग्रेवी में धीरे-धीरे मिलाएं।",
-                                "सामग्री को 15 मिनट तक पकने दें जब तक कि उसका स्वाद एकदम गाढ़ा और मखमली न हो जाए।",
-                                "प्लेट में सुरुचिपूर्ण ढंग से सजाएं, ऊपर से ताजी पत्तियां डालें और गरमागरम परोसें।"
-                            ]
-                        },
-                        es: {
-                            title: `AI: ${capitalizedDish}`,
-                            desc: `Un plano culinario premium para ${capitalizedDish}, creado instantáneamente por la matriz de BabelChef AI.`,
-                            category: "BabelChef AI ✨",
-                            difficulty: "Precisión de IA",
-                            time: "25 min",
-                            ingredients: [`Ingredientes estelares para ${capitalizedDish}`, "1 cucharada de Esencia Secreta", "2 pizcas de Microvegetales", "1 taza de Caldo Aromático"],
-                            steps: [
-                                `Prepare los ingredientes e instrumente el calor óptimo para el refinado de ${capitalizedDish}.`,
-                                "Mezcle la base lentamente con el sistema de condimentos BabelChef a fuego medio estable.",
-                                "Deje herver a fuego lento hasta que la emulsión logre una densidad de textura perfecta.",
-                                "Sirva caliente con estética minimalista de alta cocina."
-                            ]
-                        }
-                    }
-                };
+    setTimeout(() => {
+        let ingEN = [], stepsEN = [], ingHI = [], stepsHI = [];
+        let customImg = "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80"; // Default Food Image
 
-                recipes.unshift(generatedRecipe);
+        // ==========================================
+        // 1. RICE FAMILY (Pulao, Palow, Biryani, Rice...)
+        // ==========================================
+        if (lowerDish.match(/(rice|pulao|palow|biryani|chawal|khichdi)/)) {
+            customImg = "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=800&q=80";
+            
+            ingEN = ["2 cups Premium Basmati Rice", "Aromatic Whole Spices (Cardamom, Cloves, Cinnamon)", "1/2 cup Fresh Chopped Veggies / Saffron strands", "3 tbsp Pure Desi Ghee", "Warm Water for Simmering"];
+            stepsEN = [
+                `Gently wash the premium rice grains under cold water until clear, then soak for 20 minutes.`,
+                "Heat pure desi ghee in a deep vessel and let the aromatic whole spices crackle and release oils.",
+                `Add the soaked rice and gently toss with the spices to coat every grain with ghee without breaking them.`,
+                "Pour in precisely measured warm water, bring to a boil, then tightly cover and simmer on lowest heat for 15 minutes."
+            ];
 
-                searchQuery = "";
-                document.getElementById('searchInput').value = "";
-                selectedCategory = "All";
+            ingHI = ["2 कप प्रीमियम बासमती चावल", "सुगंधित खड़े मसाले (इलायची, लौंग, दालचीनी)", "1/2 कप कटी हुई ताज़ा सब्जियां / केसर", "3 चम्मच शुद्ध देसी घी", "पकाने के लिए गुनगुना पानी"];
+            stepsHI = [
+                `चावल के दानों को साफ पानी से अच्छे से धो लें, फिर पकने से 20 मिनट पहले भिगोकर रख दें।`,
+                "एक गहरे बर्तन में देसी घी गर्म करें और उसमें सुगंधित खड़े मसालों को चटकने दें ताकि उनकी खुशबू आ जाए।",
+                `भीगे हुए चावल डालें और धीरे से चलाएं ताकि बिना टूटे हर दाने पर घी की कोटिंग हो जाए।`,
+                "नियत मात्रा में गुनगुना पानी डालें, उबाल आने दें, फिर ढक्कन बंद करके धीमी आंच पर 15 मिनट तक पकने दें।"
+            ];
+        } 
+        // ==========================================
+        // 2. GRAVY / LIQUID FAMILY (Dal, Curry, Paneer, Soup, Sambhar...)
+        // ==========================================
+        else if (lowerDish.match(/(dal|curry|paneer|korma|soup|gravy|sambhar|chole|tadka)/)) {
+            customImg = "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80";
+            
+            ingEN = [`Main structural base for ${capitalizedDish}`, "2 finely chopped Onions & Fresh Tomato Puree", "1 tbsp Authentic Spice Blend (Turmeric, Garam Masala)", "2 tbsp Butter or Oil for Tadka", "Fresh Coriander leaves for garnish"];
+            stepsEN = [
+                `Prepare and boil the primary base ingredients required for your custom ${capitalizedDish} until soft.`,
+                "In a separate pan, heat oil/butter and sauté onions until golden brown, then pour in fresh tomato puree.",
+                "Stir in the authentic spice blend and cook on medium flame until the oil beautifully separates from the gravy.",
+                `Slowly blend the main boiled base into the hot seasoned gravy, let it simmer together to absorb flavors, and apply final hot tempering.`
+            ];
 
-                overlay.classList.add('hidden');
-                renderCategoryChips();
-                filterAndRenderRecipes();
-                openModal(aiRecipeId);
+            ingHI = [`${capitalizedDish} की मुख्य सामग्री बेस`, "2 बारीक कटे प्याज और ताज़ा टमाटर प्यूरी", "1 चम्मच शुद्ध मसाला मिश्रण (हल्दी, गरम मसाला)", "तड़के के लिए 2 चम्मच मक्खन या तेल", "सजावट के लिए ताज़ा हरा धनिया"];
+            stepsHI = [
+                `${capitalizedDish} के लिए मुख्य सामग्रियों को तैयार करें और उनके नरम होने तक अच्छे से उबाल लें।`,
+                "एक अलग पैन में तेल/मक्खन गर्म करें, प्याज को सुनहरा होने तक भूनें, फिर ताज़ा टमाटर प्यूरी डालें।",
+                "मसाला मिश्रण डालें और मध्यम आंच पर तब तक पकाएं जब तक कि तेल ग्रेवी से अलग न दिखने लगे।",
+                `उबले हुए बेस को इस तैयार मसालेदार ग्रेवी में मिलाएं, स्वादों को सोखने के लिए धीमी आंच पर उबलने दें और आखिरी में गरमागरम तड़का लगाएं।`
+            ];
+        } 
+        // ==========================================
+        // 3. BAKED / DOUGH FAMILY (Momo, Pizza, Burger, Bread, Roti...)
+        // ==========================================
+        else if (lowerDish.match(/(momo|pizza|burger|roll|bread|roti|paratha|dumpling)/)) {
+            customImg = "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80";
+            
+            ingEN = ["2 cups Refined Flour / Wheat Dough Base", "1 cup Seasoned Savory Stuffing / Premium Toppings", "1 tbsp Active Yeast or Baking Powder (if applicable)", "Herb Infused Spices", "Butter or Cooking Spray"];
+            stepsEN = [
+                "Knead a smooth, elastic uniform dough with water and let it rest under a damp cloth to activate.",
+                `Roll out or shape the dough base perfectly to suit the classic structure of ${capitalizedDish}.`,
+                "Apply the custom savory stuffing or arrange premium toppings evenly across the prepared surface.",
+                "Cook perfectly using the required heat profile—either steaming inside a basket or baking in a preheated oven until golden."
+            ];
 
-            }, 3200);
+            ingHI = ["2 कप मैदा या गेहूं के आटे का बेस", "1 कप स्वादिष्ट स्टफिंग / प्रीमियम टॉपिंग्स", "1 चम्मच बेकिंग पाउडर या यीस्ट (यदि आवश्यक हो)", "हर्ब इन्फ्यूज्ड मसाले", "मक्खन या कुकिंग ऑयल"];
+            stepsHI = [
+                "पानी के साथ एक चिकना और लचीला आटा गूंथ लें और इसे सेट होने के लिए एक गीले कपड़े के नीचे रख दें।",
+                `${capitalizedDish} की क्लासिक बनावट के अनुसार आटे के बेस को बेल लें या सही आकार दें।`,
+                "तैयार सतह पर अंदरूनी स्टफिंग भरें या ऊपर से प्रीमियम टॉपिंग्स को समान रूप से सजाएं।",
+                "सही तापमान पर पकाएं—या तो स्टीमर बास्केट के अंदर स्टीम करें या पहले से गरम ओवन में सुनहरा होने तक बेक करें।"
+            ];
+        }
+        // ==========================================
+        // 4. SWEET FAMILY (Cake, Dessert, Halwa, Kheer, Sweet...)
+        // ==========================================
+        else if (lowerDish.match(/(cake|dessert|halwa|sweet|kheer|icecream|mithai|pudding)/)) {
+            customImg = "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=800&q=80";
+            
+            ingEN = [`Core sweet components for ${capitalizedDish}`, "1 cup Refined Sugar or Condensed Milk", "Ghee or Premium Butter base", "Assorted Chopped Nuts (Almonds, Pistachios)", "Natural Vanilla or Cardamom Extract"];
+            stepsEN = [
+                "Gently melt the butter/ghee base or prepare the baking/boiling container for the dessert.",
+                `Incorporate the core sweet components with sugar or rich condensed milk on controlled low heat.`,
+                "Stir continuously to achieve a smooth, velvety, lump-free consistency and avoid scorching the bottom.",
+                `Infuse with natural extracts, transfer to molds, garnish with plenty of nuts, and either bake or chill until set.`
+            ];
+
+            ingHI = [`${capitalizedDish} के मुख्य मीठे घटक`, "1 कप चीनी या कCondensed मिल्क", "घी या प्रीमियम बटर बेस", "कटे हुए मिश्रित मेवे (बादाम, पिस्ता)", "प्राकृतिक वैनिला या इलायची का अर्क"];
+            stepsHI = [
+                "बटर/घी के बेस को धीमी आंच पर पिघलाएं या डेसर्ट के लिए बेकिंग/उबालने वाले बर्तन को तैयार करें।",
+                `नियंत्रित धीमी आंच पर चीनी या गाढ़े कCondensed मिल्क के साथ मुख्य मीठे घटकों को आपस में मिलाएं।`,
+                "एक चिकनी, मखमली बनावट पाने के लिए लगातार चलाते रहें ताकि मिश्रण बर्तन के तले में जले नहीं।",
+                `इलायची या वैनिला का फ्लेवर मिलाएं, मोल्ड्स में डालें, ढेर सारे मेवों से सजाएं, और सेट होने के लिए बेक या ठंडा करें।`
+            ];
+        }
+        // ==========================================
+        // 5. UNIVERSAL SAFE FALLBACK (For anything else)
+        // ==========================================
+        else {
+            ingEN = [`Fresh choice core selection for ${capitalizedDish}`, "2 tbsp Custom Masterchef Spices", "1 cup Seasonal Aromatics Base", "2 tbsp Premium Cooking Butter or Oil"];
+            stepsEN = [
+                `Carefully wash, organize, and prep the essential structural ingredients required for making ${capitalizedDish}.`,
+                "Heat the cooking oil or butter in a pan and bloom your spices until highly fragrant.",
+                `Incorporate the primary ingredients into the pan, stirring uniformly to distribute the premium heat metrics.`,
+                "Simmer elegantly on low heat for 15-20 minutes, fine-tune the seasonings, and serve your dish hot."
+            ];
+
+            ingHI = [`${capitalizedDish} की फ्रेश मुख्य सामग्री`, "2 चम्मच कस्टम मास्टरशेफ मसाले", "1 कप सीजनल सुगंधित बेस", "2 चम्मच प्रीमियम कुकिंग बटर या तेल"];
+            stepsHI = [
+                `${capitalizedDish} बनाने के लिए आवश्यक सभी जरूरी और बुनियादी सामग्रियों को साफ करके तैयार कर लें।`,
+                "एक पैन में कुकिंग ऑयल या बटर गरम करें और मसालों को धीमी आंच पर खुशबू आने तक भूनें।",
+                `मुख्य सामग्रियों को पैन में डालें और स्वादों को हर तरफ बराबर पहुंचाने के लिए इसे अच्छी तरह चलाएं।`,
+                "15-20 मिनट के लिए धीमी आंच पर पकने दें, मसालों को अपने स्वाद अनुसार बैलेंस करें और गरमागरम परोसें।"
+            ];
         }
 
-        function openModal(id) {
-            const item = recipes.find(r => r.id === id);
-            if (!item) return;
-
-            const langData = item.languages[currentLang] || item.languages['en'];
-            const labels = uiText[currentLang] || uiText['en'];
-            const modalBody = document.getElementById('modalBody');
-
-            modalBody.innerHTML = `
-                <div class="relative w-full aspect-video sm:aspect-[21/10] bg-gray-100">
-                    <img src="${item.imageUrl}" alt="${langData.title}" class="w-full h-full object-cover">
-                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6 pt-16">
-                        <span class="text-xs font-bold uppercase tracking-widest text-amber-400">${langData.category}</span>
-                        <h2 class="text-2xl sm:text-3xl font-serif font-bold text-white mt-1">${langData.title}</h2>
-                    </div>
-                </div>
-
-                <div class="p-6 sm:p-8 space-y-6">
-                    <div class="flex gap-4 items-center bg-gray-50 dark:bg-gray-800/40 p-4 rounded-2xl text-xs font-medium text-gray-600 dark:text-gray-300">
-                        <div class="flex items-center gap-2">
-                            <i class="fa-regular fa-clock text-base text-amber-600"></i>
-                            <span>${langData.time}</span>
-                        </div>
-                        <div class="h-4 w-px bg-gray-200 dark:bg-gray-700"></div>
-                        <div class="flex items-center gap-2">
-                            <i class="fa-solid fa-chart-simple text-base text-amber-600"></i>
-                            <span>${langData.difficulty}</span>
-                        </div>
-                    </div>
-
-                    <p class="text-sm leading-relaxed text-gray-600 dark:text-gray-400 italic">"${langData.desc}"</p>
-
-                    <div>
-                        <h4 class="text-sm font-bold uppercase tracking-wider text-gray-900 dark:text-white mb-3 flex items-center gap-2">
-                            <i class="fa-solid fa-basket-shopping text-amber-600"></i> ${labels.ingredientsTitle}
-                        </h4>
-                        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                            ${langData.ingredients.map(ing => `
-                                <li class="flex items-start gap-2.5 text-xs text-gray-600 dark:text-gray-300 bg-stone-50 dark:bg-gray-800/30 px-3 py-2 rounded-xl border border-stone-100 dark:border-gray-800">
-                                    <input type="checkbox" class="mt-0.5 accent-amber-600 rounded cursor-pointer">
-                                    <span>${ing}</span>
-                                </li>
-                            `).join('')}
-                        </ul>
-                    </div>
-
-                    <div class="pt-2">
-                        <h4 class="text-sm font-bold uppercase tracking-wider text-gray-900 dark:text-white mb-4 flex items-center gap-2">
-                            <i class="fa-solid fa-kitchen-set text-amber-600"></i> ${labels.processTitle}
-                        </h4>
-                        <ol class="space-y-4">
-                            ${langData.steps.map((step, idx) => `
-                                <li class="flex gap-4 items-start">
-                                    <span class="flex-shrink-0 w-6 h-6 rounded-full bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-400 flex items-center justify-center text-xs font-bold">${idx + 1}</span>
-                                    <p class="text-xs leading-relaxed text-gray-600 dark:text-gray-300 pt-0.5">${step}</p>
-                                </li>
-                            `).join('')}
-                        </ol>
-                    </div>
-
-                    <div class="w-full bg-gradient-to-r from-amber-600 to-orange-600 py-3.5 px-4 rounded-xl text-center text-white text-xs font-semibold shadow-md flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-wand-magic-sparkles"></i>
-                        <span>${labels.ctaBtn}</span>
-                    </div>
-                </div>
-            `;
-
-            const modal = document.getElementById('recipeModal');
-            const container = document.getElementById('modalContainer');
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                container.classList.remove('scale-95');
-                container.classList.add('scale-100');
-            }, 10);
-            document.body.style.overflow = 'hidden';
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('recipeModal');
-            const container = document.getElementById('modalContainer');
-            container.classList.remove('scale-100');
-            container.classList.add('scale-95');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 200);
-            document.body.style.overflow = '';
-        }
-
-        window.onclick = function(event) {
-            const modal = document.getElementById('recipeModal');
-            if (event.target === modal) {
-                closeModal();
+        // --- Rest of the BabelChef Generation Logic remains completely same ---
+        const aiRecipeId = "ai_recipe_" + Date.now();
+        const generatedRecipe = {
+            id: aiRecipeId,
+            baseCategory: "BabelChef AI",
+            imageUrl: customImg,
+            languages: {
+                en: {
+                    title: `AI: ${capitalizedDish}`,
+                    desc: `A customized culinary blueprint for ${capitalizedDish}, engineered instantly by the predictive BabelChef AI matrix.`,
+                    category: "BabelChef AI ✨",
+                    difficulty: "AI Precision",
+                    time: "25 mins",
+                    ingredients: ingEN,
+                    steps: stepsEN
+                },
+                hi: {
+                    title: `AI: ${capitalizedDish}`,
+                    desc: `BabelChef AI द्वारा आपके इनपुट के आधार पर तुरंत डिज़ाइन की गई ${capitalizedDish} की एक शानदार डिजिटल रेसिपी।`,
+                    category: "BabelChef AI ✨",
+                    difficulty: "AI सटीकता",
+                    time: "25 मिनट",
+                    ingredients: ingHI,
+                    steps: stepsHI
+                }
             }
-        }
-    </script>
-</body>
-</html>
+        };
+
+        recipes.unshift(generatedRecipe);
+        searchQuery = "";
+        document.getElementById('searchInput').value = "";
+        selectedCategory = "All";
+
+        overlay.classList.add('hidden');
+        renderCategoryChips();
+        filterAndRenderRecipes();
+        openModal(aiRecipeId);
+
+    }, 3200);
+                             }
+                
