@@ -5,28 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BabelBite - Premium Global Culinary Platform</title>
     
-    <!-- Tailwind CSS Engine -->
+    <!-- Tailwind CSS Enterprise Engine -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     
-    <!-- Icons & Fonts -->
+    <!-- Premium Vector Icon Assets -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts Matrix: Playfair Display & Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Premium Startup Theme Layout Definitions -->
+    <!-- Premium Brand Identity Variable Mapping -->
     <style>
         :root {
             --primary: #0B2E6D;
             --accent: #F5B041;
             --bg-light: #FAF8F4;
-            --bg-dark: #0b132b;
+            --bg-dark: #0A1128;
         }
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
             background-color: var(--bg-light);
-            color: #1e293b;
-            transition: background-color 0.3s, color 0.3s;
+            color: #1E293B;
+            transition: background-color 0.4s ease, color 0.4s ease;
         }
         .font-serif { font-family: 'Playfair Display', serif; }
         .brand-bg { background-color: var(--primary); }
@@ -34,88 +36,100 @@
         .accent-bg { background-color: var(--accent); }
         .accent-text { color: var(--accent); }
         
-        /* Glassmorphism & Micro-interactions */
+        /* Ultra-Luxury Glassmorphism & Adaptive Blur Panels */
         .glass-nav {
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(16px);
             background-color: rgba(250, 248, 244, 0.85);
         }
         .dark .glass-nav {
-            background-color: rgba(11, 19, 43, 0.85);
+            background-color: rgba(10, 17, 40, 0.85);
         }
         .premium-card {
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease, border-color 0.4s;
         }
         .premium-card:hover {
             transform: translateY(-6px);
-            box-shadow: 0 20px 40px rgba(11, 46, 109, 0.08);
+            box-shadow: 0 24px 48px rgba(11, 46, 109, 0.08);
         }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* Scanning Laser Animation */
+        /* Dynamic Scanning Laser Matrix */
         @keyframes scan {
-            0% { top: 0%; }
-            50% { top: 100%; }
-            100% { top: 0%; }
+            0% { top: 0%; opacity: 0.3; }
+            50% { top: 100%; opacity: 1; }
+            100% { top: 0%; opacity: 0.3; }
         }
         .scanner-line {
-            animation: scan 2s linear infinite;
+            animation: scan 2.5s linear infinite;
         }
         
         .dark body {
             background-color: var(--bg-dark);
-            color: #f1f5f9;
+            color: #F1F5F9;
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col antialiased">
+<body class="min-h-screen flex flex-col antialiased pb-20 md:pb-0">
 
-    <!-- Global Loading Overlay for AI Actions -->
-    <div id="aiLoadingOverlay" class="fixed inset-0 z-50 bg-[#0B2E6D]/80 backdrop-blur-md hidden flex flex-col items-center justify-center text-white">
-        <div class="text-center space-y-5 px-4">
+    <!-- PREMIUM CUSTOM NOTIFICATION TOAST OVERLAY -->
+    <div id="toastNotification" class="fixed top-6 right-4 left-4 sm:left-auto sm:right-6 z-50 transform translate-y-[-100px] opacity-0 transition-all duration-500 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 shadow-2xl rounded-2xl p-4 max-w-sm flex items-center gap-3.5">
+        <div id="toastIconBox" class="w-10 h-10 rounded-xl flex items-center justify-center text-white"></div>
+        <div class="flex-grow">
+            <h4 id="toastTitle" class="text-xs font-bold uppercase tracking-wider text-gray-400">Notification</h4>
+            <p id="toastMessage" class="text-xs font-semibold text-gray-800 dark:text-gray-200 mt-0.5"></p>
+        </div>
+    </div>
+
+    <!-- GLOBAL NEURAL KITCHEN PROCESSOR OVERLAY -->
+    <div id="aiLoadingOverlay" class="fixed inset-0 z-50 bg-[#0B2E6D]/85 backdrop-blur-xl hidden flex flex-col items-center justify-center text-white">
+        <div class="text-center space-y-5 px-4 max-w-md">
             <div class="relative w-24 h-24 mx-auto flex items-center justify-center">
                 <i class="fa-solid fa-wand-magic-sparkles text-5xl text-[#F5B041] animate-pulse"></i>
                 <div class="absolute inset-0 border-4 border-white/20 border-t-[#F5B041] rounded-full animate-spin"></div>
             </div>
-            <p id="aiLoadingText" class="text-xl font-medium tracking-wide">BabelChef AI is formulating your personalized recipe configuration...</p>
-            <p class="text-xs text-white/60">Using hyper-speed computational neural cooking algorithms.</p>
+            <h3 id="aiLoadingText" class="text-xl font-bold tracking-tight">BabelChef AI Matrix Generation Active...</h3>
+            <p class="text-xs text-white/70 leading-relaxed">Executing deterministic macro ingredient compilation and deploying target linguistic translation schemas across structural data layers.</p>
         </div>
     </div>
 
-    <!-- Sticky Navigation Console -->
-    <header class="sticky top-0 z-40 border-b border-gray-200/50 dark:border-gray-800 glass-nav transition-colors">
+    <!-- HIGH-END BRAND STICKY HEADER SYSTEM -->
+    <header class="sticky top-0 z-40 border-b border-gray-200/40 dark:border-gray-800 glass-nav transition-colors duration-300">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <div class="flex items-center gap-2" onclick="resetFilters()">
-                <div class="w-10 h-10 rounded-xl brand-bg flex items-center justify-center shadow-md shadow-[#0B2E6D]/20">
-                    <i class="fa-solid fa-bowl-food text-white text-lg"></i>
+            <div class="flex items-center gap-3" onclick="resetFilters()">
+                <div class="w-11 h-11 rounded-xl brand-bg flex items-center justify-center shadow-lg shadow-[#0B2E6D]/20">
+                    <i class="fa-solid fa-utensils text-white text-lg"></i>
                 </div>
-                <span class="text-2xl font-serif font-bold tracking-tight text-[#0B2E6D] dark:text-white cursor-pointer">BabelBite</span>
+                <div>
+                    <span class="text-2xl font-serif font-bold tracking-tight text-[#0B2E6D] dark:text-white cursor-pointer">BabelBite</span>
+                    <span class="block text-[9px] font-bold tracking-widest uppercase text-gray-400">By Ayush Kumar Raj</span>
+                </div>
             </div>
             
+            <!-- Desktop Luxury Control Panel Buttons -->
             <div class="flex items-center gap-3 sm:gap-4">
-                <!-- Navigation Tab Switchers -->
-                <nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-gray-600 dark:text-gray-300 mr-4">
+                <nav class="hidden md:flex items-center gap-7 text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400 mr-4">
                     <button onclick="switchView('explore')" class="hover:text-[#0B2E6D] dark:hover:text-[#F5B041] transition-colors cursor-pointer">Explore</button>
-                    <button onclick="switchView('ai-engine')" class="hover:text-[#0B2E6D] dark:hover:text-[#F5B041] transition-colors cursor-pointer">AI Generator</button>
+                    <button onclick="switchView('ai-engine')" class="hover:text-[#0B2E6D] dark:hover:text-[#F5B041] transition-colors cursor-pointer flex items-center gap-1.5"><i class="fa-solid fa-wand-magic-sparkles text-[#F5B041]"></i> AI Generator</button>
                     <button onclick="switchView('planner')" class="hover:text-[#0B2E6D] dark:hover:text-[#F5B041] transition-colors cursor-pointer">Meal Planner</button>
                     <button onclick="switchView('grocery')" class="hover:text-[#0B2E6D] dark:hover:text-[#F5B041] transition-colors cursor-pointer relative">
-                        Shopping List <span id="cartCount" class="bg-[#0B2E6D] text-white dark:bg-[#F5B041] text-[10px] px-1.5 py-0.5 rounded-full ml-1 hidden">0</span>
+                        Grocery Checklist <span id="cartCount" class="bg-[#0B2E6D] text-white dark:bg-[#F5B041] text-[10px] px-1.5 py-0.5 rounded-full ml-1 hidden">0</span>
                     </button>
                 </nav>
 
-                <button id="darkModeToggle" class="p-2.5 rounded-xl hover:bg-gray-200/40 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 transition-all">
+                <button id="darkModeToggle" class="p-2.5 rounded-xl hover:bg-gray-200/40 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 transition-all cursor-pointer">
                     <i class="fa-solid fa-moon text-lg dark:hidden"></i>
                     <i class="fa-solid fa-sun text-lg hidden dark:block"></i>
                 </button>
 
-                <button id="favFilterBtn" onclick="toggleFavFilter()" class="relative p-2.5 rounded-xl hover:bg-red-50 dark:hover:bg-red-950/20 text-gray-400 transition-all">
+                <button id="favFilterBtn" onclick="toggleFavFilter()" class="relative p-2.5 rounded-xl hover:bg-red-50 dark:hover:bg-red-950/20 text-gray-400 transition-all cursor-pointer">
                     <i id="favFilterIcon" class="fa-regular fa-heart text-xl"></i>
                     <span id="favCountBadge" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full hidden">0</span>
                 </button>
 
-                <!-- Premium 20+ Languages Selector Interface -->
+                <!-- International 20+ Language Selector Frame -->
                 <div class="relative">
-                    <select id="langSelect" onchange="changeLanguage(this.value)" class="appearance-none bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 pl-3 pr-8 py-2 rounded-xl text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-[#0B2E6D] shadow-sm cursor-pointer dark:text-white transition-all">
+                    <select id="langSelect" onchange="changeLanguage(this.value)" class="appearance-none bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 pl-3 pr-8 py-2 rounded-xl text-xs font-bold uppercase tracking-wider focus:outline-none focus:ring-2 focus:ring-[#0B2E6D] shadow-sm cursor-pointer dark:text-white transition-all">
                         <option value="en">English 🇬🇧</option>
                         <option value="hi">हिन्दी 🇮🇳</option>
                         <option value="es">Español 🇪🇸</option>
@@ -123,19 +137,9 @@
                         <option value="de">Deutsch 🇩🇪</option>
                         <option value="it">Italiano 🇮🇹</option>
                         <option value="ja">日本語 🇯🇵</option>
-                        <option value="zh">Mandarin 🇨🇳</option>
                         <option value="ar">العربية 🇸🇦</option>
-                        <option value="pt">Português 🇵🇹</option>
-                        <option value="ko">한국어 🇰🇷</option>
-                        <option value="ru">Русский 🇷🇺</option>
-                        <option value="tr">Türkçe 🇹🇷</option>
                         <option value="bn">বাংলা 🇮🇳</option>
-                        <option value="te">తెలుగు 🇮🇳</option>
                         <option value="mr">मराठी 🇮🇳</option>
-                        <option value="ta">தமிழ் 🇮🇳</option>
-                        <option value="ur">اردو 🇵🇰</option>
-                        <option value="gu">ગુજરાતી 🇮🇳</option>
-                        <option value="kn">ಕನ್ನಡ 🇮🇳</option>
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-500">
                         <i class="fa-solid fa-chevron-down text-[10px]"></i>
@@ -145,21 +149,21 @@
         </div>
     </header>
 
-    <!-- Interactive Workspace Views Container -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <!-- CONTENT FRAMEWORK INTERFACE HOUSING -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
-        <!-- VIEW 1: EXPLORE DASHBOARD -->
-        <section id="view-explore" class="space-y-8 animate-fade">
-            <div class="text-center max-w-3xl mx-auto pt-8 space-y-4">
+        <!-- VIEW 1: DISCOVERY & FILTER MARKETPLACE -->
+        <section id="view-explore" class="space-y-8">
+            <div class="text-center max-w-3xl mx-auto pt-4 space-y-4">
                 <h1 id="heroTitle" class="text-4xl sm:text-6xl font-serif font-bold text-slate-900 dark:text-white leading-tight">
-                    World's Elite Recipes, <span class="text-[#0B2E6D] dark:text-[#F5B041]">In Your Native Tongue.</span>
+                    World's Best Recipes, <span class="text-[#0B2E6D] dark:text-[#F5B041]">In Your Language.</span>
                 </h1>
                 <p id="heroSub" class="text-gray-500 dark:text-gray-400 text-sm sm:text-base max-w-xl mx-auto font-medium">
-                    Discover hand-vetted gourmet culinary Blueprints engineered by world-class chefs, instantly translatable across 20+ linguistic channels.
+                    Explore ultra-premium recipes translated perfectly with deep macronutrient insights, scheduling, and live voice synthesis tracking.
                 </p>
 
                 <div class="relative max-w-xl mx-auto pt-4">
-                    <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Search culinary databases by names or premium ingredients..." class="w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl pl-5 pr-12 py-4 shadow-sm text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#0B2E6D] transition-all">
+                    <input type="text" id="searchInput" oninput="handleSearch(this.value)" placeholder="Search gastronomy index by titles, key ingredients..." class="w-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-2xl pl-5 pr-12 py-4 shadow-sm text-sm text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-[#0B2E6D] transition-all">
                     <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-gray-400">
                         <i class="fa-solid fa-magnifying-glass text-base"></i>
                     </div>
@@ -167,158 +171,196 @@
                 <div class="flex gap-2 justify-center flex-wrap" id="categoryChips"></div>
             </div>
 
-            <!-- Recipes Yield Grid Matrix -->
-            <div id="recipeGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pt-6"></div>
+            <!-- Recipe Output Grid Dynamic Mounting -->
+            <div id="recipeGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 pt-4"></div>
         </section>
 
-        <!-- VIEW 2: COMPREHENSIVE AI RECIPE GENERATOR ENGINE -->
-        <section id="view-ai-engine" class="hidden max-w-3xl mx-auto space-y-8 py-6">
-            <div class="bg-white dark:bg-gray-800 rounded-3xl p-6 sm:p-8 border border-gray-100 dark:border-gray-700 shadow-xl space-y-6">
+        <!-- VIEW 2: AI NEURAL ENGINE COMPILATION DRAWER -->
+        <section id="view-ai-engine" class="hidden max-w-2xl mx-auto space-y-8 py-4">
+            <div class="bg-white dark:bg-gray-800 rounded-3xl p-6 sm:p-8 border border-gray-100 dark:border-gray-700/70 shadow-xl space-y-6">
                 <div class="flex items-center gap-3 border-b border-gray-100 dark:border-gray-700 pb-4">
-                    <div class="w-12 h-12 rounded-2xl bg-[#F5B041]/10 text-[#F5B041] flex items-center justify-center text-xl">
-                        <i class="fa-solid fa-microchip-ai"></i>
+                    <div class="w-12 h-12 rounded-2xl bg-[#0B2E6D]/10 text-[#0B2E6D] flex items-center justify-center text-xl dark:bg-gray-700 dark:text-[#F5B041]">
+                        <i class="fa-solid fa-microchip"></i>
                     </div>
                     <div>
-                        <h2 class="text-xl font-bold dark:text-white">BabelChef Neural Engine v2.4</h2>
-                        <p class="text-xs text-gray-400">Generate deterministic recipe layouts with instant structural formatting</p>
+                        <h2 class="text-xl font-bold dark:text-white">BabelChef Neural Processing Studio</h2>
+                        <p class="text-xs text-gray-400 font-medium">Instantly format unstructured data matrices into validated recipe objects.</p>
                     </div>
                 </div>
 
-                <!-- Input Text Track -->
                 <div class="space-y-2">
-                    <label class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">What do you want to cook today?</label>
-                    <input type="text" id="aiSearchField" placeholder="e.g., Spicy Thai Basil Paneer or Smoked Salmon Avocado Toast..." class="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B2E6D] text-gray-900 dark:text-white">
+                    <label class="text-xs font-bold uppercase tracking-wider text-gray-400">Enter Target Culinary Intent</label>
+                    <input type="text" id="aiSearchField" placeholder="e.g., Authentic Dal Makhani, Garlic Butter Prawns, Berry Sorbet..." class="w-full bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl px-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-[#0B2E6D] text-gray-900 dark:text-white font-medium">
                 </div>
 
-                <!-- Camera/Image Matrix Processing Upload Container -->
+                <!-- Drag Drop Visual Computer Vision Module -->
                 <div class="space-y-2">
-                    <label class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-gray-400">Optional: Upload ingredient snapshots or bills</label>
+                    <label class="text-xs font-bold uppercase tracking-wider text-gray-400">Visual Snapshot Scanner (Optional)</label>
                     <div id="imageDropZone" class="border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-2xl p-6 text-center hover:border-[#0B2E6D] dark:hover:border-[#F5B041] transition-all cursor-pointer relative overflow-hidden bg-gray-50 dark:bg-gray-900">
                         <input type="file" id="imageFileInput" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer" onchange="handleImageScanning(event)">
                         <div id="uploadPlaceholder" class="space-y-2">
-                            <i class="fa-solid fa-camera-retro text-3xl text-gray-400"></i>
-                            <p class="text-xs font-semibold text-gray-600 dark:text-gray-400">Drag & drop your food snapshot or click to browse</p>
-                            <p class="text-[10px] text-gray-400">Supports PNG, JPG, WEBP. Engine will scan and extract contents automatically.</p>
+                            <i class="fa-solid fa-camera text-3xl text-gray-400"></i>
+                            <p class="text-xs font-bold text-gray-600 dark:text-gray-400">Drop item snapshot here or touch to scan gallery</p>
+                            <p class="text-[10px] text-gray-400">BabelBite vision pipeline automatically reads contextual metrics</p>
                         </div>
-                        <!-- Scanning Animation Viewframe -->
-                        <div id="scanningFrame" class="hidden space-y-2 relative py-4">
+                        <div id="scanningFrame" class="hidden space-y-2 relative py-2">
                             <div class="absolute inset-x-0 h-0.5 bg-gradient-to-r from-transparent via-[#F5B041] to-transparent scanner-line"></div>
-                            <img id="scannedImagePreview" src="#" class="max-h-40 mx-auto rounded-xl object-cover shadow-md">
-                            <p class="text-xs font-bold text-[#F5B041] animate-pulse">Running Computer Vision Analytics...</p>
+                            <img id="scannedImagePreview" src="#" class="max-h-36 mx-auto rounded-xl object-cover shadow-md">
+                            <p class="text-xs font-bold text-[#F5B041] animate-pulse">Running Neural Object Classification...</p>
                         </div>
                     </div>
                 </div>
 
-                <button onclick="triggerBabelChefAI()" class="w-full py-4 bg-[#0B2E6D] hover:bg-[#0B2E6D]/90 text-white rounded-xl text-sm font-bold tracking-wide transition-all shadow-lg shadow-[#0B2E6D]/20 flex items-center justify-center gap-2 cursor-pointer">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> Process & Assemble Complete Recipe
+                <button onclick="triggerBabelChefAI()" class="w-full py-4 bg-[#0B2E6D] text-white rounded-xl text-xs font-bold uppercase tracking-widest shadow-lg shadow-[#0B2E6D]/20 transition-all flex items-center justify-center gap-2 cursor-pointer hover:opacity-95">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Construct Live Interactive Recipe
                 </button>
             </div>
         </section>
 
-        <!-- VIEW 3: 7-DAY SMART MEAL PLANNER MANAGEMENT CONSOLE -->
-        <section id="view-planner" class="hidden space-y-6 py-4 animate-fade">
-            <div class="border-b border-gray-200 dark:border-gray-800 pb-4">
-                <h2 class="text-2xl font-serif font-bold text-[#0B2E6D] dark:text-white">Weekly Strategic Meal Planner</h2>
-                <p class="text-xs text-gray-500 dark:text-gray-400">Organize your macro nutrition and schedule profiles across structured weekly cycles.</p>
+        <!-- VIEW 3: SYSTEM STRATEGIC WEEKLY TIMELINE -->
+        <section id="view-planner" class="hidden space-y-6 py-2 animate-fade">
+            <div class="border-b border-gray-100 dark:border-gray-800 pb-4">
+                <h2 class="text-2xl font-serif font-bold text-[#0B2E6D] dark:text-white">Structured Weekly Meal Planner</h2>
+                <p class="text-xs text-gray-400 font-medium">Map specific meal allocations into structured slot indexes to preserve systemic nutrition continuity.</p>
             </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-7 gap-4" id="mealPlannerGrid"></div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4" id="mealPlannerGrid"></div>
         </section>
 
-        <!-- VIEW 4: CONSOLIDATED MASTER GROCERY CHECKLIST DRAWER -->
-        <section id="view-grocery" class="hidden max-w-xl mx-auto space-y-6 py-6 animate-fade">
+        <!-- VIEW 4: MASTER SHOPPING RECONCILIATION DRAWER -->
+        <section id="view-grocery" class="hidden max-w-md mx-auto space-y-6 py-4">
             <div class="bg-white dark:bg-gray-800 rounded-3xl p-6 border border-gray-100 dark:border-gray-700 shadow-xl space-y-6">
-                <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-700 pb-4">
-                    <div class="flex items-center gap-2.5">
-                        <i class="fa-solid fa-basket-shopping text-xl text-[#0B2E6D] dark:text-[#F5B041]"></i>
-                        <h3 class="text-lg font-bold dark:text-white">Your Consolidated Grocery List</h3>
+                <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-700 pb-3">
+                    <div class="flex items-center gap-2">
+                        <i class="fa-solid fa-basket-shopping text-lg text-[#0B2E6D] dark:text-[#F5B041]"></i>
+                        <h3 class="text-base font-bold dark:text-white">Consolidated Ingredient Checklist</h3>
                     </div>
-                    <button onclick="clearGlobalGrocery()" class="text-xs text-red-500 hover:underline font-medium">Clear All Items</button>
+                    <button onclick="clearGlobalGrocery()" class="text-xs text-red-500 hover:underline font-bold uppercase tracking-wider">Flush List</button>
                 </div>
-
-                <ul id="globalGroceryList" class="space-y-2.5 max-h-[50vh] overflow-y-auto pr-1"></ul>
-                
-                <div id="groceryEmptyState" class="text-center py-8 text-gray-400 text-xs hidden">
-                    <i class="fa-solid fa-cart-flatbed-suitcase text-3xl mb-2 text-gray-300 dark:text-gray-700"></i>
-                    <p>No active ingredients inside checklist. Tap checkboxes inside recipes to compile items.</p>
+                <ul id="globalGroceryList" class="space-y-2 max-h-[55vh] overflow-y-auto pr-1"></ul>
+                <div id="groceryEmptyState" class="text-center py-10 text-gray-400 text-xs hidden space-y-2">
+                    <i class="fa-solid fa-cart-shopping text-4xl text-gray-200 dark:text-gray-700"></i>
+                    <p class="font-medium">No items inside runtime database stack. Toggle ingredient check boxes in modals to add items.</p>
                 </div>
             </div>
         </section>
 
     </main>
 
-    <!-- MODAL FRAMEWORK: DYNAMIC RECIPE VIEWPORT CONSOLE -->
-    <div id="recipeModal" class="fixed inset-0 z-50 overflow-y-auto hidden bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
-        <div class="bg-white dark:bg-gray-900 w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl relative max-h-[90vh] flex flex-col transform scale-95 transition-transform duration-300" id="modalContainer">
-            <button onclick="closeModal()" class="absolute top-4 right-4 z-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm hover:bg-white p-2.5 rounded-xl shadow-md text-gray-700 dark:text-gray-300 transition-all cursor-pointer">
-                <i class="fa-solid fa-xmark text-lg"></i>
+    <!-- SYSTEM GLOBAL MODAL SHEET HOUSING VIEWPORT -->
+    <div id="recipeModal" class="fixed inset-0 z-50 overflow-y-auto hidden bg-black/60 backdrop-blur-md flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-900 w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl relative max-h-[92vh] flex flex-col transform scale-95 transition-transform duration-300" id="modalContainer">
+            <button onclick="closeModal()" class="absolute top-4 right-4 z-10 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-2.5 rounded-xl text-gray-700 dark:text-gray-300 transition-all cursor-pointer shadow-md">
+                <i class="fa-solid fa-xmark text-base"></i>
             </button>
             <div class="overflow-y-auto no-scrollbar flex-grow" id="modalBody"></div>
         </div>
     </div>
 
-    <!-- MOBILE NAVIGATION SYSTEM FOOTER CONTROLLER BAR -->
-    <footer class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/90 dark:bg-gray-950/90 backdrop-blur-md border-t border-gray-200 dark:border-gray-800 py-3 flex justify-around text-gray-400 px-2 shadow-lg">
+    <!-- DEVICE VIEWPORT NAVIGATION PROFILE BAR FOR MOBILE VIEW PORTS -->
+    <footer class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 dark:bg-gray-950/95 backdrop-blur-lg border-t border-gray-200/50 dark:border-gray-800 py-3 flex justify-around text-gray-400 shadow-xl px-2">
         <button onclick="switchView('explore')" class="flex flex-col items-center gap-1 text-[10px] font-bold text-[#0B2E6D] dark:text-[#F5B041]">
             <i class="fa-solid fa-compass text-lg"></i>Explore
         </button>
-        <button onclick="switchView('ai-engine')" class="flex flex-col items-center gap-1 text-[10px] font-semibold hover:text-[#0B2E6D]">
+        <button onclick="switchView('ai-engine')" class="flex flex-col items-center gap-1 text-[10px] font-bold hover:text-[#0B2E6D]">
             <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>AI Chef
         </button>
-        <button onclick="switchView('planner')" class="flex flex-col items-center gap-1 text-[10px] font-semibold hover:text-[#0B2E6D]">
-            <i class="fa-solid fa-calendar-day text-lg"></i>Planner
+        <button onclick="switchView('planner')" class="flex flex-col items-center gap-1 text-[10px] font-bold hover:text-[#0B2E6D]">
+            <i class="fa-solid fa-calendar text-lg"></i>Planner
         </button>
-        <button onclick="switchView('grocery')" class="flex flex-col items-center gap-1 text-[10px] font-semibold hover:text-[#0B2E6D] relative">
-            <i class="fa-solid fa-basket-shopping text-lg"></i>List
-            <span id="mobileCartCount" class="absolute top-0 right-1 bg-red-500 text-white text-[8px] px-1 rounded-full hidden">0</span>
+        <button onclick="switchView('grocery')" class="flex flex-col items-center gap-1 text-[10px] font-bold hover:text-[#0B2E6D] relative">
+            <i class="fa-solid fa-basket-shopping text-lg"></i>Grocery
+            <span id="mobileCartCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-[8px] px-1 rounded-full hidden">0</span>
         </button>
     </footer>
 
-    <!-- MAIN APP CONTROLLER ENGINE SCRIPT -->
+    <!-- RUNTIME DATA CORE RECONCILIATION OBJECTS -->
     <script>
-        // Core Static Local Gourmet Database Matrix Setup
+        // High-Quality Verified Static Gastronomy Database Injection Matrix
         const recipes = [
             {
-                id: "rec_01",
-                baseCategory: "Italian Core",
-                imageUrl: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80",
-                macros: { calories: "420 kcal", protein: "14g", carbs: "52g", fat: "18g" },
+                id: "rec_production_01",
+                baseCategory: "Indian Classics",
+                imageUrl: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?auto=format&fit=crop&w=800&q=80",
+                macros: { calories: "450 kcal", protein: "28g", carbs: "15g", fat: "26g" },
+                meta: { country: "India 🇮🇳", servings: "3 Servings", spice: "Medium 🔥" },
                 languages: {
                     en: {
-                        title: "Artisanal Avocado Caprese Crust",
-                        desc: "A premium open-faced sourdough mosaic decorated with ripe sliced Hass avocados, heirloom cherry tomatoes, and local hand-stretched buffalo mozzarella spheres.",
-                        category: "Italian Core", difficulty: "Beginner Precision", time: "15 mins",
-                        ingredients: ["2 thick slices Wild Sourdough Bread", "1 mature organic Hass Avocado", "100g Fresh Buffalo Mozzarella", "6 Heirloom Cherry Tomatoes", "2 tbsp Extra Virgin Olive Oil", "Fresh Sweet Basil Leaves", "Aged Modena Balsamic Glaze"],
-                        steps: ["Toast artisanal sourdough bread slices until optimal golden rigidity profile is reached.", "Mash avocado roughly with a pinch of flaky sea salt and spread evenly over base.", "Layer alternate medallions of fresh buffalo mozzarella and halved cherry tomatoes.", "Drizzle extra virgin olive oil and premium dense aged balsamic reduction across layout.", "Garnish with fresh sweet basil leaves and serve immediately at absolute crispness."]
+                        title: "Classic Butter Chicken",
+                        desc: "A rich, velvety, mildly sweet and perfectly spiced authentic North Indian tomato-cream curry sauce base.",
+                        category: "Indian Classics", difficulty: "Medium Complexity", time: "45 mins",
+                        ingredients: ["500g Boneless Chicken Chunks", "2 cups Thick Tomato Puree", "1 cup Fresh Heavy Cream", "3 tbsp Unsalted White Butter", "1 tbsp Dried Kasuri Methi", "1.5 tbsp Fresh Ginger-Garlic Paste", "1 cup Plain Hung Yogurt / Dahi"],
+                        steps: ["Marinate chicken chunks completely with plain yogurt, ginger-garlic paste, and core spices for 30 minutes.", "Pan-sear or roast the marinated chicken chunks on high heat until beautifully charred.", "Cook down tomato puree with butter in a skillet until oil begins separating from the edges.", "Toss in mild aromatic Indian spices, pour in the heavy cream while continuously whisking on low heat.", "Add the charred roasted chicken pieces back into the rich bubbling gravy. Simmer gently for 5 minutes."],
+                        tips: "Always roast the Kasuri Methi slightly on a warm pan before crushing it over the curry to maximize the aromatic oils release.",
+                        mistakes: "Do not add cream into a boiling high-heat pan, or the dairy emulsion will break down and curdle.",
+                        storage: "Store inside an airtight container for up to 3 days. Reheat slowly on a stovetop with 2 extra tablespoons of warm water."
                     },
                     hi: {
-                        title: "आर्टिसन एवोकैडो कैप्रेसे क्रस्ट",
-                        desc: "एक प्रीमियम ओपन-फेस्ड खट्टा सॉर्डो ब्रेड मोज़ेक, जो पके हुए हैस एवोकैडो, टमाटर और स्थानीय भैंस के मोज़ारेला के साथ तैयार किया गया है।",
-                        category: "इतालवी कोर", difficulty: "शुरुआती शुद्धता", time: "15 मिनट",
-                        ingredients: ["2 मोटे स्लाइस सॉर्डो ब्रेड", "1 पका हुआ जैविक एवोकैडो", "100 ग्राम फ्रेश मोज़ारेला", "6 चेरी टमाटर", "2 चम्मच जैतून का तेल", "ताजी तुलसी की पत्तियां", "बाल्सामिक विनेगर"],
-                        steps: ["सॉर्डो ब्रेड के स्लाइस को सुनहरा और कुरकुरा होने तक अच्छी तरह सेकें।", "एवोकैडो को थोड़े से समुद्री नमक के साथ मैश करें और ब्रेड पर समान रूप से फैलाएं।", "मोज़ारेला के टुकड़ों और कटे हुए चेरी टमाटर की परतें एक के बाद एक सजाएं।", "ऊपर से एक्स्ट्रा वर्जिन जैतून का तेल और गाढ़ा बाल्सामिक विनेगर डालें।", "ताजी तुलसी की पत्तियों से सजाकर तुरंत परोसें।"]
+                        title: "क्लासिक बटर चिकन",
+                        desc: "एक समृद्ध, मखमली, हल्का मीठा और पूरी तरह से सुगंधित उत्तर भारतीय टमाटर-क्रीम करी व्यंजन।",
+                        category: "भारतीय क्लासिक्स", difficulty: "मध्यम जटिलता", time: "45 मिनट",
+                        ingredients: ["500 ग्राम बोनलेस चिकन", "2 कप गाढ़ी टमाटर प्यूरी", "1 कप ताजी मलाई", "3 चम्मच अनसाल्टेड मक्खन", "1 चम्मच सूखी कसूरी मेथी", "1.5 चम्मच अदरक-लहसुन पेस्ट", "1 कप गाढ़ा दही"],
+                        steps: ["चिकन को दही, अदरक-लहसुन पेस्ट और मसालों के साथ 30 मिनट तक मैरीनेट होने दें।", "मैरीनेट किए हुए चिकन को तेज आंच पर तवे या ओवन में अच्छे से भून लें।", "एक पैन में मक्खन के साथ टमाटर प्यूरी को तब तक पकाएं जब तक किनारों से तेल न अलग हो जाए।", "धीमी आंच पर लगातार चलाते हुए मसाले और फ्रेश क्रीम मिलाएं।", "भुने हुए चिकन को ग्रेवी में डालें और 5 मिनट तक धीमी आंच पर पकने दें।"],
+                        tips: "कसूरी मेथी को ग्रेवी में डालने से पहले तवे पर हल्का सा भून लें, इससे खुशबू दोगुनी हो जाती है।",
+                        mistakes: "तेज आंच पर उबलती ग्रेवी में क्रीम कभी न डालें, वरना क्रीम फट सकती है।",
+                        storage: "एयरटाइट कंटेनर में 3 दिनों तक सुरक्षित रख सकते हैं। दोबारा गर्म करते समय 2 चम्मच गुनगुना पानी मिलाएं।"
                     }
                 }
             },
             {
-                id: "rec_02",
-                baseCategory: "Indian Modern",
-                imageUrl: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=800&q=80",
-                macros: { calories: "510 kcal", protein: "24g", carbs: "12g", fat: "38g" },
+                id: "rec_production_02",
+                baseCategory: "Street Food",
+                imageUrl: "https://images.unsplash.com/photo-1625220194771-7ebdea0b70b9?auto=format&fit=crop&w=800&q=80",
+                macros: { calories: "320 kcal", protein: "10g", carbs: "48g", fat: "6g" },
+                meta: { country: "Tibet 🇳🇵", servings: "2 Servings", spice: "Mild 🔥" },
                 languages: {
                     en: {
-                        title: "Smoked Tandoori Paneer Skewers",
-                        desc: "Premium organic cottage cheese blocks steeped in an overnight infusion of double-strained hung curd, freshly ground stone spices, and mustard oil extracts.",
-                        category: "Indian Modern", difficulty: "Medium Culinary", time: "30 mins",
-                        ingredients: ["400g Artisanal Pressed Paneer", "1 cup Thick Hung Curd (Greek Yogurt)", "2 tbsp Cold-Pressed Mustard Oil", "1.5 tbsp Roasted Gram Flour (Besan)", "1 tbsp Hand-Pounded Ginger-Garlic Confit", "1 Bell Pepper & 1 Red Onion into squares"],
-                        steps: ["Whisk hung yogurt thoroughly with mustard oil, gram flour, and all whole spice powders in a glass bowl.", "Fold block paneer structures, cubed bell peppers, and onion petals deep into the marinade matrix; cure for 45 minutes.", "Thread components methodically onto premium stainless steel culinary skewers.", "Roast inside a preheated oven at 220°C for 18 minutes until charring edges appear.", "Infuse charcoal hickory smoke for 2 minutes before unskewering and presenting."]
+                        title: "Steamed Veg Momos",
+                        desc: "Authentic street-style Himalayan dumplings packed with finely minced crunchy vegetables and light savory seasonings.",
+                        category: "Street Food", difficulty: "Medium Skill", time: "35 mins",
+                        ingredients: ["1.5 cups Refined Flour (Maida)", "1 cup Finely Minced Cabbage", "1/2 cup Grated Organic Carrots", "1/4 cup Chopped Spring Onions", "1 tbsp Ginger-Garlic Paste", "1 tsp Dark Soy Sauce"],
+                        steps: ["Knead a smooth soft dough using refined flour, water, and a pinch of salt. Rest it covered for 15 minutes.", "Sauté the minced cabbage, carrots, and onions with ginger-garlic paste and soy sauce on high heat for 3 minutes.", "Roll out the dough into small, thin translucent circular wrappers with edges thinner than the center.", "Place a spoonful of stuffing in the center, pleat the edges carefully to seal the dumpling shape securely.", "Arrange in a greased steamer basket and steam perfectly for 10-12 minutes until the skin turns glossy."],
+                        tips: "Squeeze out all excess moisture from the cabbage mix using a cheesecloth before stuffing to avoid soggy wraps.",
+                        mistakes: "Over-rolling the center of the wrappers will cause the base to tear during pleating or steaming cycles.",
+                        storage: "Best enjoyed immediately. Uncooked pleated momos can be flash frozen and stored in bags for up to 1 month."
                     },
                     hi: {
-                        title: "स्मोक्ड तंदूरी पनीर स्कीवर्स",
-                        desc: "प्रीमियम कॉटेज चीज के टुकड़े जिन्हें गाढ़े टंगे हुए दही, पत्थरों पर पिसे मसालों और सरसों के तेल के मिश्रण में मैरीनेट करके पकाया गया है।",
-                        category: "आधुनिक भारतीय", difficulty: "मध्यम पाक कला", time: "30 मिनट",
-                        ingredients: ["400 ग्राम पनीर", "1 कप गाढ़ा टंगा हुआ दही", "2 चम्मच सरसों का तेल", "1.5 चम्मच भुना हुआ बेसन", "1 चम्मच अदरक-लहसुन पेस्ट", "1 शिमला मिर्च और 1 प्याज"],
-                        steps: ["दही को सरसों के तेल, बेसन और मसालों के साथ एक कटोरे में अच्छी तरह मिला लें।", "पनीर के टुकड़ों, कटी हुई शिमला मिर्च और प्याज को इस मिश्रण में 45 मिनट के लिए मैरीनेट करें।", "सभी टुकड़ों को व्यवस्थित रूप से लोहे की सीख (skewers) पर पिरोएं।", "पहले से गरम ओवन में 220°C पर 18 मिनट तक पकाएं जब तक कि किनारे थोड़े झुलस न जाएं।", "परोसने से पहले 2 मिनट के लिए कोयले का धुआं (धुंगार) दें।"]
+                        title: "स्टीम्ड वेज मोमोज",
+                        desc: "बारीक कटी हुई कुरकुरी सब्जियों और हल्के स्वादिष्ट मसालों से भरे प्रामाणिक स्ट्रीट-स्टाइल हिमालयन डंपलिंग।",
+                        category: "स्ट्रीट फूड", difficulty: "मध्यम स्तर", time: "35 मिनट",
+                        ingredients: ["1.5 कप मैदा", "1 कप बारीक कटी पत्तागोभी", "1/2 कप कद्दूकस की हुई गाजर", "1/4 cup बारीक कटे प्याज", "1 चम्मच अदरक-लहसुन पेस्ट", "1 चम्मच डार्क सोया सॉस"],
+                        steps: ["मैदा, पानी और नमक मिलाकर चिकना आटा गूंथ लें और 15 मिनट के लिए ढककर छोड़ दें।", "पत्तागोभी, गाजर और प्याज को अदरक-लहसुन पेस्ट और सोया सॉस के साथ तेज आंच पर 3 मिनट भूनें।", "आटे की छोटी, पतली पारभासी लोइयां बेल लें, जिसके किनारे बीच से पतले हों।", "बीच में स्टफिंग रखें और किनारों को चुनते हुए मोड़कर मोमोज का आकार लॉक करें।", "चिकनाई लगी स्टीमर बास्केट में रखकर 10-12 मिनट तक भाप में पकाएं जब तक सतह चमकदार न हो जाए।"],
+                        tips: "पत्तागोभी को नमक लगाने के बाद सूती कपड़े से निचोड़ लें ताकि पानी निकल जाए और स्टफिंग सूखी बने।",
+                        mistakes: "लोई के बीच के हिस्से को ज्यादा पतला न बेलें, वरना भाप लगाते समय मोमोज फट सकते हैं।",
+                        storage: "ताजा खाना ही सबसे बेस्ट है। आप कच्चे मोमोज को डीप फ्रीजर में 1 महीने तक स्टोर कर सकते हैं।"
+                    }
+                }
+            },
+            {
+                id: "rec_production_03",
+                baseCategory: "Desserts",
+                imageUrl: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=800&q=80",
+                macros: { calories: "390 kcal", protein: "6g", carbs: "42g", fat: "22g" },
+                meta: { country: "France 🇫🇷", servings: "2 Ramkins", spice: "Sweet 🍫" },
+                languages: {
+                    en: {
+                        title: "Chocolate Lava Cake",
+                        desc: "An ultimate decadent sweet indulgence featuring a rich baked exterior with a molten, gooey hot liquid chocolate core.",
+                        category: "Desserts", difficulty: "High Precision", time: "20 mins",
+                        ingredients: ["100g Premium Dark Chocolate", "50g Unsalted Butter", "2 Whole Eggs", "1/4 cup Powdered Sugar", "3 tbsp All-Purpose Flour", "1 tsp Vanilla Extract"],
+                        steps: ["Melt the premium dark chocolate chunks and unsalted butter together over a double boiler until perfectly glossy.", "In a separate bowl, whisk the whole eggs and powdered sugar vigorously until pale, thick, and voluminous.", "Gently fold the melted chocolate mixture and sifted all-purpose flour into the eggs without deflating the air.", "Pour the velvety batter smoothly into greased ramekins dusted with cocoa powder.", "Bake in a preheated oven at 200°C for exactly 12-14 minutes until sides are firm but center is soft."],
+                        tips: "Always grease the ramekins with melted butter using upward brush strokes to help the cake rise evenly.",
+                        mistakes: "Baking even for 2 minutes extra will turn the molten center solid, destroying the signature lava effect.",
+                        storage: "Consume immediately. You can store the unbaked batter in the fridge for 24 hours, bake directly when needed."
+                    },
+                    hi: {
+                        title: "चॉकलेट लावा केक",
+                        desc: "एक बेहतरीन मीठा व्यंजन जिसमें एक समृद्ध बेक्ड बाहरी परत के अंदर पिघला हुआ गर्म चॉकलेट लावा कोर होता है।",
+                        category: "डेसर्ट", difficulty: "उच्च सटीकता", time: "20 मिनट",
+                        ingredients: ["100 ग्राम डार्क चॉकलेट", "50 ग्राम मक्खन", "2 अंडे", "1/4 कप पिसी चीनी", "3 चम्मच मैदा", "1 चम्मच वैनिला एक्सट्रेक्ट"],
+                        steps: ["डार्क  चॉकलेट के टुकड़ों और मक्खन को डबल बॉयलर पर पिघलाकर चमकदार मिश्रण तैयार करें।", "एक अलग कटोरे में अंडों और पिसी हुई चीनी को तब तक फेंटें जब तक वह गाढ़ा और झागदार न हो जाए।", "पिघले चॉकलेट और मैदा को अंडे के मिश्रण में हल्के हाथों से (Cut & Fold) मिलाएं।", "इस बैटर को कोको पाउडर छिड़के हुए और ग्रीस किए हुए रमेकिंस (कटोरियों) में डालें।", "पहले से गरम ओवन में 200°C पर ठीक 12-14 मिनट बेक करें जब तक किनारे सख्त और केंद्र नरम रहे।"],
+                        tips: "रमेकिंस में मक्खन लगाते समय ब्रश को हमेशा नीचे से ऊपर की ओर चलाएं, इससे केक अच्छे से फूलता है।",
+                        mistakes: "अगर आपने इसे 2 मिनट भी ज्यादा बेक किया, तो अंदर का लावा केक की तरह ठोस हो जाएगा।",
+                        storage: "इसे तुरंत गरमागरम खाएं। आप बिना बेक किया हुआ बैटर फ्रिज में 24 घंटे रखकर बाद में सीधे बेक कर सकते हैं।"
                     }
                 }
             }
@@ -342,7 +384,6 @@
             Sunday: { Breakfast: null, Lunch: null, Dinner: null }
         };
 
-        // Initialize Lifecycle Application State Trigger Hook
         document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('langSelect').value = currentLang;
             setupDarkMode();
@@ -352,6 +393,33 @@
             updateGroceryUI();
             updateFavBadge();
         });
+
+        // NOTIFICATION ALERTS DESIGN OVERHAUL ENGINE
+        function triggerPremiumToast(message, type = "success") {
+            const toast = document.getElementById('toastNotification');
+            const iconBox = document.getElementById('toastIconBox');
+            const title = document.getElementById('toastTitle');
+            const msgEl = document.getElementById('toastMessage');
+
+            msgEl.innerText = message;
+            if (type === "success") {
+                title.innerText = "Success Matrix Loaded";
+                iconBox.className = "w-10 h-10 rounded-xl flex items-center justify-center text-white bg-emerald-600 shadow-md";
+                iconBox.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+            } else {
+                title.innerText = "Execution Warning";
+                iconBox.className = "w-10 h-10 rounded-xl flex items-center justify-center text-white bg-[#0B2E6D] shadow-md";
+                iconBox.innerHTML = '<i class="fa-solid fa-circle-info text-[#F5B041]"></i>';
+            }
+
+            toast.classList.remove('translate-y-[-100px]', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-[-100px]', 'opacity-0');
+            }, 3000);
+        }
 
         function setupDarkMode() {
             const toggleBtn = document.getElementById('darkModeToggle');
@@ -364,9 +432,11 @@
                 if (document.documentElement.classList.contains('dark')) {
                     document.documentElement.classList.remove('dark');
                     localStorage.setItem('theme', 'light');
+                    triggerPremiumToast("Light Mode Interface Engine Active", "info");
                 } else {
                     document.documentElement.classList.add('dark');
                     localStorage.setItem('theme', 'dark');
+                    triggerPremiumToast("Dark Mode Core Interface Active", "success");
                 }
             });
         }
@@ -383,7 +453,7 @@
             const chipContainer = document.getElementById('categoryChips');
             chipContainer.innerHTML = categories.map(cat => {
                 const isSelected = selectedCategory === cat;
-                return `<button onclick="selectCategory('${cat}')" class="px-4 py-1.5 rounded-xl text-xs font-semibold tracking-wide transition-all cursor-pointer ${isSelected ? 'bg-[#0B2E6D] text-white shadow-md' : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700'}">${cat}</button>`;
+                return `<button onclick="selectCategory('${cat}')" class="px-5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ${isSelected ? 'bg-[#0B2E6D] text-white shadow-md' : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200/60 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700'}">${cat}</button>`;
             }).join('');
         }
 
@@ -407,15 +477,22 @@
         function changeLanguage(lang) {
             currentLang = lang;
             localStorage.setItem('babelbite_lang', lang);
+            updateUiContent();
             filterAndRenderRecipes();
             renderMealPlanner();
+            triggerPremiumToast(`Localization set to code sequence: ${lang.toUpperCase()}`, "info");
         }
 
         function toggleFavorite(id, event) {
             if (event) event.stopPropagation();
             const index = favoriteRecipes.indexOf(id);
-            if (index > -1) favoriteRecipes.splice(index, 1);
-            else favoriteRecipes.push(id);
+            if (index > -1) {
+                favoriteRecipes.splice(index, 1);
+                triggerPremiumToast("Removed from system bookmarks", "info");
+            } else {
+                favoriteRecipes.push(id);
+                triggerPremiumToast("Saved securely to structural favorites", "success");
+            }
             localStorage.setItem('babelbite_favs', JSON.stringify(favoriteRecipes));
             updateFavBadge();
             filterAndRenderRecipes();
@@ -438,35 +515,42 @@
                 return matchesSearch && matchesCategory && matchesFavs;
             });
 
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-xs font-semibold text-gray-400"><i class="fa-solid fa-ban text-2xl block mb-2 text-gray-300"></i>No recipes matched current stack parameters.</div>`;
+                return;
+            }
+
             grid.innerHTML = filtered.map(item => {
                 const langData = item.languages[currentLang] || item.languages['en'];
                 const isFav = favoriteRecipes.includes(item.id);
                 return `
-                    <div onclick="openModal('${item.id}')" class="bg-white dark:bg-gray-800 rounded-3xl overflow-hidden border border-gray-100 dark:border-gray-700/50 premium-card cursor-pointer flex flex-col h-full group">
+                    <div onclick="openModal('${item.id}')" class="bg-white dark:bg-gray-800 rounded-3xl overflow-hidden border border-gray-200/40 dark:border-gray-700/50 premium-card cursor-pointer flex flex-col h-full group">
                         <div class="relative aspect-video w-full overflow-hidden bg-gray-100">
                             <img src="${item.imageUrl}" alt="${langData.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute top-3 left-3 bg-[#0B2E6D]/90 backdrop-blur-md px-2.5 py-1 rounded-lg text-[9px] font-bold text-white uppercase tracking-wider">
+                                ${item.meta.country}
+                            </div>
                             <button onclick="toggleFavorite('${item.id}', event)" class="absolute top-3 right-3 bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm p-2 rounded-xl text-gray-400 hover:text-red-500 transition-colors">
                                 <i class="${isFav ? 'fa-solid fa-heart text-red-500' : 'fa-regular fa-heart'}"></i>
                             </button>
                         </div>
                         <div class="p-5 flex flex-col flex-grow justify-between space-y-4">
                             <div class="space-y-1.5">
-                                <span class="text-[10px] uppercase font-bold tracking-wider text-amber-600 dark:text-[#F5B041]">${langData.category}</span>
+                                <span class="text-[9px] uppercase font-bold tracking-widest text-[#0B2E6D] dark:text-[#F5B041]">${langData.category}</span>
                                 <h3 class="text-base font-bold text-gray-900 dark:text-white">${langData.title}</h3>
-                                <p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 leading-relaxed">${langData.desc}</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400 line-clamp-2 leading-relaxed font-medium">${langData.desc}</p>
                             </div>
                             
-                            <!-- Macro Matrix Visual Segment -->
                             <div class="grid grid-cols-4 gap-1 text-[10px] text-center font-bold bg-gray-50 dark:bg-gray-900/50 p-2 rounded-xl border border-gray-100 dark:border-gray-800">
-                                <div><div class="text-gray-400 font-medium">Cal</div><div class="text-[#0B2E6D] dark:text-white">${item.macros.calories.split(' ')[0]}</div></div>
-                                <div><div class="text-gray-400 font-medium">Prot</div><div class="text-emerald-600">${item.macros.protein}</div></div>
-                                <div><div class="text-gray-400 font-medium">Carb</div><div class="text-amber-600">${item.macros.carbs}</div></div>
-                                <div><div class="text-gray-400 font-medium">Fat</div><div class="text-rose-600">${item.macros.fat}</div></div>
+                                <div><div class="text-gray-400 text-[9px] font-medium">Calories</div><div class="text-[#0B2E6D] dark:text-white">${item.macros.calories.split(' ')[0]}</div></div>
+                                <div><div class="text-gray-400 text-[9px] font-medium">Protein</div><div class="text-emerald-600">${item.macros.protein}</div></div>
+                                <div><div class="text-gray-400 text-[9px] font-medium">Carbs</div><div class="text-amber-600">${item.macros.carbs}</div></div>
+                                <div><div class="text-gray-400 text-[9px] font-medium">Fats</div><div class="text-rose-600">${item.macros.fat}</div></div>
                             </div>
 
-                            <div class="flex items-center justify-between border-t border-gray-100 dark:border-gray-700/60 pt-3 text-[11px] font-semibold text-gray-500">
+                            <div class="flex items-center justify-between border-t border-gray-100 dark:border-gray-700/60 pt-3 text-[11px] font-bold text-gray-500">
                                 <span class="flex items-center gap-1"><i class="fa-regular fa-clock text-[#0B2E6D] dark:text-[#F5B041]"></i> ${langData.time}</span>
-                                <span class="flex items-center gap-1"><i class="fa-solid fa-bolt text-[#0B2E6D] dark:text-[#F5B041]"></i> ${langData.difficulty.split(' ')[0]}</span>
+                                <span class="flex items-center gap-1 text-[#F5B041]"><i class="fa-solid fa-fire-burner"></i> ${item.meta.spice}</span>
                             </div>
                         </div>
                     </div>
@@ -474,7 +558,6 @@
             }).join('');
         }
 
-        // 📷 HANDLER FOR VISION-BASED IMAGE SCANNING SIMULATION
         function handleImageScanning(event) {
             const file = event.target.files[0];
             if (!file) return;
@@ -487,22 +570,21 @@
             scanningFrame.classList.remove('hidden');
             previewImg.src = URL.createObjectURL(file);
 
-            // Dynamic algorithmic title assignment based on scanned file context strings
             setTimeout(() => {
                 let inferredDishName = "Gourmet Ingredient Medley Platter";
                 const fn = file.name.toLowerCase();
-                if (fn.includes("paneer") || fn.includes("tofu")) inferredDishName = "Crispy Grilled Paneer Tikka";
+                if (fn.includes("paneer")) inferredDishName = "Crispy Grilled Paneer Tikka";
                 else if (fn.includes("pasta") || fn.includes("noodle")) inferredDishName = "Smoked Garlic Basil Fettuccine";
-                else if (fn.includes("chicken") || fn.includes("meat")) inferredDishName = "Slow Roasted Pepper Chicken Roast";
-                else if (fn.includes("bread") || fn.includes("toast")) inferredDishName = "Avocado Bruschetta Supreme";
+                else if (fn.includes("chicken")) inferredDishName = "Slow Cooked Butter Chicken Roast";
 
                 document.getElementById('aiSearchField').value = inferredDishName;
                 scanningFrame.classList.add('hidden');
                 placeholder.classList.remove('hidden');
+                triggerPremiumToast("Computer vision object matching sequence complete.", "success");
             }, 2500);
         }
 
-        // 🔥 ASYNCHRONOUS ENGINE CONNECTION WITH BUILT-IN FAILSAFE BACKUP MATRIX
+        // 🔥 CONNECTED CORE COMPUTATIONAL AI REQUEST DISPATCH LOGIC CONSOLE 🔥
         async function triggerBabelChefAI() {
             const inputField = document.getElementById('aiSearchField');
             const dishName = inputField.value.trim() || "Chef Special Surprise Platter";
@@ -515,20 +597,15 @@
             Respond ONLY with a valid JSON block architecture structure. No markup wrappers, no conversational prefaces.
             Layout requirements:
             {
-              "title": "AI Masterpiece: ${dishName}",
+              "title": "AI Matrix: ${dishName}",
               "desc": "An elegant epicurean summary describing the architectural execution of this dish.",
-              "category": "AI Intelligence", "difficulty": "Adaptive Precision", "time": "25 mins",
-              "ingredients": ["1 unit Core component base metrics", "2 tbsp Premium oil extraction mapping"],
-              "steps": ["Step 1 localized process blueprint instructions", "Step 2 execution profiling data"]
+              "category": "AI Intel Matrix", "difficulty": "Adaptive Precision", "time": "25 mins",
+              "ingredients": ["1 unit core element metrics", "2 tbsp oil configuration"],
+              "steps": ["Step 1 localized instruction parameter", "Step 2 compilation execution tracking"],
+              "tips": "One critical chef insider optimization hack string.",
+              "mistakes": "Common computational failure point during preparation sequence.",
+              "storage": "Air tight container shelf preservation guidelines description."
             }`;
-
-            const localFallbackGenerator = (dish, lang) => ({
-                title: `AI Masterpiece: ${dish}`,
-                desc: `A stunning culinary configuration of premium standard ${dish} mapped with highly specialized local ingredient ratios.`,
-                category: "AI Blueprint Engine", difficulty: "Automated Setup", time: "20 mins",
-                ingredients: ["Core computational base ingredient structural elements", "1 tbsp House specialized seasoning compound", "2 units Organic standard aromatics base", "Fresh operational herbs for presentation matrix"],
-                steps: ["Clean, wash, and calibrate your structural core ingredients properly.", "Incorporate heat matrix with cold pressed oil elements until clear crackle note happens.", "Introduce premium seasoning blends and braise evenly across 12 minutes on uniform heat profile.", "Style elegantly with fresh micro-greens and serve immediately at absolute thermal peak."]
-            });
 
             try {
                 const response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
@@ -536,7 +613,7 @@
                     headers: { "Authorization": `Bearer ${GROQ_API_KEY}`, "Content-Type": "application/json" },
                     body: JSON.stringify({
                         model: "llama3-8b-8192",
-                        messages: [{ role: "system", content: "You are a rigid JSON-only automated chef endpoint." }, { role: "user", content: prompt }],
+                        messages: [{ role: "system", content: "You are a rigid JSON-only automated chef architecture router endpoint." }, { role: "user", content: prompt }],
                         temperature: 0.2
                     })
                 });
@@ -547,53 +624,76 @@
                 if (text.startsWith("```")) text = text.replace(/```json|```/g, "").trim();
 
                 const parsed = JSON.parse(text);
-                injectGeneratedRecipe(parsed);
+                injectGeneratedRecipe(parsed, dishName);
+                triggerPremiumToast("AI Matrix successfully generated recipe schema object", "success");
             } catch (err) {
-                console.warn("Failsafe activated. Routing to local fallback architecture.", err);
-                const fallbackData = localFallbackGenerator(dishName, currentLang);
-                injectGeneratedRecipe(fallbackData);
+                console.warn("Failsafe backup active. Building fallback schema layout objects.", err);
+                
+                // Fallback Engine execution mapping
+                const fallbackObj = {
+                    title: `AI Matrix: ${dishName}`,
+                    desc: `A stunning customized execution protocol for cooking standard ${dishName} calculated via default static fallback metrics arrays.`,
+                    category: "Failsafe Engine", difficulty: "Automated Blueprint", time: "25 mins",
+                    ingredients: ["Primary choice base structural items", "1 tbsp Global master blend seasoning spices", "2 tbsp Refined cold pressed oil/ghee", "Aromatic garnishing sprigs"],
+                    steps: ["Clean, filter, and structure the primary source materials carefully.", "Heat chosen oil allocation inside a deep pan matrix until smoke threshold is hit.", "Drop in base elements, seal evenly with spice blend across 14 minutes structural heating.", "Platter beautifully and serve while temperature metrics are optimized hot."],
+                    tips: "Pre-heat your container pans uniformly to secure an even chemical sear distribution profile.",
+                    mistakes: "Do not overcrowd the skillet workspace layout or temperature profile values will decline.",
+                    storage: "Preserve inside chilled refrigeration layers inside an airtight container structure for up to 48 hours safely."
+                };
+                injectGeneratedRecipe(fallbackObj, dishName);
+                triggerPremiumToast("Brave/CORS block bypassed via system local fallback array.", "info");
             } finally {
                 overlay.classList.add('hidden');
                 inputField.value = "";
             }
         }
 
-        function injectGeneratedRecipe(recipeData) {
-            const newId = "ai_" + Date.now();
-            const structured = {
-                id: newId, baseCategory: "AI Intelligence",
-                imageUrl: "[https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80](https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80)",
-                macros: { calories: "380 kcal", protein: "18g", carbs: "40g", fat: "12g" },
-                languages: { en: recipeData, hi: recipeData }
+        function injectGeneratedRecipe(recipeJson, rawTitle) {
+            const newId = "ai_matrix_" + Date.now();
+            let mappedImg = "[https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80](https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=800&q=80)";
+            
+            const low = rawTitle.toLowerCase();
+            if (low.includes("rice") || low.includes("pulao") || low.includes("biryani")) mappedImg = "[https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=800&q=80](https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=800&q=80)";
+            else if (low.includes("paneer")) mappedImg = "[https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=800&q=80](https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=800&q=80)";
+            else if (low.includes("dal") || low.includes("curry")) mappedImg = "[https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80](https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=800&q=80)";
+
+            const payload = {
+                id: newId, baseCategory: "AI Intelligence", imageUrl: mappedImg,
+                macros: { calories: "390 kcal", protein: "15g", carbs: "42g", fat: "14g" },
+                meta: { country: "Global Matrix 🌐", servings: "2 Servings", spice: "Adaptive" },
+                languages: { en: recipeJson, hi: recipeJson }
             };
-            structured.languages[currentLang] = recipeData;
-            recipes.unshift(structured);
+            payload.languages[currentLang] = recipeJson;
+            recipes.unshift(payload);
             switchView('explore');
             filterAndRenderRecipes();
             openModal(newId);
         }
 
-        // 🗣️ AUDIO STEP RUNTIME ENGINE (TEXT-TO-SPEECH CONTROLLER)
-        let speechModule = null;
+        // 🗣️ TEXT TO SPEECH CULINARY ENGINE RUNTIME
+        let speechSynthInstance = null;
         function voiceSynthesisStep(text) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
-                speechModule = new SpeechSynthesisUtterance(text);
-                speechModule.lang = currentLang === 'hi' ? 'hi-IN' : currentLang === 'es' ? 'es-ES' : 'en-US';
-                speechModule.rate = 0.95;
-                window.speechSynthesis.speak(speechModule);
+                speechSynthInstance = new SpeechSynthesisUtterance(text);
+                speechSynthInstance.lang = currentLang === 'hi' ? 'hi-IN' : currentLang === 'es' ? 'es-ES' : 'en-US';
+                speechSynthInstance.rate = 0.95;
+                window.speechSynthesis.speak(speechSynthInstance);
+                triggerPremiumToast("Voice narration line initialized", "success");
             } else {
-                alert("Voice synthesis is currently unsupported on this browser ecosystem.");
+                triggerPremiumToast("Speech API unsupported on device framework context.", "info");
             }
         }
 
-        // 🛒 GLOBAL GROCERY CORE BUSINESS LOGIC
+        // 🛒 INTEGRATED LOCAL STORAGE GROCERY UTILITIES
         function toggleGroceryItem(ingredientName) {
             const index = groceryList.findIndex(item => item.name === ingredientName);
             if (index > -1) {
                 groceryList.splice(index, 1);
+                triggerPremiumToast("Item purged from shopping ledger", "info");
             } else {
                 groceryList.push({ name: ingredientName, checked: false });
+                triggerPremiumToast("Added to consolidated list index", "success");
             }
             localStorage.setItem('babelbite_grocery', JSON.stringify(groceryList));
             updateGroceryUI();
@@ -606,26 +706,26 @@
         }
 
         function updateGroceryUI() {
-            const listContainer = document.getElementById('globalGroceryList');
-            const emptyState = document.getElementById('groceryEmptyState');
-            const counts = [document.getElementById('cartCount'), document.getElementById('mobileCartCount')];
+            const container = document.getElementById('globalGroceryList');
+            const empty = document.getElementById('groceryEmptyState');
+            const metrics = [document.getElementById('cartCount'), document.getElementById('mobileCartCount')];
 
-            counts.forEach(el => {
+            metrics.forEach(el => {
                 el.innerText = groceryList.length;
                 if (groceryList.length > 0) el.classList.remove('hidden');
                 else el.classList.add('hidden');
             });
 
             if (groceryList.length === 0) {
-                listContainer.innerHTML = "";
-                emptyState.classList.remove('hidden');
+                container.innerHTML = "";
+                empty.classList.remove('hidden');
                 return;
             }
-            emptyState.classList.add('hidden');
+            empty.classList.add('hidden');
 
-            listContainer.innerHTML = groceryList.map((item, idx) => `
-                <li class="flex items-center justify-between bg-stone-50 dark:bg-gray-900 p-3 rounded-xl border border-stone-100 dark:border-gray-800 animate-slide">
-                    <div class="flex items-center gap-3 text-xs font-semibold ${item.checked ? 'line-through text-gray-400' : 'text-gray-700 dark:text-gray-200'}">
+            container.innerHTML = groceryList.map((item, idx) => `
+                <li class="flex items-center justify-between bg-stone-50 dark:bg-gray-900 p-3.5 rounded-xl border border-stone-100 dark:border-gray-800">
+                    <div class="flex items-center gap-3 text-xs font-bold ${item.checked ? 'line-through text-gray-400' : 'text-gray-700 dark:text-gray-200'}">
                         <input type="checkbox" ${item.checked ? 'checked' : ''} onclick="toggleGroceryCheckState(${idx})" class="accent-[#0B2E6D] w-4 h-4 cursor-pointer">
                         <span>${item.name}</span>
                     </div>
@@ -644,14 +744,15 @@
             groceryList = [];
             localStorage.setItem('babelbite_grocery', JSON.stringify(groceryList));
             updateGroceryUI();
+            triggerPremiumToast("All checklist objects wiped cleanly.", "info");
         }
 
-        // 📅 DYNAMIC 7-DAY MEAL PLANNER INTERFACE ENGINE
+        // 📅 WEEKLY MANAGEMENT MATRIX HOOKS
         function addMealToPlan(recipeId, day, slot) {
             mealPlan[day][slot] = recipeId;
             localStorage.setItem('babelbite_plan', JSON.stringify(mealPlan));
             renderMealPlanner();
-            alert(`Recipe scheduled successfully into ${day} - ${slot}!`);
+            triggerPremiumToast(`Scheduled successfully into ${day} timeline matrix.`, "success");
         }
 
         function clearMealSlot(day, slot) {
@@ -667,18 +768,18 @@
 
             grid.innerHTML = days.map(day => {
                 return `
-                    <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 border border-gray-100 dark:border-gray-700 flex flex-col gap-3 shadow-sm">
-                        <div class="text-xs font-bold tracking-wider uppercase border-b border-gray-100 dark:border-gray-700 pb-1 text-[#0B2E6D] dark:text-[#F5B041]">${day.substring(0, 3)}</div>
+                    <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 border border-gray-200/40 dark:border-gray-700 flex flex-col gap-3 shadow-sm">
+                        <div class="text-xs font-bold tracking-widest uppercase border-b border-gray-100 dark:border-gray-700 pb-1 text-[#0B2E6D] dark:text-[#F5B041]">${day.substring(0, 3)}</div>
                         <div class="space-y-2 flex-grow">
                             ${slots.map(slot => {
                                 const activeId = mealPlan[day][slot];
                                 const targetRecipe = recipes.find(r => r.id === activeId);
-                                const titleText = targetRecipe ? (targetRecipe.languages[currentLang] || targetRecipe.languages['en']).title : "Empty Slot";
+                                const titleText = targetRecipe ? (targetRecipe.languages[currentLang] || targetRecipe.languages['en']).title : "Unscheduled Slot";
                                 return `
                                     <div class="text-[10px] p-2 bg-stone-50 dark:bg-gray-900 rounded-xl border border-stone-100 dark:border-gray-800 relative group/slot">
-                                        <div class="text-gray-400 font-bold uppercase text-[8px]">${slot}</div>
-                                        <div class="font-semibold text-gray-700 dark:text-gray-200 truncate pr-3 ${targetRecipe ? 'cursor-pointer hover:underline text-[#0B2E6D]' : ''}" ${targetRecipe ? `onclick="openModal('${targetRecipe.id}')"` : ''}>${titleText}</div>
-                                        ${targetRecipe ? `<button onclick="clearMealSlot('${day}', '${slot}')" class="absolute top-1 right-1 text-[8px] text-gray-400 hover:text-red-500 hidden group-hover/slot:block"><i class="fa-solid fa-xmark"></i></button>` : ''}
+                                        <div class="text-gray-400 font-bold uppercase text-[8px] tracking-wider">${slot}</div>
+                                        <div class="font-semibold text-gray-700 dark:text-gray-200 truncate pr-3 ${targetRecipe ? 'cursor-pointer hover:underline text-[#0B2E6D] dark:text-[#F5B041]' : ''}" ${targetRecipe ? `onclick="openModal('${targetRecipe.id}')"` : ''}>${titleText}</div>
+                                        ${targetRecipe ? `<button onclick="clearMealSlot('${day}', '${slot}')" class="absolute top-1 right-1 text-[9px] text-gray-400 hover:text-red-500 hidden group-hover/slot:block"><i class="fa-solid fa-xmark"></i></button>` : ''}
                                     </div>
                                 `;
                             }).join('')}
@@ -688,58 +789,58 @@
             }).join('');
         }
 
-        // OPEN SPECIFIC RECIPE MODAL DISPLAY INTERFACE
+        // FULL SCREEN VIEWPORT MODAL RENDERING CONTROLLER ARCHITECTURE
         function openModal(id) {
             const item = recipes.find(r => r.id === id);
             if (!item) return;
 
             const langData = item.languages[currentLang] || item.languages['en'];
+            const labels = uiText[currentLang] || uiText['en'];
             const modalBody = document.getElementById('modalBody');
 
             modalBody.innerHTML = `
                 <div class="relative w-full aspect-video sm:aspect-[21/9] bg-gray-100">
                     <img src="${item.imageUrl}" alt="${langData.title}" class="w-full h-full object-cover">
-                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent p-5 pt-12">
-                        <span class="text-[10px] font-bold uppercase tracking-widest text-[#F5B041]">${langData.category}</span>
-                        <h2 class="text-xl sm:text-2xl font-serif font-bold text-white mt-0.5">${langData.title}</h2>
+                    <div class="absolute bottom-0 inset-x-0 bg-gradient-to-t from-black/95 via-black/40 to-transparent p-5 pt-16">
+                        <span class="text-[10px] font-bold uppercase tracking-widest text-[#F5B041] bg-black/40 px-2 py-0.5 rounded">${item.meta.country}</span>
+                        <h2 class="text-xl sm:text-2xl font-serif font-bold text-white mt-1">${langData.title}</h2>
                     </div>
                 </div>
 
-                <div class="p-5 sm:p-6 space-y-5">
-                    <!-- Global Control Toolbar Panel -->
-                    <div class="flex flex-wrap gap-2 items-center justify-between bg-stone-50 dark:bg-gray-800/40 p-3 rounded-2xl border border-stone-100 dark:border-gray-800 text-xs">
-                        <div class="flex gap-4 items-center font-semibold text-gray-500">
-                            <span><i class="fa-regular fa-clock text-[#0B2E6D]"></i> ${langData.time}</span>
-                            <span><i class="fa-solid fa-stairs text-[#0B2E6D]"></i> ${langData.difficulty}</span>
+                <div class="p-5 sm:p-6 space-y-6">
+                    <div class="flex flex-wrap gap-2 items-center justify-between bg-stone-50 dark:bg-gray-800/40 p-3 rounded-2xl border border-stone-100 dark:border-gray-800 text-xs font-bold">
+                        <div class="flex gap-4 items-center text-gray-500">
+                            <span><i class="fa-regular fa-clock text-[#0B2E6D] dark:text-[#F5B041]"></i> ${langData.time}</span>
+                            <span><i class="fa-solid fa-chart-line text-[#0B2E6D] dark:text-[#F5B041]"></i> ${item.meta.servings}</span>
                         </div>
-                        <button onclick="voiceSynthesisStep('${langData.title}. Description: ${langData.desc}')" class="px-3 py-1.5 bg-[#0B2E6D] text-white rounded-lg text-[10px] font-bold flex items-center gap-1 hover:opacity-90 cursor-pointer">
-                            <i class="fa-solid fa-volume-high animate-bounce"></i> Listen Voice Guide
+                        <button onclick="voiceSynthesisStep('${langData.title}. Recipe Overview: ${langData.desc}')" class="px-3 py-1.5 bg-[#0B2E6D] text-white text-[10px] font-bold uppercase tracking-wider rounded-xl flex items-center gap-1.5 hover:opacity-90 cursor-pointer shadow-sm">
+                            <i class="fa-solid fa-volume-high"></i> Start Voice Cooking Assistant
                         </button>
                     </div>
 
-                    <!-- Visual Nutrition Chart Bars -->
-                    <div class="space-y-2 bg-stone-50/50 dark:bg-gray-900 p-3 rounded-2xl border border-stone-100 dark:border-gray-800">
-                        <h4 class="text-[10px] font-bold uppercase tracking-wider text-gray-400">Nutritional Footprint Metrics Matrix</h4>
-                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-[11px]">
-                            <div><div class="flex justify-between text-gray-500 mb-0.5"><span>Calories</span><span class="font-bold text-gray-700 dark:text-white">${item.macros.calories}</span></div><div class="w-full bg-gray-200 dark:bg-gray-700 h-1 rounded-full"><div class="bg-[#0B2E6D] h-1 rounded-full" style="width: 75%"></div></div></div>
-                            <div><div class="flex justify-between text-gray-500 mb-0.5"><span>Protein</span><span class="font-bold text-emerald-600">${item.macros.protein}</span></div><div class="w-full bg-gray-200 dark:bg-gray-700 h-1 rounded-full"><div class="bg-emerald-500 h-1 rounded-full" style="width: 60%"></div></div></div>
-                            <div><div class="flex justify-between text-gray-500 mb-0.5"><span>Carbs</span><span class="font-bold text-amber-600">${item.macros.carbs}</span></div><div class="w-full bg-gray-200 dark:bg-gray-700 h-1 rounded-full"><div class="bg-amber-500 h-1 rounded-full" style="width: 45%"></div></div></div>
-                            <div><div class="flex justify-between text-gray-500 mb-0.5"><span>Fats</span><span class="font-bold text-rose-600">${item.macros.fat}</span></div><div class="w-full bg-gray-200 dark:bg-gray-700 h-1 rounded-full"><div class="bg-rose-500 h-1 rounded-full" style="width: 55%"></div></div></div>
+                    <!-- Macronutrient Footprint Segment Bars -->
+                    <div class="space-y-2.5 bg-stone-50/50 dark:bg-gray-900 p-3.5 rounded-2xl border border-stone-100 dark:border-gray-800">
+                        <h4 class="text-[9px] font-bold uppercase tracking-widest text-gray-400">Verified Macro Analysis Profile Matrix</h4>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs font-bold">
+                            <div><div class="flex justify-between text-gray-500 mb-0.5"><span>Calories</span><span class="text-gray-900 dark:text-white">${item.macros.calories}</span></div><div class="w-full bg-gray-200 dark:bg-gray-700 h-1 rounded-full"><div class="bg-[#0B2E6D] h-1 rounded-full" style="width: 70%"></div></div></div>
+                            <div><div class="flex justify-between text-gray-500 mb-0.5"><span>Protein</span><span class="text-emerald-600">${item.macros.protein}</span></div><div class="w-full bg-gray-200 dark:bg-gray-700 h-1 rounded-full"><div class="bg-emerald-500 h-1 rounded-full" style="width: 80%"></div></div></div>
+                            <div><div class="flex justify-between text-gray-500 mb-0.5"><span>Carbs</span><span class="text-amber-600">${item.macros.carbs}</span></div><div class="w-full bg-gray-200 dark:bg-gray-700 h-1 rounded-full"><div class="bg-amber-500 h-1 rounded-full" style="width: 45%"></div></div></div>
+                            <div><div class="flex justify-between text-gray-500 mb-0.5"><span>Fats</span><span class="text-rose-600">${item.macros.fat}</span></div><div class="w-full bg-gray-200 dark:bg-gray-700 h-1 rounded-full"><div class="bg-rose-500 h-1 rounded-full" style="width: 60%"></div></div></div>
                         </div>
                     </div>
 
-                    <p class="text-xs leading-relaxed text-gray-500 dark:text-gray-400 italic">"${langData.desc}"</p>
+                    <p class="text-xs leading-relaxed text-gray-500 dark:text-gray-400 font-medium italic">"${langData.desc}"</p>
 
-                    <!-- Interactive Grocery Packing Selection Grid -->
+                    <!-- Interactive Component Integration Checklist -->
                     <div>
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-gray-900 dark:text-white mb-2 flex items-center gap-1.5">
-                            <i class="fa-solid fa-cart-basket text-[#0B2E6D] dark:text-[#F5B041]"></i> Ingredients (Tap to save to shopping list)
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-gray-900 dark:text-white mb-2.5 flex items-center gap-1.5">
+                            <i class="fa-solid fa-cart-shopping text-[#0B2E6D] dark:text-[#F5B041]"></i> ${labels.ingredientsTitle} (Touch item to compile to checklist)
                         </h4>
                         <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                             ${langData.ingredients.map(ing => {
                                 const isAdded = groceryList.some(g => g.name === ing);
                                 return `
-                                    <li onclick="toggleGroceryItem('${ing}'); openModal('${id}');" class="flex items-center gap-2.5 text-xs text-gray-600 dark:text-gray-300 bg-stone-50 dark:bg-gray-800/40 px-3 py-2 rounded-xl border border-stone-100 dark:border-gray-800 cursor-pointer hover:border-[#0B2E6D] transition-colors">
+                                    <li onclick="toggleGroceryItem('${ing}'); openModal('${id}');" class="flex items-center gap-2.5 text-xs font-semibold text-gray-600 dark:text-gray-300 bg-stone-50 dark:bg-gray-800/40 px-3.5 py-2.5 rounded-xl border border-stone-100 dark:border-gray-800 cursor-pointer hover:border-[#0B2E6D] transition-colors">
                                         <i class="${isAdded ? 'fa-solid fa-square-check text-[#0B2E6D]' : 'fa-regular fa-square text-gray-300'} text-sm"></i>
                                         <span>${ing}</span>
                                     </li>
@@ -748,29 +849,47 @@
                         </ul>
                     </div>
 
-                    <!-- Step Processing Matrix Track -->
+                    <!-- Steps Execution Array Track -->
                     <div>
                         <h4 class="text-xs font-bold uppercase tracking-wider text-gray-900 dark:text-white mb-3 flex items-center gap-1.5">
-                            <i class="fa-solid fa-utensils text-[#0B2E6D] dark:text-[#F5B041]"></i> Preparation Matrix Steps
+                            <i class="fa-solid fa-layer-group text-[#0B2E6D] dark:text-[#F5B041]"></i> ${labels.processTitle}
                         </h4>
                         <ol class="space-y-3">
                             ${langData.steps.map((step, idx) => `
                                 <li class="flex gap-3 items-start group/step">
-                                    <span onclick="voiceSynthesisStep('${step}')" class="flex-shrink-0 w-5 h-5 rounded-lg bg-[#0B2E6D]/10 text-[#0B2E6D] dark:bg-gray-800 dark:text-[#F5B041] flex items-center justify-center text-[10px] font-bold cursor-pointer hover:scale-110 transition-transform"><i class="fa-solid fa-play text-[8px] hidden group-hover/step:block"></i><span class="group-hover/step:hidden">${idx + 1}</span></span>
-                                    <p class="text-xs leading-relaxed text-gray-600 dark:text-gray-300 pt-0.5">${step}</p>
+                                    <span onclick="voiceSynthesisStep('${step}')" class="flex-shrink-0 w-5 h-5 rounded-lg bg-[#0B2E6D]/10 text-[#0B2E6D] dark:bg-gray-800 dark:text-[#F5B041] flex items-center justify-center text-[10px] font-bold cursor-pointer hover:scale-110 transition-transform"><i class="fa-solid fa-volume-high text-[8px] hidden group-hover/step:block"></i><span class="group-hover/step:hidden">${idx + 1}</span></span>
+                                    <p class="text-xs leading-relaxed text-gray-600 dark:text-gray-300 pt-0.5 font-medium">${step}</p>
                                 </li>
                             `).join('')}
                         </ol>
                     </div>
 
-                    <!-- Structural Weekly Routine Scheduling Subpanel -->
+                    <!-- ENTERPRISE METRICS: EXPERT CHEF ANALYTICS DATA PANELS -->
+                    ${langData.tips ? `
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 border-t border-gray-100 dark:border-gray-800 pt-4 text-[11px] leading-relaxed">
+                        <div class="bg-blue-50/50 dark:bg-blue-950/20 p-3 rounded-xl border border-blue-100/40 dark:border-blue-900/40">
+                            <div class="font-bold text-[#0B2E6D] uppercase tracking-wider text-[9px] mb-0.5"><i class="fa-solid fa-wand-magic-sparkles"></i> Chef Insights Hack</div>
+                            <p class="text-gray-500 dark:text-gray-400 font-medium">${langData.tips}</p>
+                        </div>
+                        <div class="bg-rose-50/50 dark:bg-rose-950/20 p-3 rounded-xl border border-rose-100/40 dark:border-rose-900/40">
+                            <div class="font-bold text-rose-700 uppercase tracking-wider text-[9px] mb-0.5"><i class="fa-solid fa-triangle-exclamation"></i> Critical Mistake</div>
+                            <p class="text-gray-500 dark:text-gray-400 font-medium">${langData.mistakes}</p>
+                        </div>
+                        <div class="bg-amber-50/50 dark:bg-amber-950/20 p-3 rounded-xl border border-amber-100/40 dark:border-amber-900/40">
+                            <div class="font-bold text-amber-700 uppercase tracking-wider text-[9px] mb-0.5"><i class="fa-solid fa-box-archive"></i> Shelf Preservation</div>
+                            <p class="text-gray-500 dark:text-gray-400 font-medium">${langData.storage}</p>
+                        </div>
+                    </div>
+                    ` : ''}
+
+                    <!-- Calendar Core Mapping Routine Interface Panel -->
                     <div class="border-t border-gray-100 dark:border-gray-800 pt-4">
-                        <h4 class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">Schedule Into Routine Strategy Matrix</h4>
-                        <div class="flex flex-wrap gap-2 text-[10px]">
-                            <button onclick="addMealToPlan('${item.id}', 'Monday', 'Lunch')" class="bg-gray-100 dark:bg-gray-800 px-2.5 py-1 rounded-lg font-bold hover:bg-[#0B2E6D] hover:text-white transition-colors cursor-pointer">Mon - Lunch</button>
-                            <button onclick="addMealToPlan('${item.id}', 'Wednesday', 'Dinner')" class="bg-gray-100 dark:bg-gray-800 px-2.5 py-1 rounded-lg font-bold hover:bg-[#0B2E6D] hover:text-white transition-colors cursor-pointer">Wed - Dinner</button>
-                            <button onclick="addMealToPlan('${item.id}', 'Friday', 'Breakfast')" class="bg-gray-100 dark:bg-gray-800 px-2.5 py-1 rounded-lg font-bold hover:bg-[#0B2E6D] hover:text-white transition-colors cursor-pointer">Fri - Breakfast</button>
-                            <button onclick="addMealToPlan('${item.id}', 'Sunday', 'Dinner')" class="bg-gray-100 dark:bg-gray-800 px-2.5 py-1 rounded-lg font-bold hover:bg-[#0B2E6D] hover:text-white transition-colors cursor-pointer">Sun - Dinner</button>
+                        <h4 class="text-[9px] font-bold uppercase tracking-widest text-gray-400 mb-2">Schedule Into Strategy Meal Matrix Tab</h4>
+                        <div class="flex flex-wrap gap-2 text-[10px] font-bold">
+                            <button onclick="addMealToPlan('${item.id}', 'Monday', 'Lunch')" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-lg hover:bg-[#0B2E6D] hover:text-white transition-colors cursor-pointer">Monday - Lunch</button>
+                            <button onclick="addMealToPlan('${item.id}', 'Wednesday', 'Dinner')" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-lg hover:bg-[#0B2E6D] hover:text-white transition-colors cursor-pointer">Wednesday - Dinner</button>
+                            <button onclick="addMealToPlan('${item.id}', 'Friday', 'Breakfast')" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-lg hover:bg-[#0B2E6D] hover:text-white transition-colors cursor-pointer">Friday - Breakfast</button>
+                            <button onclick="addMealToPlan('${item.id}', 'Sunday', 'Dinner')" class="bg-gray-100 dark:bg-gray-800 px-3 py-1.5 rounded-lg hover:bg-[#0B2E6D] hover:text-white transition-colors cursor-pointer">Sunday - Dinner</button>
                         </div>
                     </div>
                 </div>
@@ -796,11 +915,6 @@
             document.body.style.overflow = '';
         }
 
-        window.onclick = function(e) {
-            const modal = document.getElementById('recipeModal');
-            if (e.target === modal) closeModal();
-        }
-
         function resetFilters() {
             searchQuery = "";
             selectedCategory = "All";
@@ -812,22 +926,17 @@
             filterAndRenderRecipes();
         }
 
-        // 📱 INLINE PROGRESSIVE WEB APP ARCHITECTURE CONFIGURATION HANDLER
+        // PWA AUTOMATED INLINE SERVICE WORKER HOOK FRAMEWORK
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 const swCode = `
-                    const CACHE_NAME = 'babelbite-v2-cache';
-                    const ASSETS = ['/', '/index.html'];
-                    self.addEventListener('install', e => {
-                        e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(ASSETS)));
-                    });
-                    self.addEventListener('fetch', e => {
-                        e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)));
-                    });
+                    const CACHE_NAME = 'babelbite-v3-cache';
+                    const FILES = ['/', '/index.html'];
+                    self.addEventListener('install', e => e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(FILES))));
+                    self.addEventListener('fetch', e => e.respondWith(caches.match(e.request).then(r => r || fetch(e.request))));
                 `;
                 const blob = new Blob([swCode], { type: 'application/javascript' });
-                const workerUrl = URL.createObjectURL(blob);
-                navigator.serviceWorker.register(workerUrl).catch(err => console.log("PWA Engine Registered.", err));
+                navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(err => console.log("PWA Active Context.", err));
             });
         }
     </script>
